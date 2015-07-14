@@ -1,0 +1,35 @@
+MoPathLineSegment = Class.create(MoPathSegment, {
+	initialize : function($super, x, y) {
+		$super(x, y);
+	},
+
+	mergeBounds : function(prevSegment, withRect) {	
+		if(prevSegment != null && !(prevSegment instanceof MoPathMoveSegment))
+		{
+			withRect.union(this.x, this.y, this.x, this.y);
+			return;
+		}
+
+		var px = prevSegment != null ? prevSegment.x : 0;
+		var py = prevSegment != null ? prevSegment.y : 0;
+
+		withRect.union(
+			Math.min(this.x, px),
+			Math.min(this.y, py),
+			Math.max(this.x, px),
+			Math.max(this.y, py));
+	},
+	
+	flatten : function(steps, prevSegment) {
+		return [this];
+	},
+	
+	getTangent : function(prevSegment, fromStart) {
+		var x1 = prevSegment != null ? prevSegment.x : 0;
+		var y1 = prevSegment != null ? prevSegment.y : 0;
+		var x2 = this.x;
+		var y2 = this.y;
+
+		return [x2 - x1, y2 - y1];
+	}
+});
