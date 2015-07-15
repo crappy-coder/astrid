@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title>MoEnjin Gamepad API - Diagnostics</title>
+		<script type="text/javascript" src="moenjin-web.js"></script>
+		<script type="text/javascript" src="gamepad.js"></script>
+		<style type="text/css">
+			html, body { margin: 10px; background-color:#000; color:#fff; font-family: arial,sans-serif; font-size:12px; }
+			h2 { font-size:18px; font-weight:bold; }
+			#container { display: none; }
+			#api-unavailable { font-size:22px; color:#ff0000; }
+			
+			.slot { width: 460px; height:640px; float:left; }
+			.active { color: green; font-weight:bold; font-size:14px; }
+			.inactive { color:#333; font-weight:bold; font-size:14px; }
+			.progress { height:20px; background: -webkit-linear-gradient(top,  rgba(247,206,131,1) 0%,rgba(247,119,0,1) 100%); }
+			.progress-track { width:200px; height:20px; background: -webkit-linear-gradient(top,  rgba(155,155,155,1) 0%,rgba(201,201,201,1) 100%); }
+			.axes-area { width:100px;height:100px;background:#333 }
+			.axes { position:relative;width:5px;height:5px;background: -webkit-linear-gradient(top,  rgba(247,206,131,1) 0%,rgba(247,119,0,1) 100%); }
+		</style>
+	</head>
+	<body onload="loadGamepads()">
+		<div id="container">
+			<div id="api-unavailable">The Gamepad API is either unavailable, or is disabled.</div>
+			<div id="slots">
+			
+				<!-- SLOT 1 -->
+				<div id="slot1" class="slot">
+					<span>Index: 1</span><br/>
+					<span id="slot1-name" class="active">Not Connected</span><br/>
+					<span id="slot1-A" class="inactive">A</span><br/>
+					<span id="slot1-B" class="inactive">B</span><br/>
+					<span id="slot1-X" class="inactive">X</span><br/>
+					<span id="slot1-Y" class="inactive">Y</span><br/>
+					<span id="slot1-Start" class="inactive">START</span><br/>
+					<span id="slot1-Back" class="inactive">BACK</span><br/>
+					<span id="slot1-Big" class="inactive">BIG</span><br/>
+					<span id="slot1-DPadUp" class="inactive">DPAD-UP</span><br/>
+					<span id="slot1-DPadDown" class="inactive">DPAD-DOWN</span><br/>
+					<span id="slot1-DPadLeft" class="inactive">DPAD-LEFT</span><br/>
+					<span id="slot1-DPadRight" class="inactive">DPAD-RIGHT</span><br/>
+					<span id="slot1-LeftShoulder" class="inactive">LEFT-SHOULDER</span><br/>
+					<span id="slot1-LeftTrigger" class="inactive">LEFT-TRIGGER</span><br/>
+					<span id="slot1-LeftStick" class="inactive">LEFT-STICK</span><br/>
+					<span id="slot1-RightShoulder" class="inactive">RIGHT-SHOULDER</span><br/>
+					<span id="slot1-RightTrigger" class="inactive">RIGHT-TRIGGER</span><br/>
+					<span id="slot1-RightStick" class="inactive">RIGHT-STICK</span><br/><br/>
+					
+					<div style="float:left;width:200px">
+						<h2>Left Trigger</h2>
+						<div id="slot1-LeftTriggerPercentContainer" class="progress-track">
+							<div id="slot1-LeftTriggerPercent" class="progress" style="width:0px"></div>
+						</div><br/>
+						<span id="slot1-LeftTriggerAmount"></span>,
+						<span id="slot1-LeftTriggerAmountFiltered"></span>
+					</div>
+					
+					<div style="float:left;width:200px;margin-left:20px">
+						<h2>Right Trigger</h2>
+						<div id="slot1-RightTriggerPercentContainer" class="progress-track">
+							<div id="slot1-RightTriggerPercent" class="progress" style="width:0px"></div>
+						</div><br/>
+						<span id="slot1-RightTriggerAmount"></span>,
+						<span id="slot1-RightTriggerAmountFiltered"></span>
+					</div>
+					
+					<div style="float:left;width:200px">
+						<h2>Left Stick</h2>
+						<div id="slot1-LeftStickContainer" class="axes-area">
+							<div id="slot1-LeftStickAxes" class="axes"></div>
+						</div><br/>
+						<span id="slot1-LeftStickAmount"></span><br/>
+						<span id="slot1-LeftStickAmountFiltered"></span>
+					</div>
+					
+					<div style="float:left;width:200px;margin-left:20px">
+						<h2>Right Stick</h2>
+						<div id="slot1-RightStickContainer" class="axes-area">
+							<div id="slot1-RightStickAxes" class="axes"></div>
+						</div><br/>
+						<span id="slot1-RightStickAmount"></span><br/>
+						<span id="slot1-RightStickAmountFiltered"></span>
+					</div>
+				</div>
+				
+				
+				<!-- SLOT 2 -->
+				<div id="slot2" class="slot">
+					<span>Index: 2</span><br/>
+					<span id="slot2-name" class="active">Not Connected</span><br/>
+					<span id="slot2-A" class="inactive">A</span><br/>
+					<span id="slot2-B" class="inactive">B</span><br/>
+					<span id="slot2-X" class="inactive">X</span><br/>
+					<span id="slot2-Y" class="inactive">Y</span><br/>
+					<span id="slot2-Start" class="inactive">START</span><br/>
+					<span id="slot2-Back" class="inactive">BACK</span><br/>
+					<span id="slot2-Big" class="inactive">BIG</span><br/>
+					<span id="slot2-DPadUp" class="inactive">DPAD-UP</span><br/>
+					<span id="slot2-DPadDown" class="inactive">DPAD-DOWN</span><br/>
+					<span id="slot2-DPadLeft" class="inactive">DPAD-LEFT</span><br/>
+					<span id="slot2-DPadRight" class="inactive">DPAD-RIGHT</span><br/>
+					<span id="slot2-LeftShoulder" class="inactive">LEFT-SHOULDER</span><br/>
+					<span id="slot2-LeftTrigger" class="inactive">LEFT-TRIGGER</span><br/>
+					<span id="slot2-LeftStick" class="inactive">LEFT-STICK</span><br/>
+					<span id="slot2-RightShoulder" class="inactive">RIGHT-SHOULDER</span><br/>
+					<span id="slot2-RightTrigger" class="inactive">RIGHT-TRIGGER</span><br/>
+					<span id="slot2-RightStick" class="inactive">RIGHT-STICK</span><br/><br/>
+					
+					<div style="float:left;width:200px">
+						<h2>Left Trigger</h2>
+						<div id="slot2-LeftTriggerPercentContainer" class="progress-track">
+							<div id="slot2-LeftTriggerPercent" class="progress" style="width:0px"></div>
+						</div><br/>
+						<span id="slot2-LeftTriggerAmount"></span>,
+						<span id="slot2-LeftTriggerAmountFiltered"></span>
+					</div>
+					
+					<div style="float:left;width:200px;margin-left:20px">
+						<h2>Right Trigger</h2>
+						<div id="slot2-RightTriggerPercentContainer" class="progress-track">
+							<div id="slot2-RightTriggerPercent" class="progress" style="width:0px"></div>
+						</div><br/>
+						<span id="slot2-RightTriggerAmount"></span>,
+						<span id="slot2-RightTriggerAmountFiltered"></span>
+					</div>
+					
+					<div style="float:left;width:200px">
+						<h2>Left Stick</h2>
+						<div id="slot2-LeftStickContainer" class="axes-area">
+							<div id="slot2-LeftStickAxes" class="axes"></div>
+						</div><br/>
+						<span id="slot2-LeftStickAmount"></span><br/>
+						<span id="slot2-LeftStickAmountFiltered"></span>
+					</div>
+					
+					<div style="float:left;width:200px;margin-left:20px">
+						<h2>Right Stick</h2>
+						<div id="slot2-RightStickContainer" class="axes-area">
+							<div id="slot2-RightStickAxes" class="axes"></div>
+						</div><br/>
+						<span id="slot2-RightStickAmount"></span><br/>
+						<span id="slot2-RightStickAmountFiltered"></span>
+					</div>
+				</div>
+				
+				<!-- SLOT 3 -->
+				<div id="slot3" class="slot">
+					<span>Index: 3</span><br/>
+					<span id="slot3-name" class="active">Not Connected</span><br/>
+					<span id="slot3-A" class="inactive">A</span><br/>
+					<span id="slot3-B" class="inactive">B</span><br/>
+					<span id="slot3-X" class="inactive">X</span><br/>
+					<span id="slot3-Y" class="inactive">Y</span><br/>
+					<span id="slot3-Start" class="inactive">START</span><br/>
+					<span id="slot3-Back" class="inactive">BACK</span><br/>
+					<span id="slot3-Big" class="inactive">BIG</span><br/>
+					<span id="slot3-DPadUp" class="inactive">DPAD-UP</span><br/>
+					<span id="slot3-DPadDown" class="inactive">DPAD-DOWN</span><br/>
+					<span id="slot3-DPadLeft" class="inactive">DPAD-LEFT</span><br/>
+					<span id="slot3-DPadRight" class="inactive">DPAD-RIGHT</span><br/>
+					<span id="slot3-LeftShoulder" class="inactive">LEFT-SHOULDER</span><br/>
+					<span id="slot3-LeftTrigger" class="inactive">LEFT-TRIGGER</span><br/>
+					<span id="slot3-LeftStick" class="inactive">LEFT-STICK</span><br/>
+					<span id="slot3-RightShoulder" class="inactive">RIGHT-SHOULDER</span><br/>
+					<span id="slot3-RightTrigger" class="inactive">RIGHT-TRIGGER</span><br/>
+					<span id="slot3-RightStick" class="inactive">RIGHT-STICK</span><br/><br/>
+					
+					<div style="float:left;width:200px">
+						<h2>Left Trigger</h2>
+						<div id="slot3-LeftTriggerPercentContainer" class="progress-track">
+							<div id="slot3-LeftTriggerPercent" class="progress" style="width:0px"></div>
+						</div><br/>
+						<span id="slot3-LeftTriggerAmount"></span>,
+						<span id="slot3-LeftTriggerAmountFiltered"></span>
+					</div>
+					
+					<div style="float:left;width:200px;margin-left:20px">
+						<h2>Right Trigger</h2>
+						<div id="slot3-RightTriggerPercentContainer" class="progress-track">
+							<div id="slot3-RightTriggerPercent" class="progress" style="width:0px"></div>
+						</div><br/>
+						<span id="slot3-RightTriggerAmount"></span>,
+						<span id="slot3-RightTriggerAmountFiltered"></span>
+					</div>
+					
+					<div style="float:left;width:200px">
+						<h2>Left Stick</h2>
+						<div id="slot3-LeftStickContainer" class="axes-area">
+							<div id="slot3-LeftStickAxes" class="axes"></div>
+						</div><br/>
+						<span id="slot3-LeftStickAmount"></span><br/>
+						<span id="slot3-LeftStickAmountFiltered"></span>
+					</div>
+					
+					<div style="float:left;width:200px;margin-left:20px">
+						<h2>Right Stick</h2>
+						<div id="slot3-RightStickContainer" class="axes-area">
+							<div id="slot3-RightStickAxes" class="axes"></div>
+						</div><br/>
+						<span id="slot3-RightStickAmount"></span><br/>
+						<span id="slot3-RightStickAmountFiltered"></span>
+					</div>
+				</div>
+				
+				<!-- SLOT 4 -->
+				<div id="slot4" class="slot">
+					<span>Index: 4</span><br/>
+					<span id="slot4-name" class="active">Not Connected</span><br/>
+					<span id="slot4-A" class="inactive">A</span><br/>
+					<span id="slot4-B" class="inactive">B</span><br/>
+					<span id="slot4-X" class="inactive">X</span><br/>
+					<span id="slot4-Y" class="inactive">Y</span><br/>
+					<span id="slot4-Start" class="inactive">START</span><br/>
+					<span id="slot4-Back" class="inactive">BACK</span><br/>
+					<span id="slot4-Big" class="inactive">BIG</span><br/>
+					<span id="slot4-DPadUp" class="inactive">DPAD-UP</span><br/>
+					<span id="slot4-DPadDown" class="inactive">DPAD-DOWN</span><br/>
+					<span id="slot4-DPadLeft" class="inactive">DPAD-LEFT</span><br/>
+					<span id="slot4-DPadRight" class="inactive">DPAD-RIGHT</span><br/>
+					<span id="slot4-LeftShoulder" class="inactive">LEFT-SHOULDER</span><br/>
+					<span id="slot4-LeftTrigger" class="inactive">LEFT-TRIGGER</span><br/>
+					<span id="slot4-LeftStick" class="inactive">LEFT-STICK</span><br/>
+					<span id="slot4-RightShoulder" class="inactive">RIGHT-SHOULDER</span><br/>
+					<span id="slot4-RightTrigger" class="inactive">RIGHT-TRIGGER</span><br/>
+					<span id="slot4-RightStick" class="inactive">RIGHT-STICK</span><br/><br/>
+					
+					<div style="float:left;width:200px">
+						<h2>Left Trigger</h2>
+						<div id="slot4-LeftTriggerPercentContainer" class="progress-track">
+							<div id="slot4-LeftTriggerPercent" class="progress" style="width:0px"></div>
+						</div><br/>
+						<span id="slot4-LeftTriggerAmount"></span>,
+						<span id="slot4-LeftTriggerAmountFiltered"></span>
+					</div>
+					
+					<div style="float:left;width:200px;margin-left:20px">
+						<h2>Right Trigger</h2>
+						<div id="slot4-RightTriggerPercentContainer" class="progress-track">
+							<div id="slot4-RightTriggerPercent" class="progress" style="width:0px"></div>
+						</div><br/>
+						<span id="slot4-RightTriggerAmount"></span>,
+						<span id="slot4-RightTriggerAmountFiltered"></span>
+					</div>
+					
+					<div style="float:left;width:200px">
+						<h2>Left Stick</h2>
+						<div id="slot4-LeftStickContainer" class="axes-area">
+							<div id="slot4-LeftStickAxes" class="axes"></div>
+						</div><br/>
+						<span id="slot4-LeftStickAmount"></span><br/>
+						<span id="slot4-LeftStickAmountFiltered"></span>
+					</div>
+					
+					<div style="float:left;width:200px;margin-left:20px">
+						<h2>Right Stick</h2>
+						<div id="slot4-RightStickContainer" class="axes-area">
+							<div id="slot4-RightStickAxes" class="axes"></div>
+						</div><br/>
+						<span id="slot4-RightStickAmount"></span><br/>
+						<span id="slot4-RightStickAmountFiltered"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

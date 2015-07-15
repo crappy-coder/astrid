@@ -1,0 +1,120 @@
+<!DOCTYPE html> 
+<html>
+<head>
+  <script type="text/javascript">
+	function draw()
+	{
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		var x = 100;
+		
+		
+		//10px sans-serif
+		console.log(ctx.font);
+		console.log(ctx.textAlign);
+		console.log(ctx.textBaseline);
+		
+		ctx.font = "24px Arial";
+
+		ctx.fillStyle = "#ffffff";
+		ctx.fillText("TOP", 0, 20);
+			
+		drawText(ctx, "Start y g", x, 50, "start", "top");
+		drawText(ctx, "End y g", x, 100, "end", "top");
+		drawText(ctx, "Left y g", x, 150, "left", "top");
+		drawText(ctx, "Right y g", x, 200, "right", "top");
+		drawText(ctx, "Center y g", x, 250, "center", "top");
+		
+		ctx.fillStyle = "#ffffff";
+		ctx.textAlign = "start";
+		ctx.textBaseline = "alphabetic";
+		ctx.fillText("HANGING", 200, 20);
+			
+		x = 300;
+			
+		drawText(ctx, "Start y g", x, 50, "start", "hanging");
+		drawText(ctx, "End y g", x, 100, "end", "hanging");
+		drawText(ctx, "Left y g", x, 150, "left", "hanging");
+		drawText(ctx, "Right y g", x, 200, "right", "hanging");
+		drawText(ctx, "Center y g", x, 250, "center", "hanging");
+		
+		ctx.fillStyle = "#ffffff";
+		ctx.textAlign = "start";
+		ctx.textBaseline = "alphabetic";
+		ctx.fillText("MIDDLE", 400, 20);
+			
+		x = 500;
+			
+		drawText(ctx, "Start y g", x, 50, "start", "middle");
+		drawText(ctx, "End y g", x, 100, "end", "middle");
+		drawText(ctx, "Left y g", x, 150, "left", "middle");
+		drawText(ctx, "Right y g", x, 200, "right", "middle");
+		drawText(ctx, "Center y g", x, 250, "center", "middle");
+		
+		ctx.fillStyle = "#ffffff";
+		ctx.textAlign = "start";
+		ctx.textBaseline = "alphabetic";
+		ctx.fillText("ALPHABETIC", 600, 20);
+			
+		x = 700;
+			
+		drawText(ctx, "Start y g", x, 50, "start", "alphabetic");
+		drawText(ctx, "End y g", x, 100, "end", "alphabetic");
+		drawText(ctx, "Left y g", x, 150, "left", "alphabetic");
+		drawText(ctx, "Right y g", x, 200, "right", "alphabetic");
+		drawText(ctx, "Center y g", x, 250, "center", "alphabetic");
+		
+		ctx.fillStyle = "#ffffff";
+		ctx.textAlign = "start";
+		ctx.textBaseline = "alphabetic";
+		ctx.fillText("IDEOGRAPHIC", 800, 20);
+			
+		x = 900;
+			
+		drawText(ctx, "Start y g", x, 50, "start", "ideographic");
+		drawText(ctx, "End y g", x, 100, "end", "ideographic");
+		drawText(ctx, "Left y g", x, 150, "left", "ideographic");
+		drawText(ctx, "Right y g", x, 200, "right", "ideographic");
+		drawText(ctx, "Center y g", x, 250, "center", "ideographic");
+		
+		ctx.fillStyle = "#ffffff";
+		ctx.textAlign = "start";
+		ctx.textBaseline = "alphabetic";
+		ctx.fillText("BOTTOM", 1000, 20);
+			
+		x = 1100;
+			
+		drawText(ctx, "Start y g", x, 50, "start", "bottom");
+		drawText(ctx, "End y g", x, 100, "end", "bottom");
+		drawText(ctx, "Left y g", x, 150, "left", "bottom");
+		drawText(ctx, "Right y g", x, 200, "right", "bottom");
+		drawText(ctx, "Center y g", x, 250, "center", "bottom");
+	}
+	
+	function drawText(ctx, text, x, y, align, baseline)
+	{
+		x += 0.5;
+		y += 0.5;
+	
+		var metrics = ctx.measureText(text);
+	
+		ctx.beginPath();
+		ctx.moveTo(x, y);
+		ctx.lineTo(x + metrics.width + 10, y);
+		ctx.moveTo(x, y);
+		ctx.lineTo(x, y - 24);
+		ctx.lineWidth = 1;
+		ctx.strokeStyle = "#ffffff";
+		ctx.stroke();
+
+		ctx.textAlign = align;
+		ctx.textBaseline = baseline;
+		ctx.fillStyle = "#ff0000";
+		ctx.fillText(text, x, y);
+	}
+  </script>
+</head>
+<body onload="draw()" style="background-color:#000000">
+	<canvas id="canvas" width="1600" height="800" ></canvas>
+</body>
+</html> 

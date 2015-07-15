@@ -1,0 +1,5 @@
+Some text document 01
+--------------------------------------------------
+Lorem ipsum doler sit amet...
+
+The end!
