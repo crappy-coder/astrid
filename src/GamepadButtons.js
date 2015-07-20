@@ -1,0 +1,30 @@
+var GamepadButtons = {
+	None: 0,
+	A: (1 << 0),
+	B: (1 << 1),
+	X: (1 << 2),
+	Y: (1 << 3),
+	Start: (1 << 4),
+	Back: (1 << 5),
+	Big: (1 << 6),
+	DPadUp: (1 << 7),
+	DPadDown: (1 << 8),
+	DPadLeft: (1 << 9),
+	DPadRight: (1 << 10),
+	LeftShoulder: (1 << 11),
+	LeftTrigger: (1 << 12),
+	LeftStick: (1 << 13),
+	LeftStickUp: (1 << 14),
+	LeftStickDown: (1 << 15),
+	LeftStickLeft: (1 << 16),
+	LeftStickRight: (1 << 17),
+	RightShoulder: (1 << 18),
+	RightTrigger: (1 << 19),
+	RightStick: (1 << 20),
+	RightStickUp: (1 << 21),
+	RightStickDown: (1 << 22),
+	RightStickLeft: (1 << 23),
+	RightStickRight: (1 << 24)
+};
+
+export default GamepadButtons;
