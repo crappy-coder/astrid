@@ -1,5 +1,5 @@
 import Canvas from "./Canvas";
-import Vector2D from "./Vector2D";
+import Vector2D from "./math/Vector2D";
 import ParallaxCanvas from "./ParallaxCanvas";
 
 class ParallaxCanvasLayer extends Canvas {

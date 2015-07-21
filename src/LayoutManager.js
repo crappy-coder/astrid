@@ -3,7 +3,7 @@ import EventDispatcher from "./EventDispatcher";
 import Event from "./Event";
 import FrameEvent from "./FrameEvent";
 import { ValueOrDefault } from "./Engine";
-import { MaxInt } from "./EngineMath";
+import { MaxInt } from "./math/EngineMath";
 import Application from "./Application";
 
 class LayoutBin {

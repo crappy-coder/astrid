@@ -1,7 +1,7 @@
 import Control from "./Control";
-import TextAlignment from "./TextAlignment";
-import TextTrimming from "./TextTrimming";
-import Font from "./Font";
+import TextAlignment from "./text/TextAlignment";
+import TextTrimming from "./text/TextTrimming";
+import Font from "./text/Font";
 import Rectangle from "./Rectangle";
 import Pen from "./Pen";
 import { AreNotEqual, ValueOrDefault } from "./Engine";

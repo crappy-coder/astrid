@@ -1,4 +1,4 @@
-import Vector2D from "./Vector2D";
+import Vector2D from "./math/Vector2D";
 import ContactPointState from "./ContactPointState";
 import CollisionEvent from "./CollisionEvent";
 import Box2D from "box2dweb";

@@ -6,7 +6,7 @@ import SourceEvent from "./SourceEvent";
 import LoadEvent from "./LoadEvent";
 import ImageSource from "./ImageSource";
 import CanvasSource from "./CanvasSource";
-import VideoSource from "./VideoSource";
+import VideoSource from "./media/VideoSource";
 import TextureSource from "./TextureSource";
 
 class Image extends Drawable {

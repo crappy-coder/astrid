@@ -7,9 +7,9 @@ import DeviceMotionEvent from "./DeviceMotionEvent";
 import DeviceOrientationEvent from "./DeviceOrientationEvent";
 import FrameEvent from "./FrameEvent";
 import FPSClock from "./FPSGraph";
-import Gamepad from "./Gamepad";
+import Gamepad from "./input/Gamepad";
 import ScreenOrientation from "./ScreenOrientation";
-import Color from "./Color";
+import Color from "./color/Color";
 import Size from "./Size";
 import DisplaySurface from "./DisplaySurface";
 

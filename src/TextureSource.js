@@ -4,7 +4,7 @@ import TextureCachePolicy from "./TextureCachePolicy";
 import LoadEvent from "./LoadEvent";
 import ProgressEvent from "./ProgressEvent";
 import Size from "./Size";
-import EngineMath from "./EngineMath";
+import EngineMath from "./math/EngineMath";
 import TextureData from "./TextureData";
 
 class TextureSource extends ImageSource {

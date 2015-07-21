@@ -1,5 +1,5 @@
 import EventDispatcher from "./EventDispatcher";
-import Animatable from "./Animatable";
+import Animatable from "./animation/Animatable";
 import PenLineCap from "./PenLineCap";
 import PenLineJoin from "./PenLineJoin";
 import DashStyle from "./DashStyle";

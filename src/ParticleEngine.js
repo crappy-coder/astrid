@@ -1,8 +1,8 @@
 import Equatable from "./Equatable";
-import Vector2D from "./Vector2D";
-import Color from "./Color";
+import Vector2D from "./math/Vector2D";
+import Color from "./color/Color";
 import Drawable from "./Drawable";
-import RadialGradientBrush from "./RadialGradientBrush";
+import RadialGradientBrush from "./brushes/RadialGradientBrush";
 import Application from "./Application";
 import FrameEvent from "./FrameEvent";
 

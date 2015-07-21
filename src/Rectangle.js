@@ -1,9 +1,9 @@
 import Equatable from "./Equatable";
-import StringTokenizer from "./StringTokenizer";
+import StringTokenizer from "./text/StringTokenizer";
 import { ValueOrDefault } from "./Engine";
-import Vector2D from "./Vector2D";
+import Vector2D from "./math/Vector2D";
 import Size from "./Size";
-import { PositiveInfinity, NegativeInfinity } from "./EngineMath";
+import { PositiveInfinity, NegativeInfinity } from "./math/EngineMath";
 
 class Rectangle extends Equatable {
 	constructor(x, y, width, height) {

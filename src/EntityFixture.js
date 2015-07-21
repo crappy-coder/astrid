@@ -1,6 +1,6 @@
 import EntityBase from "./EntityBase";
 import CollisionCategory from "./CollisionCategory";
-import Matrix2D from "./Matrix2D";
+import Matrix2D from "./math/Matrix2D";
 import Rectangle from "./Rectangle";
 import Box2D from "box2dweb";
 

@@ -4,20 +4,20 @@ import HorizontalAlignment from "./HorizontalAlignment";
 import VerticalAlignment from "./VerticalAlignment";
 import Dock from "./Dock";
 import Graphics from "./Graphics";
-import Matrix2D from "./Matrix2D";
+import Matrix2D from "./math/Matrix2D";
 import LayoutManager from "./LayoutManager";
 import DirtyRegion from "./DirtyRegion";
 import DirtyRegionTracker from "./DirtyRegionTracker";
-import Vector2D from "./Vector2D";
+import Vector2D from "./math/Vector2D";
 import { ValueOrDefault, PrintMeasureOrder, DebugWrite, DebugLevel } from "./Engine";
-import NavigationMode from "./NavigationMode";
+import NavigationMode from "./navigation/NavigationMode";
 import Event from "./Event";
 import BorderMetrics from "./BorderMetrics";
 import Application from "./Application";
-import MouseEvent from "./useEvent";
+import MouseEvent from "./input/useEvent";
 import PropertyOptions from "./PropertyOptions";
 import Size from "./Size";
-import Animatable from "./Animatable";
+import Animatable from "./animation/Animatable";
 
 var DrawableFlags = {
 	"None": 0,
