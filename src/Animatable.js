@@ -1,8 +1,11 @@
 import EventDispatcher from "./EventDispatcher";
 import PropertyOptions from "./PropertyOptions";
+import PropertyChangedEvent from "./PropertyChangedEvent";
+import Drawable from "./Drawable";
+import Tuple from "./Tuple";
+import Pair from "./Pair";
 import { AreNotEqual } from "./Engine";
 
-var Animatable = {
 /**
  * @MIXIN
  *
@@ -49,7 +52,7 @@ var Animatable = {
  *	Dispatched when a property value has changed.
  *
  */
-
+var Animatable = {
 	initializeAnimatableProperties() {
 		/**
 		 * SUMMARY:
@@ -79,8 +82,8 @@ var Animatable = {
 	initializeAnimatablePropertiesCore() {
 		/**
 		 * SUMMARY:
-		 * 	Override to initialize any properties that you wish to be animated. See
-		 *  example above on how this method should be implemented.
+		 * 	Override to initialize any properties that you wish to be animated.
+		 * 	See example above on how this method should be implemented.
 		 *
 		 * RETURNS (void):
 		 *
@@ -138,7 +141,7 @@ var Animatable = {
 	getAnimatablePropertyTuple(propertyName) {
 		// @PRIVATE
 
-		for(var i = 0; i < this.animatableProperties.length; i++) {
+		for (var i = 0; i < this.animatableProperties.length; i++) {
 			var tuple = this.animatableProperties[i];
 
 			if (tuple.getFirst() == propertyName) {
@@ -219,12 +222,12 @@ var Animatable = {
 			this.animatableProperties = [];
 		}
 
-		this.animatableProperties.push(new MoTuple(propertyName, options, new MoPair(getterFunc, setterFunc)));
+		this.animatableProperties.push(new Tuple(propertyName, options, new Pair(getterFunc, setterFunc)));
 
 		// enable property changes for drawables, this way, when a
 		// property changes the drawable can respect the options
-		if (this instanceof MoDrawable) {
-			this.addEventHandler(MoPropertyChangedEvent.PROPERTY_CHANGED, this.handleDependantObjectPropertyChangedEvent.asDelegate(this));
+		if (this instanceof Drawable) {
+			this.addEventHandler(PropertyChangedEvent.PROPERTY_CHANGED, this.handleDependantObjectPropertyChangedEvent.asDelegate(this));
 		}
 	},
 
@@ -251,8 +254,8 @@ var Animatable = {
 		}
 
 		// disable property changes for drawables
-		if (this instanceof MoDrawable) {
-			this.removeEventHandler(MoPropertyChangedEvent.PROPERTY_CHANGED, this.handleDependantObjectPropertyChangedEvent.asDelegate(this));
+		if (this instanceof Drawable) {
+			this.removeEventHandler(PropertyChangedEvent.PROPERTY_CHANGED, this.handleDependantObjectPropertyChangedEvent.asDelegate(this));
 		}
 	},
 
@@ -283,10 +286,10 @@ var Animatable = {
 
 		// add or remove the handler
 		if (on) {
-			this.addEventHandler(MoPropertyChangedEvent.PROPERTY_CHANGED, handler);
+			this.addEventHandler(PropertyChangedEvent.PROPERTY_CHANGED, handler);
 		}
 		else {
-			this.removeEventHandler(MoPropertyChangedEvent.PROPERTY_CHANGED, handler);
+			this.removeEventHandler(PropertyChangedEvent.PROPERTY_CHANGED, handler);
 		}
 	},
 
@@ -311,8 +314,9 @@ var Animatable = {
 	raisePropertyChangedEvent(propName, oldValue, newValue) {
 		// @PRIVATE
 
-		if (this instanceof MoEventDispatcher)
-			this.dispatchEvent(new MoPropertyChangedEvent(MoPropertyChangedEvent.PROPERTY_CHANGED, propName, oldValue, newValue));
+		if (this instanceof EventDispatcher) {
+			this.dispatchEvent(new PropertyChangedEvent(PropertyChangedEvent.PROPERTY_CHANGED, propName, oldValue, newValue));
+		}
 	}
 };
 
