@@ -1,13 +1,13 @@
 import ContentControl from "./ContentControl";
-import InputManager from "./InputManager";
-import Vector2D from "./Vector2D";
+import InputManager from "./input/InputManager";
+import Vector2D from "./math/Vector2D";
 import DirtyRegion from "./DirtyRegion";
 import DirtyRegionTracker from "./DirtyRegionTracker";
 import FPSGraph from "./FPSGraph";
 import Entity from "./Entity";
 import EntityType from "./EntityType";
 import IK from "./IK";
-import AIEntity from "./AIEntity.js";
+import AIEntity from "ai/AIEntity.js";
 import { ValueOrDefault } from "./Engine";
 import EntityQueryEvent from "./EntityQueryEvent";
 import EntityRayCastType from "./EntityRayCastType";

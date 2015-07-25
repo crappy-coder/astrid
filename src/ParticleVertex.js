@@ -1,5 +1,5 @@
-import Color from "./Color";
-import Vector2D from "./Vector2D";
+import Color from "./color/Color";
+import Vector2D from "./math/Vector2D";
 
 class ParticleVertex {
 	constructor() {

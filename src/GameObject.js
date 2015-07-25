@@ -1,4 +1,4 @@
-import AIEntity from "./AIEntity";
+import AIEntity from "ai/AIEntity";
 
 class GameObject extends AIEntity {
 	constructor(name, container, surface) {

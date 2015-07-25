@@ -1,5 +1,5 @@
 import PathSegment from "./PathSegment";
-import Vector2D from "./Vector2D";
+import Vector2D from "./math/Vector2D";
 
 class PathQuadraticBezierSegment extends PathSegment {
 	constructor(x, y, cx, cy) {

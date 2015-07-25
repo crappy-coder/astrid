@@ -1,5 +1,5 @@
 import Equatable from "./Equatable";
-import { MinInt, MaxInt } from "./EngineMath";
+import { MinInt, MaxInt } from "./math/EngineMath";
 import Rectangle from "./Rectangle";
 import DirtyRegionTracker from "./DirtyRegionTracker";
 

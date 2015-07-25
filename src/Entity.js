@@ -1,8 +1,8 @@
 import EntityBase from "./EntityBase";
-import Vector2D from "./Vector2D";
+import Vector2D from "./math/Vector2D";
 import Direction from "./Direction";
 import EntityType from "./EntityType";
-import EngineMath from "./EngineMath";
+import EngineMath from "./math/EngineMath";
 import { ValueOrDefault } from "./Engine";
 import Rectangle from "./Rectangle";
 import EntityFixture from "./EntityFixture";

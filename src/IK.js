@@ -1,13 +1,13 @@
-import Animatable from "./Animatable";
+import Animatable from "./animation/Animatable";
 import EventDispatcher from "./EventDispatcher";
 import { ValueOrDefault } from "./Engine";
-import EngineMath from "./EngineMath";
-import RotateTransform from "./RotateTransform";
+import EngineMath from "./math/EngineMath";
+import RotateTransform from "./transforms/RotateTransform";
 import PropertyOptions from "./PropertyOptions";
-import Vector2D from "./Vector2D";
+import Vector2D from "./math/Vector2D";
 import Application from "./Application";
 import Pen from "./Pen";
-import SolidColorBrush from "./SolidColorBrush";
+import SolidColorBrush from "./brushes/SolidColorBrush";
 import Canvas from "./Canvas";
 
 class IKBoneImpl {

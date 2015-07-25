@@ -1,5 +1,5 @@
 import Equatable from "./Equatable";
-import Vector2D from "./Vector2D";
+import Vector2D from "./math/Vector2D";
 
 class Line extends Equatable {
 	constructor(x1, y1, x2, y2) {
