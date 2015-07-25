@@ -1,5 +1,5 @@
-import EventDispatcher from "./EventDispatcher";
-import LoadEvent from "./LoadEvent";
+import EventDispatcher from "./../EventDispatcher";
+import LoadEvent from "./../LoadEvent";
 
 class TextureData extends EventDispatcher {
 	constructor() {

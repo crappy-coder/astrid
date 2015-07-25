@@ -1,11 +1,11 @@
 import Canvas from "./Canvas";
-import { ValueOrDefault } from "./Engine";
+import { ValueOrDefault } from "./../Engine";
 import PropertyOptions from "./PropertyOptions";
-import BasicAnimation from "./animation/BasicAnimation";
-import LinearEase from "./LinearEase";
-import Matrix2D from "./math/Matrix2D";
-import Vector2D from "./math/Vector2D";
-import SolidColorBrush from "./brushes/SolidColorBrush";
+import BasicAnimation from "./../animation/BasicAnimation";
+import LinearEase from "./../animation/LinearEase";
+import Matrix2D from "./../Matrix2D";
+import Vector2D from "./../Vector2D";
+import SolidColorBrush from "./../brushes/SolidColorBrush";
 
 class Sprite extends Canvas {
 	constructor(name, animationName, textureAtlas) {

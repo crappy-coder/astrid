@@ -1,5 +1,5 @@
-import Equatable from "./Equatable";
-import { ValueOrDefault } from "./Engine";
+import Equatable from "./../Equatable";
+import { ValueOrDefault } from "./../Engine";
 
 class BorderMetrics extends Equatable {
 	constructor(left, top, right, bottom) {

@@ -1,6 +1,6 @@
-import EventDispatcher from "./EventDispatcher";
-import SourceEvent from "./SourceEvent";
-import Size from "./Size";
+import EventDispatcher from "./../EventDispatcher";
+import SourceEvent from "./../SourceEvent";
+import Size from "./../Size";
 
 class ImageSource extends EventDispatcher {
 	constructor() {

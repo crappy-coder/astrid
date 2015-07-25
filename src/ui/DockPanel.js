@@ -1,6 +1,6 @@
 import Panel from "./Panel";
 import Dock from "./Dock";
-import Rectangle from "./Rectangle";
+import Rectangle from "./../Rectangle";
 
 class DockPanel extends Panel {
 	constructor(name) {

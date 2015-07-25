@@ -1,6 +1,6 @@
 import ContentControl from "./ContentControl";
-import { AreNotEqual } from "./Engine";
 import CornerRadius from "./CornerRadius";
+import { AreNotEqual } from "./../Engine";
 
 class Border extends ContentControl {
 	constructor(name) {

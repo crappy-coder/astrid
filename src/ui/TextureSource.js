@@ -1,10 +1,10 @@
 import ImageSource from "./ImageSource";
-import { ValueOrDefault, TextureCacheGet, TextureCacheAdd } from "./Engine";
+import { ValueOrDefault, TextureCacheGet, TextureCacheAdd } from "./../Engine";
 import TextureCachePolicy from "./TextureCachePolicy";
-import LoadEvent from "./LoadEvent";
-import ProgressEvent from "./ProgressEvent";
-import Size from "./Size";
-import EngineMath from "./math/EngineMath";
+import LoadEvent from "./../LoadEvent";
+import ProgressEvent from "./../ProgressEvent";
+import Size from "./../Size";
+import EngineMath from "./../EngineMath";
 import TextureData from "./TextureData";
 
 class TextureSource extends ImageSource {

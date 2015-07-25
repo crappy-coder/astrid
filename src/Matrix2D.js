@@ -1,6 +1,6 @@
-import Equatable from "./../Equatable";
+import Equatable from "./Equatable";
 import Vector2D from "./Vector2D";
-import { ValueOrDefault } from "./../Engine";
+import { ValueOrDefault } from "./Engine";
 import EngineMath, { DegreeToRadian } from "./EngineMath";
 
 var MatrixType = {

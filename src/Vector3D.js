@@ -1,5 +1,5 @@
-import Equatable from "./../Equatable";
-import { ValueOrDefault } from "./../Engine";
+import Equatable from "./Equatable";
+import { ValueOrDefault } from "./Engine";
 import EngineMath from "./EngineMath";
 
 class Vector3D extends Equatable {

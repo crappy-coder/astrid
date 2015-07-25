@@ -1,11 +1,11 @@
 import Control from "./Control";
-import TextAlignment from "./text/TextAlignment";
-import TextTrimming from "./text/TextTrimming";
-import Font from "./text/Font";
-import Rectangle from "./Rectangle";
+import TextAlignment from "./../text/TextAlignment";
+import TextTrimming from "./../text/TextTrimming";
+import Font from "./../text/Font";
+import Rectangle from "./../Rectangle";
 import Pen from "./Pen";
-import { AreNotEqual, ValueOrDefault } from "./Engine";
-import Application from "./Application";
+import { AreNotEqual, ValueOrDefault } from "./../Engine";
+import Application from "./../Application";
 
 class Label extends Control {
 	constructor(name) {

@@ -1,6 +1,6 @@
 import Drawable from "./Drawable";
-import { AreNotEqual } from "./Engine";
 import Pen from "./Pen";
+import { AreNotEqual } from "./../Engine";
 
 class Control extends Drawable {
 	constructor(name) {

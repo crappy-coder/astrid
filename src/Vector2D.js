@@ -1,6 +1,6 @@
-import Equatable from "./../Equatable";
-import { ValueOrDefault } from "./../Engine";
-import EngineMath from "./../Engine";
+import Equatable from "./Equatable";
+import { ValueOrDefault } from "./Engine";
+import EngineMath from "./Engine";
 
 class Vector2D extends Equatable {
 	constructor(x, y) {

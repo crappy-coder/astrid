@@ -1,6 +1,6 @@
 import Canvas from "./Canvas";
-import MouseEvent from "./input/useEvent";
-import Vector2D from "./math/Vector2D";
+import MouseEvent from "./../input/useEvent";
+import Vector2D from "./../Vector2D";
 
 class ViewportCanvas extends Canvas {
 	constructor(name) {

@@ -1,9 +1,9 @@
 import Canvas from "./Canvas";
-import Vector2D from "./math/Vector2D";
-import CollectionEvent from "./CollectionEvent";
-import Application from "./Application";
-import FrameEvent from "./FrameEvent";
-import EngineMath, { PositiveInfinity } from "./math/EngineMath";
+import Vector2D from "./../Vector2D";
+import CollectionEvent from "./../CollectionEvent";
+import Application from "./../Application";
+import FrameEvent from "./../FrameEvent";
+import EngineMath, { PositiveInfinity } from "./../EngineMath";
 import ParallaxCanvasLayer from "./ParallaxCanvasLayer";
 
 class ParallaxCanvas extends Canvas {

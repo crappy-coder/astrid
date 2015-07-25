@@ -1,5 +1,5 @@
 import Drawable from "./Drawable";
-import { AreNotEqual } from "./Engine";
+import { AreNotEqual } from "./../Engine";
 
 class Panel extends Drawable {
 	constructor(name) {
