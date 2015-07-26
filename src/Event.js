@@ -11,8 +11,8 @@ class Event extends Equatable {
 		super();
 		this.type = type;
 		this.phase = EventPhase.TARGET;
-		this.canBubble = MoValueOrDefault(bubbles, false);
-		this.canCancel = MoValueOrDefault(cancelable, false);
+		this.canBubble = ValueOrDefault(bubbles, false);
+		this.canCancel = ValueOrDefault(cancelable, false);
 		this.target = null;
 		this.currentTarget = null;
 		this.isPropagationStopped = false;

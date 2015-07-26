@@ -5,8 +5,8 @@ class TimerEvent extends Event {
 	constructor(type, currentTickTime, lastTickTime, bubbles, cancelable) {
 		super(type, bubbles, cancelable);
 
-		this.currentTickTime = MoValueOrDefault(currentTickTime, 0);
-		this.lastTickTime = MoValueOrDefault(lastTickTime, 0);
+		this.currentTickTime = ValueOrDefault(currentTickTime, 0);
+		this.lastTickTime = ValueOrDefault(lastTickTime, 0);
 	}
 
 	getTickTime() {
@@ -22,7 +22,7 @@ class TimerEvent extends Event {
 	}
 }
 
-Object.assign(MoTimerEvent, {
+Object.assign(TimerEvent, {
 	TICK: "timerTick",
 	COMPLETE: "timerComplete"
 });

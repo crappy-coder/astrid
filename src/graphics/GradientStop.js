@@ -1,5 +1,5 @@
 import EventDispatcher from "../EventDispatcher";
-import { ValueOrDefault } from "../Engine";
+import { ValueOrDefault, AreEqual } from "../Engine";
 import Color from "../graphics/Color";
 import Animatable from "../animation/Animatable";
 import PropertyOptions from "../ui/PropertyOptions";
@@ -11,7 +11,7 @@ class GradientStop extends EventDispatcher {
 		this.setColor(ValueOrDefault(color, Color.Transparent));
 		this.setOffset(ValueOrDefault(offset, 0));
 		
-		/** MoGradientBrush **/
+		/** GradientBrush **/
 		this.brush = null;
 		
 		this.initializeAnimatableProperties();
@@ -39,7 +39,7 @@ class GradientStop extends EventDispatcher {
 	}
 	
 	isEqualTo(other) {
-		return (MoAreEqual(this.getColor(), other.getColor()) && this.getOffset() && other.getOffset());
+		return (AreEqual(this.getColor(), other.getColor()) && this.getOffset() && other.getOffset());
 	}
 
 	toString() {

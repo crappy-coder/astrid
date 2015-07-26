@@ -1,4 +1,5 @@
 import GamepadEvent from "./GamepadEvent";
+import { ValueOrDefault } from "../Engine";
 
 class GamepadButtonEvent extends GamepadEvent {
 	constructor(type, index, button, isDown, timestamp, bubbles, cancelable) {
@@ -6,7 +7,7 @@ class GamepadButtonEvent extends GamepadEvent {
 
 		this.button = button;
 		this.timestamp = timestamp;
-		this.isDown = MoValueOrDefault(isDown, false);
+		this.isDown = ValueOrDefault(isDown, false);
 	}
 
 	getIsDown() {

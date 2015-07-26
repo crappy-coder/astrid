@@ -6,22 +6,22 @@ var ModifierKeys = {
 	"Meta": 8,
 
 	fromValues: function (alt, ctrl, shift, meta) {
-		var bits = MoModifierKeys.None;
+		var bits = ModifierKeys.None;
 
 		if (alt) {
-			bits |= MoModifierKeys.Alt;
+			bits |= ModifierKeys.Alt;
 		}
 
 		if (ctrl) {
-			bits |= MoModifierKeys.Control;
+			bits |= ModifierKeys.Control;
 		}
 
 		if (shift) {
-			bits |= MoModifierKeys.Shift;
+			bits |= ModifierKeys.Shift;
 		}
 
 		if (meta) {
-			bits |= MoModifierKeys.Meta;
+			bits |= ModifierKeys.Meta;
 		}
 
 		return bits;

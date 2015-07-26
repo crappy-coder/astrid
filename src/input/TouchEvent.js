@@ -1,8 +1,9 @@
 import Event from "../Event";
+import { ValueOrDefault } from "../Engine";
 
 class TouchEvent extends Event {
 	constructor(type, touchPoints, scale, rotation, bubbles, cancelable) {
-		super(type, MoValueOrDefault(bubbles, true), MoValueOrDefault(cancelable, true));
+		super(type, ValueOrDefault(bubbles, true), ValueOrDefault(cancelable, true));
 
 		this.points = touchPoints;
 		this.scale = scale;

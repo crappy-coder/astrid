@@ -1,12 +1,13 @@
 import Equatable from "./Equatable";
 import { NegativeInfinity } from "./EngineMath";
+import { ValueOrDefault } from "./Engine";
 
 class Size extends Equatable {
 	constructor(width, height) {
 		super();
 
-		this.width = MoValueOrDefault(width, 0);
-		this.height = MoValueOrDefault(height, 0);
+		this.width = ValueOrDefault(width, 0);
+		this.height = ValueOrDefault(height, 0);
 
 		if (this.width < 0 || this.height < 0) {
 			throw new Error("width and height must be a non-negative value.");

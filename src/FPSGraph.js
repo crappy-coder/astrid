@@ -1,3 +1,7 @@
+import EngineMath from "./EngineMath";
+import { GetTimer } from "./Engine";
+import Application from "./Application";
+
 class FPSClock {
 	constructor() {
 		this.currentTime = 0;
@@ -48,7 +52,7 @@ class FPSClock {
 	}
 	
 	reset() {
-		this.lastTime = MoGetTimer();
+		this.lastTime = GetTimer();
 		this.totalTime = 0;
 		this.elapsedTime = 0;
 		this.currentTime = this.lastTime;
@@ -68,7 +72,7 @@ class FPSClock {
 	resume() {
 		if(--this.suspendCount <= 0)
 		{
-			var ts = MoGetTimer();
+			var ts = GetTimer();
 			
 			this.suspendCount = 0;
 			this.suspendElapsedTime += ts - this.suspendStartTime;
@@ -80,11 +84,11 @@ class FPSClock {
 		this.suspendCount++;
 		
 		if(this.suspendCount == 1)
-			this.suspendStartTime = MoGetTimer();
+			this.suspendStartTime = GetTimer();
 	}
 	
 	update() {
-		var ts = MoGetTimer();
+		var ts = GetTimer();
 		
 		this.frameCount++;
 		this.lastTime = this.lastTime + this.suspendElapsedTime;
@@ -129,7 +133,7 @@ class FPSGraph {
 	}
 	
 	render(gfx, x, y) {
-		var app = MoApplication.getInstance();
+		var app = Application.getInstance();
 		var clock = app.fpsClock;
 		var graphX = 0.5;
 		var graphY = 0.5;
@@ -166,8 +170,8 @@ class FPSGraph {
 		if(this.averages.length == 100)
 			this.averages.shift();
 		
-		var x = 0;
-		var y = 0;
+		x = 0;
+		y = 0;
 		
 		// draw the fps graph
 		gfx.beginPath();
@@ -176,7 +180,7 @@ class FPSGraph {
 		{
 			var avg = this.averages[i];
 			x = (i * (graphWidth / 100)) + 1.5;
-			y = MoMath.round(Math.min(1.0, avg / 60.0) * maxBarHeight) + 0.5;
+			y = EngineMath.round(Math.min(1.0, avg / 60.0) * maxBarHeight) + 0.5;
 
 			gfx.lineTo(x, (maxBarHeight - y) + 10);
 		}
@@ -199,12 +203,11 @@ class FPSGraph {
 		// draw the fps labels
 		gfx.font = "10px courier";
 		
-		var avgStr = "FPS: " + MoMath.toPrecision(clock.getAverageFPS(), 0) + ",";
+		var avgStr = "FPS: " + EngineMath.toPrecision(clock.getAverageFPS(), 0) + ",";
 		var avgWidth = gfx.measureText(avgStr).width;
-		var bestStr = "Max: " + MoMath.toPrecision(clock.getBestFPS(), 0) + ",";
+		var bestStr = "Max: " + EngineMath.toPrecision(clock.getBestFPS(), 0) + ",";
 		var bestWidth = gfx.measureText(bestStr).width;
-		var worstStr = "Min: " + MoMath.toPrecision(clock.getWorstFPS(), 0);
-		var worstWidth = gfx.measureText(worstStr).width;
+		var worstStr = "Min: " + EngineMath.toPrecision(clock.getWorstFPS(), 0);
 		var textX = 0;
 		var textY = graphHeight + 12;
 		
@@ -218,12 +221,11 @@ class FPSGraph {
 		gfx.fillText(worstStr, textX, textY);
 		
 		// draw the time labels
-		var timeElapsedStr = "Time: " + MoMath.toPrecision(clock.getElapsedTime(), 0) + ",";
+		var timeElapsedStr = "Time: " + EngineMath.toPrecision(clock.getElapsedTime(), 0) + ",";
 		var timeElapsedWidth = gfx.measureText(timeElapsedStr).width;
-		var timeWorstStr = "Max: " + MoMath.toPrecision(clock.getWorstTime(), 0) + ",";
+		var timeWorstStr = "Max: " + EngineMath.toPrecision(clock.getWorstTime(), 0) + ",";
 		var timeWorstWidth = gfx.measureText(timeWorstStr).width;
-		var timeBestStr = "Min: " + MoMath.toPrecision(clock.getBestTime(), 0);
-		var timeBestWidth = gfx.measureText(timeBestStr).width;
+		var timeBestStr = "Min: " + EngineMath.toPrecision(clock.getBestTime(), 0);
 
 		textX = 0;
 		textY += 12;
