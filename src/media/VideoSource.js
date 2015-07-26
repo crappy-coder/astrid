@@ -1,5 +1,5 @@
-import ImageSource from "./../ui/ImageSource";
-import Size from "./../Size";
+import ImageSource from "../ui/ImageSource";
+import Size from "../Size";
 
 class VideoSource extends ImageSource {
 	constructor(videoElement) {

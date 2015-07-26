@@ -1,4 +1,4 @@
-import Event from "./../Event";
+import Event from "../Event";
 
 class PropertyChangedEvent extends Event {
 	constructor(type, propName, oldValue, newValue, bubbles, cancelable) {

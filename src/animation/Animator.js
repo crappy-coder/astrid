@@ -1,11 +1,11 @@
-import EventDispatcher from "./../EventDispatcher";
+import EventDispatcher from "../EventDispatcher";
 import RepeatBehavior from "./RepeatBehavior";
-import { ValueOrDefault, GetTimer } from "./../Engine";
+import { ValueOrDefault, GetTimer } from "../Engine";
 import LinearEase from "./LinearEase";
 import Keyframe from "./Keyframe";
-import Dictionary from "./../Dictionary";
-import Timer from "./../Timer";
-import TimerEvent from "./../TimerEvent";
+import Dictionary from "../Dictionary";
+import Timer from "../Timer";
+import TimerEvent from "../TimerEvent";
 
 class DelayedAnimator {
 	constructor(animator, delay) {
@@ -412,8 +412,6 @@ class Animator extends EventDispatcher {
 		this.update();
 		this.doSeek = false;
 	}
-
-,
 
 	reverse() {
 		if (this.isRunning) {

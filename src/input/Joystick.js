@@ -1,11 +1,11 @@
-import { ValueOrDefault } from "./../Engine";
-import Vector2D from "./../Vector2D";
-import Event from "./../Event";
-import Pen from "./../ui/Pen";
-import SolidColorBrush from "./../brushes/SolidColorBrush";
-import EngineMath from "./../EngineMath";
+import { ValueOrDefault } from "../Engine";
+import Vector2D from "../Vector2D";
+import Event from "../Event";
+import Pen from "../ui/Pen";
+import SolidColorBrush from "../brushes/SolidColorBrush";
+import EngineMath from "../EngineMath";
 import MouseEvent from "./MouseEvent";
-import Drawable from "./../ui/Drawable";
+import Drawable from "../ui/Drawable";
 
 /****************************************************************************
  ** TODO:

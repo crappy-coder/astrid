@@ -1,9 +1,9 @@
-import EventDispatcher from "./../EventDispatcher";
-import Animatable from "./../animation/Animatable";
+import EventDispatcher from "../EventDispatcher";
+import Animatable from "../animation/Animatable";
 import PenLineCap from "./PenLineCap";
 import PenLineJoin from "./PenLineJoin";
 import DashStyle from "./DashStyle";
-import { ValueOrDefault, AreEqual } from "./../Engine";
+import { ValueOrDefault, AreEqual } from "../Engine";
 import PropertyOptions from "./PropertyOptions";
 
 class Pen extends EventDispatcher {

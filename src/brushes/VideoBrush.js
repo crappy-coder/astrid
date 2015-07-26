@@ -1,8 +1,8 @@
 import Brush from "./Brush";
-import VideoEvent from "./../media/VideoEvent";
-import HorizontalAlignment from "./../ui/HorizontalAlignment";
-import VerticalAlignment from "./../ui/VerticalAlignment";
-import Stretch from "./../ui/Stretch";
+import VideoEvent from "../media/VideoEvent";
+import HorizontalAlignment from "../ui/HorizontalAlignment";
+import VerticalAlignment from "../ui/VerticalAlignment";
+import Stretch from "../ui/Stretch";
 
 class VideoBrush extends Brush {
 	constructor(sourceElement) {

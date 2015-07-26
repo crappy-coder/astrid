@@ -1,4 +1,4 @@
-import Dictionary from "./../Dictionary";
+import Dictionary from "../Dictionary";
 import Audio from "./Audio";
 
 class AudioManager {

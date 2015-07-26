@@ -1,10 +1,10 @@
-import Dictionary from "./../Dictionary";
-import EventDispatcher from "./../EventDispatcher";
-import Event from "./../Event";
-import FrameEvent from "./../FrameEvent";
-import { ValueOrDefault } from "./../Engine";
-import { MaxInt } from "./../EngineMath";
-import Application from "./../Application";
+import Dictionary from "../Dictionary";
+import EventDispatcher from "../EventDispatcher";
+import Event from "../Event";
+import FrameEvent from "../FrameEvent";
+import { ValueOrDefault } from "../Engine";
+import { MaxInt } from "../EngineMath";
+import Application from "../Application";
 
 class LayoutBin {
 	constructor() {

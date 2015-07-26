@@ -1,5 +1,5 @@
-import Event from "./../Event";
-import { ValueOrDefault } from "./../Engine";
+import Event from "../Event";
+import { ValueOrDefault } from "../Engine";
 import Key from "./Key";
 import ModifierKeys from "./ModifierKeys";
 

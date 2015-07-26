@@ -1,5 +1,5 @@
 import MouseEvent from "./MouseEvent";
-import { ValueOrDefault } from "./../Engine";
+import { ValueOrDefault } from "../Engine";
 
 class MouseButtonEvent extends MouseEvent {
 	constructor(type, button, pressed, x, y, clickCount, modifiers, bubbles, cancelable) {

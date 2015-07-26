@@ -1,5 +1,5 @@
-import Event from "./../Event";
-import { ValueOrDefault } from "./../Engine";
+import Event from "../Event";
+import { ValueOrDefault } from "../Engine";
 
 class NavigationEvent extends Event {
 	constructor(type, direction, targetFrom, targetTo, bubbles, cancelable) {

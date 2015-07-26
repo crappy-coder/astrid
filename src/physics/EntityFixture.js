@@ -1,7 +1,7 @@
 import EntityBase from "./EntityBase";
 import CollisionCategory from "./CollisionCategory";
-import Matrix2D from "./../Matrix2D";
-import Rectangle from "./../Rectangle";
+import Matrix2D from "../Matrix2D";
+import Rectangle from "../Rectangle";
 import Box2D from "box2dweb";
 
 var PXVector2D = Box2D.Common.Math.b2Vec2;

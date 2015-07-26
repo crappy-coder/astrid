@@ -1,8 +1,8 @@
 import GradientBrush from "./GradientBrush";
-import { AreEqual } from "./../Engine";
-import Vector2D from "./../Vector2D";
-import EngineMath from "./../EngineMath";
-import GradientStop from "./../graphics/GradientStop";
+import { AreEqual } from "../Engine";
+import Vector2D from "../Vector2D";
+import EngineMath from "../EngineMath";
+import GradientStop from "../graphics/GradientStop";
 
 class LinearGradientBrush extends GradientBrush {
 	constructor() {

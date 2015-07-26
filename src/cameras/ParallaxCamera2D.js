@@ -1,6 +1,6 @@
 import Camera2D from "./Camera2D";
-import Matrix2D from "./../Matrix2D";
-import MatrixTransform from "./../transforms/MatrixTransform";
+import Matrix2D from "../Matrix2D";
+import MatrixTransform from "../transforms/MatrixTransform";
 
 class ParallaxCamera2D extends Camera2D {
 	constructor(view, x, y, width, height, zoom) {

@@ -1,14 +1,14 @@
-import EventDispatcher from "./../EventDispatcher";
-import { IsFirefox, Gamepads, GetTimer } from "./../Engine";
+import EventDispatcher from "../EventDispatcher";
+import { IsFirefox, Gamepads, GetTimer } from "../Engine";
 import GamepadDeadZoneMode from "./GamepadDeadZoneMode";
 import GamepadDeadZoneSize from "./GamepadDeadZoneSize";
 import GamepadButtonMap from "./GamepadButtonMap";
 import GamepadState from "./GamepadState";
 import GamepadButtons from "./GamepadButtons";
-import Vector2D from "./../Vector2D";
-import Application from "./../Application.js";
-import Timer from "./../Timer";
-import TimerEvent from "./../TimerEvent";
+import Vector2D from "../Vector2D";
+import Application from "../Application.js";
+import Timer from "../Timer";
+import TimerEvent from "../TimerEvent";
 import GamepadButtonEvent from "./GamepadButtonEvent";
 import GamepadEvent from "./GamepadEvent";
 

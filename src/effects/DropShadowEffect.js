@@ -1,11 +1,11 @@
 import Effect from "./Effect";
-import PropertyOptions from "./../ui/PropertyOptions";
-import Color from "./../graphics/Color";
-import { ValueOrDefault } from "./../Engine";
-import EngineMath from "./../EngineMath";
-import Vector2D from "./../Vector2D";
-import Rectangle from "./../Rectangle";
-import GraphicsUtil from "./../graphics/GraphicsUtil";
+import PropertyOptions from "../ui/PropertyOptions";
+import Color from "../graphics/Color";
+import { ValueOrDefault } from "../Engine";
+import EngineMath from "../EngineMath";
+import Vector2D from "../Vector2D";
+import Rectangle from "../Rectangle";
+import GraphicsUtil from "../graphics/GraphicsUtil";
 
 class DropShadowEffect extends Effect {
 	constructor(direction, depth, blurRadius, color) {

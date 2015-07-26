@@ -1,5 +1,5 @@
 import ImageSource from "./ImageSource";
-import Size from "./../Size";
+import Size from "../Size";
 
 class CanvasSource extends ImageSource {
 	constructor(canvas) {

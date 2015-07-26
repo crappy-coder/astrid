@@ -1,4 +1,4 @@
-import { ValueOrDefault } from "./../Engine";
+import { ValueOrDefault } from "../Engine";
 
 class LinearEase {
 	constructor(easeInFraction, easeOutFraction) {

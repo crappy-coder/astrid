@@ -1,4 +1,4 @@
-import Rectangle from "./../Rectangle";
+import Rectangle from "../Rectangle";
 
 class Screen {
 	constructor(screen) {

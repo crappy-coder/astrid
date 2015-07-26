@@ -1,7 +1,7 @@
-import Equatable from "./../Equatable";
-import { ValueOrDefault } from "./../Engine";
+import Equatable from "../Equatable";
+import { ValueOrDefault } from "../Engine";
 import PathLineSegment from "./PathLineSegment";
-import Line from "./../Line";
+import Line from "../Line";
 
 class PathSegment extends Equatable {
 	constructor(x, y) {

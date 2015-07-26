@@ -1,9 +1,9 @@
 import Effect from "./Effect";
-import { ValueOrDefault } from "./../Engine";
-import Vector3D from "./../Vector3D";
-import Color from "./../graphics/Color";
-import PropertyOptions from "./../ui/PropertyOptions";
-import GraphicsUtil from "./../graphics/GraphicsUtil";
+import { ValueOrDefault } from "../Engine";
+import Vector3D from "../Vector3D";
+import Color from "../graphics/Color";
+import PropertyOptions from "../ui/PropertyOptions";
+import GraphicsUtil from "../graphics/GraphicsUtil";
 
 class NormalMapEffect extends Effect {
 	constructor(normalSource, lightPosition, specularSharpness) {

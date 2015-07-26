@@ -1,6 +1,6 @@
-import EventDispatcher from "./../EventDispatcher";
-import Matrix2D from "./../Matrix2D";
-import Animatable from "./../animation/Animatable";
+import EventDispatcher from "../EventDispatcher";
+import Matrix2D from "../Matrix2D";
+import Animatable from "../animation/Animatable";
 
 class Transform extends EventDispatcher {
 	constructor() {

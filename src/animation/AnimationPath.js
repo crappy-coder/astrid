@@ -1,6 +1,6 @@
-import Equatable from "./../Equatable";
+import Equatable from "../Equatable";
 import NumberInterpolator from "./NumberInterpolator";
-import { ValueOrDefault } from "./../Engine";
+import { ValueOrDefault } from "../Engine";
 
 /**
  * SUMMARY:

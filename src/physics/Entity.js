@@ -1,10 +1,10 @@
 import EntityBase from "./EntityBase";
-import Vector2D from "./../Vector2D";
+import Vector2D from "../Vector2D";
 import Direction from "./Direction";
 import EntityType from "./EntityType";
-import EngineMath from "./../EngineMath";
-import { ValueOrDefault } from "./../Engine";
-import Rectangle from "./../Rectangle";
+import EngineMath from "../EngineMath";
+import { ValueOrDefault } from "../Engine";
+import Rectangle from "../Rectangle";
 import EntityFixture from "./EntityFixture";
 import EntityJoinType from "./EntityJoinType";
 import Box2D from "box2dweb";

@@ -1,5 +1,5 @@
-import Event from "./../Event";
-import { ValueOrDefault } from "./../Engine";
+import Event from "../Event";
+import { ValueOrDefault } from "../Engine";
 
 class GestureEvent extends Event {
 	constructor(type, rotation, scale, bubbles, cancelable) {

@@ -1,4 +1,4 @@
-import EventDispatcher from "./../EventDispatcher";
+import EventDispatcher from "../EventDispatcher";
 
 class AIStateMachine extends EventDispatcher {
 	constructor() {

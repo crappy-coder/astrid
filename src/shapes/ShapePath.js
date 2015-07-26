@@ -1,5 +1,5 @@
 import Shape from "./Shape";
-import PathSegmentCollection from "./../graphics/PathSegmentCollection";
+import PathSegmentCollection from "../graphics/PathSegmentCollection";
 
 class ShapePath extends Shape {
 	constructor(name) {

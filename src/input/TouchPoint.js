@@ -1,4 +1,4 @@
-import Equatable from "./../Equatable";
+import Equatable from "../Equatable";
 
 class TouchPoint extends Equatable {
 	constructor(id, sceneX, sceneY) {

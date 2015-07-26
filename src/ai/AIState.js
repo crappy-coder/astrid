@@ -1,4 +1,4 @@
-import EventDispatcher from "./../EventDispatcher";
+import EventDispatcher from "../EventDispatcher";
 import AIStateEvent from "./AIStateEvent";
 
 class AIState extends EventDispatcher {

@@ -4,15 +4,15 @@ import {
 		DebugWrite,
 		DebugLevel,
 		GetPlatformType
-} from "./../Engine";
-import Rectangle from "./../Rectangle";
-import RepeatBehavior from "./../animation/RepeatBehavior";
+} from "../Engine";
+import Rectangle from "../Rectangle";
+import RepeatBehavior from "../animation/RepeatBehavior";
 import Sprite from "./Sprite";
 import Image from "./Image";
-import LoadEvent from "./../LoadEvent";
+import LoadEvent from "../LoadEvent";
 import TextureSource from "./TextureSource";
-import Url from "./../Url";
-import SourceEvent from "./../SourceEvent";
+import Url from "../Url";
+import SourceEvent from "../SourceEvent";
 import Screen from "./Screen";
 
 class TextureAtlasTextureRule {

@@ -1,7 +1,7 @@
 import Transform from "./Transform";
-import { ValueOrDefault } from "./../Engine";
-import PropertyOptions from "./../ui/PropertyOptions";
-import Matrix2D from "./../Matrix2D";
+import { ValueOrDefault } from "../Engine";
+import PropertyOptions from "../ui/PropertyOptions";
+import Matrix2D from "../Matrix2D";
 
 class RotateTransform extends Transform {
 	constructor(angle, centerX, centerY) {

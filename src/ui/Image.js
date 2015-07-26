@@ -1,12 +1,12 @@
 import Drawable from "./Drawable";
-import { ValueOrDefault } from "./../Engine";
-import Event from "./../Event";
-import Rectangle from "./../Rectangle";
-import SourceEvent from "./../SourceEvent";
-import LoadEvent from "./../LoadEvent";
+import { ValueOrDefault } from "../Engine";
+import Event from "../Event";
+import Rectangle from "../Rectangle";
+import SourceEvent from "../SourceEvent";
+import LoadEvent from "../LoadEvent";
 import ImageSource from "./ImageSource";
 import CanvasSource from "./CanvasSource";
-import VideoSource from "./../media/VideoSource";
+import VideoSource from "../media/VideoSource";
 import TextureSource from "./TextureSource";
 
 class Image extends Drawable {

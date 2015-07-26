@@ -1,6 +1,6 @@
-import EventDispatcher from "./../EventDispatcher";
-import { CreateHttpRequestObject, DebugWrite, DebugLevel } from "./../Engine";
-import Dictionary from "./../Dictionary";
+import EventDispatcher from "../EventDispatcher";
+import { CreateHttpRequestObject, DebugWrite, DebugLevel } from "../Engine";
+import Dictionary from "../Dictionary";
 
 class TMXTileMap extends EventDispatcher {
 	constructor() {

@@ -1,4 +1,4 @@
-import Equatable from "./../Equatable";
+import Equatable from "../Equatable";
 
 class CornerRadius extends Equatable {
 	constructor(tl, tr, bl, br) {

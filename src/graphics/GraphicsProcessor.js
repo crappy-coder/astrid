@@ -1,6 +1,6 @@
-import Rectangle from "./../Rectangle";
+import Rectangle from "../Rectangle";
 import PathMoveSegment from "./PathMoveSegment";
-import Vector2D from "./../Vector2D";
+import Vector2D from "../Vector2D";
 import GraphicsOp from "./GraphicsOp";
 
 class GraphicsItem {

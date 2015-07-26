@@ -1,4 +1,4 @@
-import Event from "./../Event";
+import Event from "../Event";
 
 class AIStateEvent extends Event {
 	constructor(type, bubbles, cancelable) {

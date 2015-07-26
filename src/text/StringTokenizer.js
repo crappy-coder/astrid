@@ -1,4 +1,4 @@
-import { ValueOrDefault } from "./../Engine";
+import { ValueOrDefault } from "../Engine";
 import Char from "./Char";
 
 class StringTokenizer {

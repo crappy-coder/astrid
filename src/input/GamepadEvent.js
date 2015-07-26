@@ -1,4 +1,4 @@
-import Event from "./../Event";
+import Event from "../Event";
 
 class GamepadEvent extends Event {
 	constructor(type, index, bubbles, cancelable) {

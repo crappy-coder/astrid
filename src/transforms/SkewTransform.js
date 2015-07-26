@@ -1,7 +1,7 @@
 import Transform from "./Transform";
-import { ValueOrDefault } from "./../Engine";
-import PropertyOptions from "./../ui/PropertyOptions";
-import Matrix2D from "./../Matrix2D";
+import { ValueOrDefault } from "../Engine";
+import PropertyOptions from "../ui/PropertyOptions";
+import Matrix2D from "../Matrix2D";
 
 class SkewTransform extends Transform {
 	constructor(skewX, skewY, centerX, centerY) {

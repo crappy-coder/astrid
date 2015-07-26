@@ -1,10 +1,10 @@
-import Equatable from "./../Equatable";
+import Equatable from "../Equatable";
 import GamepadButtons from "./GamepadButtons";
 import Gamepad from "./Gamepad";
 import GamepadDeadZoneMode from "./GamepadDeadZoneMode";
-import Vector2D from "./../Vector2D";
-import EngineMath from "./../EngineMath";
-import { ValueOrDefault } from "./../Engine";
+import Vector2D from "../Vector2D";
+import EngineMath from "../EngineMath";
+import { ValueOrDefault } from "../Engine";
 
 class GamepadState extends Equatable {
 	constructor() {

@@ -1,10 +1,10 @@
 import MediaBase from "./MediaBase";
-import Event from "./../Event";
-import { ValueOrDefault } from "./../Engine";
+import Event from "../Event";
+import { ValueOrDefault } from "../Engine";
 import VideoSource from "./VideoSource";
-import Size from "./../Size";
+import Size from "../Size";
 import VideoEvent from "./VideoEvent";
-import Drawable from "./../ui/Drawable";
+import Drawable from "../ui/Drawable";
 
 class Video extends Drawable {
 	constructor(name, sourceElement) {

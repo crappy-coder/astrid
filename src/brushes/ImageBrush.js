@@ -1,9 +1,9 @@
 import Brush from "./Brush";
-import HorizontalAlignment from "./../ui/HorizontalAlignment";
-import VerticalAlignment from "./../ui/VerticalAlignment";
-import Stretch from "./../ui/Stretch";
-import TextureSource from "./../ui/TextureSource";
-import SourceEvent from "./../SourceEvent";
+import HorizontalAlignment from "../ui/HorizontalAlignment";
+import VerticalAlignment from "../ui/VerticalAlignment";
+import Stretch from "../ui/Stretch";
+import TextureSource from "../ui/TextureSource";
+import SourceEvent from "../SourceEvent";
 
 class ImageBrush extends Brush {
 	constructor() {

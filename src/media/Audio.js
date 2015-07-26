@@ -1,4 +1,4 @@
-import NamedObject from "./../NamedObject";
+import NamedObject from "../NamedObject";
 import MediaBase from "./MediaBase";
 import AudioManager from "./AudioManager";
 

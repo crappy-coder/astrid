@@ -1,4 +1,4 @@
-import Event from "./../Event";
+import Event from "../Event";
 
 class MediaEvent extends Event {
 	constructor(type, bubbles, cancelable) {

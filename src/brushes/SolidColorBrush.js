@@ -1,7 +1,7 @@
 import Brush from "./Brush";
-import PropertyOptions from "./PropertyOptions";
-import { AreEqual } from "./../Engine";
-import Color from "./../graphics/Color";
+import PropertyOptions from "../ui/PropertyOptions";
+import { AreEqual } from "../Engine";
+import Color from "../graphics/Color";
 
 class SolidColorBrush extends Brush {
 	constructor(color) {

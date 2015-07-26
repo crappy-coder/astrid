@@ -1,9 +1,9 @@
-import EventDispatcher from "./../EventDispatcher";
-import PropertyOptions from "./../ui/PropertyOptions";
-import Vector2D from "./../Vector2D"
-import { ValueOrDefault } from "./../Engine";
-import EngineMath from "./../EngineMath";
-import RotateTransform from "./../transforms/RotateTransform";
+import EventDispatcher from "../EventDispatcher";
+import PropertyOptions from "../ui/PropertyOptions";
+import Vector2D from "../Vector2D"
+import { ValueOrDefault } from "../Engine";
+import EngineMath from "../EngineMath";
+import RotateTransform from "../transforms/RotateTransform";
 import Box2D from "box2dweb";
 
 var PXVector2D = Box2D.Common.Math.b2Vec2;

@@ -1,5 +1,5 @@
 import NumberInterpolator from "./NumberInterpolator";
-import Vector2D from "./../Vector2D";
+import Vector2D from "../Vector2D";
 
 class VectorInterpolator extends Interpolator {
 	constructor() {

@@ -1,10 +1,10 @@
-import Drawable from "./../ui/Drawable";
-import PenLineCap from "./../ui/PenLineCap";
-import PenLineJoin from "./../ui/PenLineJoin";
-import DashStyle from "./../ui/DashStyle";
-import Rectangle from "./../Rectangle";
-import { AreNotEqual } from "./../Engine";
-import Pen from "./../ui/Pen";
+import Drawable from "../ui/Drawable";
+import PenLineCap from "../ui/PenLineCap";
+import PenLineJoin from "../ui/PenLineJoin";
+import DashStyle from "../ui/DashStyle";
+import Rectangle from "../Rectangle";
+import { AreNotEqual } from "../Engine";
+import Pen from "../ui/Pen";
 
 class Shape extends Drawable {
 	constructor(name) {

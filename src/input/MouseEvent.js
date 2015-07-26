@@ -1,7 +1,7 @@
-import Event from "./../Event";
-import { ValueOrDefault } from "./../Engine";
+import Event from "../Event";
+import { ValueOrDefault } from "../Engine";
 import MouseButton from "./MouseButton";
-import Vector2D from "./../Vector2D";
+import Vector2D from "../Vector2D";
 import ModifierKeys from "./ModifierKeys";
 
 class MouseEvent extends Event {

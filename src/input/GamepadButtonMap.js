@@ -1,4 +1,4 @@
-import { ValueOrDefault } from "./../Engine";
+import { ValueOrDefault } from "../Engine";
 import GamepadButtons from "./GamepadButtons";
 
 class GamepadButtonMap {

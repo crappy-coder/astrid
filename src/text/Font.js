@@ -1,9 +1,9 @@
-import Equatable from "./../Equatable";
+import Equatable from "../Equatable";
 import FontStretch from "./FontStretch";
 import FontStyle from "./FontStyle";
 import FontWeight from "./FontWeight";
-import { ValueOrDefault } from "./../Engine";
-import Size from "./../Size";
+import { ValueOrDefault } from "../Engine";
+import Size from "../Size";
 
 class Font extends Equatable {
 	constructor() {

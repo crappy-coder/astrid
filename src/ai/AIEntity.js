@@ -1,6 +1,6 @@
-import EventDispatcher from "./../EventDispatcher";
+import EventDispatcher from "../EventDispatcher";
 import AIStateMachine from "./AIStateMachine";
-import Event from "./../Event";
+import Event from "../Event";
 
 /**
  * SUMMARY:

@@ -1,5 +1,5 @@
-import Canvas from "./../ui/Canvas";
-import { ValueOrDefault } from "./../Engine";
+import Canvas from "../ui/Canvas";
+import { ValueOrDefault } from "../Engine";
 import TMXTileMapLayerCanvas from "./TMXTileMapLayerCanvas";
 
 class TMXTileMapCanvas extends Canvas {

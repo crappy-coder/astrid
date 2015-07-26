@@ -1,13 +1,13 @@
-import Vector2D from "./../Vector2D";
-import { IsIE, IsFirefox, ValueOrDefault } from "./../Engine";
+import Vector2D from "../Vector2D";
+import { IsIE, IsFirefox, ValueOrDefault } from "../Engine";
 import Gamepad from "./Gamepad";
 import GamepadButtonEvent from "./GamepadButtonEvent";
 import GamepadButtons from "./GamepadButtons";
 import MouseButton from "./MouseButton";
 import ModifierKeys from "./ModifierKeys";
-import Event from "./../Event";
+import Event from "../Event";
 import GestureEvent from "./GestureEvent";
-import Application from "./../Application";
+import Application from "../Application";
 import TouchEvent from "./TouchEvent";
 import TouchPoint from "./TouchPoint";
 import MouseEvent from "./MouseEvent";
@@ -18,7 +18,7 @@ import KeyEvent from "./KeyEvent";
 import NavigationDirection from "./NavigationDirection";
 import NavigationEvent from "./NavigationEvent";
 import NavigationMode from "./NavigationMode";
-import EventDispatcher from "./../EventDispatcher";
+import EventDispatcher from "../EventDispatcher";
 
 class TouchTarget {
 	constructor(drawable) {

@@ -1,5 +1,5 @@
-import Equatable from "./../Equatable";
-import { ValueOrDefault } from "./../Engine";
+import Equatable from "../Equatable";
+import { ValueOrDefault } from "../Engine";
 
 class Color extends Equatable {
 	constructor(r, g, b, a) {

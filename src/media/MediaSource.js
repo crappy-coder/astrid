@@ -1,4 +1,4 @@
-import { ValueOrDefault } from "./../Engine";
+import { ValueOrDefault } from "../Engine";
 
 class MediaSource {
 	constructor(url, type, audioCodec, videoCodec) {

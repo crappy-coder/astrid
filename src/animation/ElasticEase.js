@@ -1,5 +1,5 @@
 import EasingFunction from "./EasingFunction";
-import { ValueOrDefault } from "./../Engine";
+import { ValueOrDefault } from "../Engine";
 
 class ElasticEase extends EasingFunction {
 	constructor(easingModeOrPercent, amplitude, period) {

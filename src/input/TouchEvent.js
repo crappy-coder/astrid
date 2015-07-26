@@ -1,4 +1,4 @@
-import Event from "./../Event";
+import Event from "../Event";
 
 class TouchEvent extends Event {
 	constructor(type, touchPoints, scale, rotation, bubbles, cancelable) {

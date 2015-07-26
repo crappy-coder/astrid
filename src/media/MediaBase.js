@@ -1,9 +1,9 @@
 import MediaState from "./MediaState";
-import Timer from "./../Timer";
-import TimerEvent from "./../TimerEvent";
-import { ValueOrDefault, DebugWrite, DebugLevel } from "./../Engine";
-import Event from "./../Event";
-import ErrorEvent from "./../ErrorEvent";
+import Timer from "../Timer";
+import TimerEvent from "../TimerEvent";
+import { ValueOrDefault, DebugWrite, DebugLevel } from "../Engine";
+import Event from "../Event";
+import ErrorEvent from "../ErrorEvent";
 import MediaEvent from "./MediaEvent";
 
 /****************************************************************************
