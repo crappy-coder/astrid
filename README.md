@@ -3,7 +3,11 @@
 
 ## Building
 
-There is a debug build you can run for development:
+First install dependencies:
+
+`npm install`
+
+Then there is a debug build you can run for development currently:
 
 `npm run build:debug`
 
