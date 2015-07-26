@@ -1,8 +1,8 @@
 import GradientBrush from "./GradientBrush";
-import Vector2D from "./../math/Vector2D";
-import PropertyOptions from "./../PropertyOptions";
+import Vector2D from "./../Vector2D";
+import PropertyOptions from "./PropertyOptions";
 import { AreEqual } from "./../Engine";
-import GradientStop from "./../GradientStop";
+import GradientStop from "./../graphics/GradientStop";
 
 class RadialGradientBrush extends GradientBrush {
 	constructor() {

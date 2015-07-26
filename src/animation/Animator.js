@@ -1,8 +1,8 @@
 import EventDispatcher from "./../EventDispatcher";
-import RepeatBehavior from "./../RepeatBehavior";
+import RepeatBehavior from "./RepeatBehavior";
 import { ValueOrDefault, GetTimer } from "./../Engine";
-import LinearEase from "./../LinearEase";
-import Keyframe from "./../Keyframe";
+import LinearEase from "./LinearEase";
+import Keyframe from "./Keyframe";
 import Dictionary from "./../Dictionary";
 import Timer from "./../Timer";
 import TimerEvent from "./../TimerEvent";

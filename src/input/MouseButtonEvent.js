@@ -1,4 +1,4 @@
-import MouseEvent from "./useEvent";
+import MouseEvent from "./MouseEvent";
 import { ValueOrDefault } from "./../Engine";
 
 class MouseButtonEvent extends MouseEvent {

@@ -5,7 +5,7 @@ import GamepadDeadZoneSize from "./GamepadDeadZoneSize";
 import GamepadButtonMap from "./GamepadButtonMap";
 import GamepadState from "./GamepadState";
 import GamepadButtons from "./GamepadButtons";
-import Vector2D from "./../math/Vector2D";
+import Vector2D from "./../Vector2D";
 import Application from "./../Application.js";
 import Timer from "./../Timer";
 import TimerEvent from "./../TimerEvent";

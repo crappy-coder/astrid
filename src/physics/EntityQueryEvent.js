@@ -1,5 +1,5 @@
-import Event from "./Event";
-import Rectangle from "./Rectangle";
+import Event from "./../Event";
+import Rectangle from "./../Rectangle";
 
 class EntityQueryEvent extends Event {
 	constructor(type, entityFixture, bubbles, cancelable) {

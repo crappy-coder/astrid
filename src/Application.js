@@ -1,5 +1,5 @@
 import EventDispatcher from "./EventDispatcher";
-import LayoutManager from "./LayoutManager";
+import LayoutManager from "./ui/LayoutManager";
 import Timer from "./Timer";
 import Event from "./Event";
 import TimerEvent from "./TimerEvent";
@@ -8,10 +8,10 @@ import DeviceOrientationEvent from "./DeviceOrientationEvent";
 import FrameEvent from "./FrameEvent";
 import FPSClock from "./FPSGraph";
 import Gamepad from "./input/Gamepad";
-import ScreenOrientation from "./ScreenOrientation";
-import Color from "./color/Color";
+import ScreenOrientation from "./ui/ScreenOrientation";
+import Color from "./graphics/Color";
 import Size from "./Size";
-import DisplaySurface from "./DisplaySurface";
+import DisplaySurface from "./ui/DisplaySurface";
 
 class Application extends EventDispatcher {
 	constructor() {

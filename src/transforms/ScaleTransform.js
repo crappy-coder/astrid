@@ -1,7 +1,7 @@
 import Transform from "./Transform";
-import PropertyOptions from "./../PropertyOptions";
+import PropertyOptions from "./../ui/PropertyOptions";
 import { ValueOrDefault } from "./../Engine";
-import Matrix2D from "./../math/Matrix2D";
+import Matrix2D from "./../Matrix2D";
 
 class ScaleTransform extends Transform {
 	constructor(scaleX, scaleY, centerX, centerY) {

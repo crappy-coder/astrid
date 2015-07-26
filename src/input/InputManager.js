@@ -1,23 +1,23 @@
-import Vector2D from "./../math/Vector2D";
+import Vector2D from "./../Vector2D";
 import { IsIE, IsFirefox, ValueOrDefault } from "./../Engine";
 import Gamepad from "./Gamepad";
 import GamepadButtonEvent from "./GamepadButtonEvent";
 import GamepadButtons from "./GamepadButtons";
-import MouseButton from "./useButton";
-import ModifierKeys from "./../ModifierKeys";
+import MouseButton from "./MouseButton";
+import ModifierKeys from "./ModifierKeys";
 import Event from "./../Event";
-import GestureEvent from "./../GestureEvent";
+import GestureEvent from "./GestureEvent";
 import Application from "./../Application";
 import TouchEvent from "./TouchEvent";
 import TouchPoint from "./TouchPoint";
-import MouseEvent from "./useEvent";
-import MouseButtonEvent from "./useButtonEvent";
-import MouseWheelEvent from "./useWheelEvent";
-import Key from "./../Key";
-import KeyEvent from "./../KeyEvent";
-import NavigationDirection from "./../navigation/NavigationDirection";
-import NavigationEvent from "./../navigation/NavigationEvent";
-import NavigationMode from "./../navigation/NavigationMode";
+import MouseEvent from "./MouseEvent";
+import MouseButtonEvent from "./MouseButtonEvent";
+import MouseWheelEvent from "./MouseWheelEvent";
+import Key from "./Key";
+import KeyEvent from "./KeyEvent";
+import NavigationDirection from "./NavigationDirection";
+import NavigationEvent from "./NavigationEvent";
+import NavigationMode from "./NavigationMode";
 import EventDispatcher from "./../EventDispatcher";
 
 class TouchTarget {

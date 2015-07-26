@@ -1,7 +1,7 @@
-import Equatable from "./Equatable";
+import Equatable from "./../Equatable";
 import PathSegment from "./PathSegment";
-import { AreEqual } from "./Engine";
-import Vector2D from "./math/Vector2D";
+import { AreEqual } from "./../Engine";
+import Vector2D from "./../Vector2D";
 
 class CurvePoints extends Equatable {
 	constructor() {

@@ -1,8 +1,8 @@
 import Event from "./../Event";
 import { ValueOrDefault } from "./../Engine";
-import MouseButton from "./useButton";
-import Vector2D from "./../math/Vector2D";
-import ModifierKeys from "./../ModifierKeys";
+import MouseButton from "./MouseButton";
+import Vector2D from "./../Vector2D";
+import ModifierKeys from "./ModifierKeys";
 
 class MouseEvent extends Event {
 	constructor(type, x, y, button, modifiers, bubbles, cancelable) {

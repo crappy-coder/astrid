@@ -1,6 +1,6 @@
 import Animation from "./Animation";
 import AnimationPath from "./AnimationPath";
-import Keyframe from "./../Keyframe.js";
+import Keyframe from "./Keyframe.js";
 
 class BasicAnimation extends Animation {
 	constructor(target, propertyName, fromValue, toValue) {

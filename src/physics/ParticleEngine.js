@@ -1,10 +1,10 @@
-import Equatable from "./Equatable";
-import Vector2D from "./math/Vector2D";
-import Color from "./color/Color";
-import Drawable from "./Drawable";
-import RadialGradientBrush from "./brushes/RadialGradientBrush";
-import Application from "./Application";
-import FrameEvent from "./FrameEvent";
+import Equatable from "./../Equatable";
+import Vector2D from "./../Vector2D";
+import Color from "./../graphics/Color";
+import Drawable from "./../ui/Drawable";
+import RadialGradientBrush from "./../brushes/RadialGradientBrush";
+import Application from "./../Application";
+import FrameEvent from "./../FrameEvent";
 
 // TODO : the following tasks still need to be completed for the particle engine to be 100% complete
 //           - allow for 'additiveBlending' in brush sources

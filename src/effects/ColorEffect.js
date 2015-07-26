@@ -1,6 +1,6 @@
 import Effect from "./Effect";
 import { ValueOrDefault } from "./../Engine";
-import PropertyOptions from "./../PropertyOptions";
+import PropertyOptions from "./../ui/PropertyOptions";
 
 class ColorEffect extends Effect {
 	constructor(redScale, redOffset, greenScale, greenOffset, blueScale, blueOffset, alphaScale, alphaOffset) {

@@ -1,13 +1,13 @@
-import Color from "./color/Color";
-import Dictionary from "./Dictionary";
+import Color from "./Color";
+import Dictionary from "./../Dictionary";
 import GraphicsProcessor from "./GraphicsProcessor";
-import Rectangle from "./Rectangle";
-import Vector2D from "./math/Vector2D";
-import Size from "./Size";
-import ScaleTransform from "./transforms/ScaleTransform";
-import Matrix2D from "./math/Matrix2D";
-import { AreEqual, ValueOrDefault } from "./Engine";
-import Pair from "./Pair";
+import Rectangle from "./../Rectangle";
+import Vector2D from "./../Vector2D";
+import Size from "./../Size";
+import ScaleTransform from "./../transforms/ScaleTransform";
+import Matrix2D from "./../Matrix2D";
+import { AreEqual, ValueOrDefault } from "./../Engine";
+import Pair from "./../Pair";
 import GraphicsOp from "./GraphicsOp";
 import CompositeOperator from "./CompositeOperator";
 import PathMoveSegment from "./PathMoveSegment";
@@ -16,10 +16,10 @@ import PathQuadraticBezierSegment from "./PathQuadraticBezierSegment";
 import PathCubicBezierSegment from "./PathCubicBezierSegment";
 import SweepDirection from "./SweepDirection";
 import Graphics from "./Graphics";
-import EngineMath from "./math/EngineMath";
-import Stretch from "./Stretch";
-import PenLineCap from "./PenLineCap";
-import PenLineJoin from "./PenLineJoin";
+import EngineMath from "./../EngineMath";
+import Stretch from "./../ui/Stretch";
+import PenLineCap from "./../ui/PenLineCap";
+import PenLineJoin from "./../ui/PenLineJoin";
 
 class GraphicsBaseClass {}
 GraphicsBaseClass.prototype = new GraphicsNative;

@@ -1,9 +1,9 @@
 import PhysicsContactListener from "./PhysicsContactListener";
-import { ValueOrDefault } from "./Engine";
+import { ValueOrDefault } from "./../Engine";
 import EntityFixture from "./EntityFixture";
-import MouseEvent from "./input/useEvent";
+import MouseEvent from "./../input/MouseEvent";
 import ContactPointState from "./ContactPointState";
-import Vector2D from "./math/Vector2D";
+import Vector2D from "./../Vector2D";
 import Box2D from "box2dweb";
 
 var PXVector2D = Box2D.Common.Math.b2Vec2;

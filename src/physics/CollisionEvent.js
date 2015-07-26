@@ -1,5 +1,5 @@
-import Event from "./Event";
-import { ValueOrDefault } from "./Engine";
+import Event from "./../Event";
+import { ValueOrDefault } from "./../Engine";
 
 class CollisionEvent extends Event {
 	constructor(type, controller, contactSource, contactTarget, contactNormal, contactPoints, linearVelocityA, linearVelocityB, touching, continuous, sensor, enabled, bubbles, cancelable) {

@@ -1,7 +1,7 @@
-import Transform from "./../transforms/Transform";
-import Matrix2D from "./Matrix2D";
+import Transform from "./Transform";
+import Matrix2D from "./../Matrix2D";
 import { ValueOrDefault, AreEqual } from "./../Engine";
-import PropertyOptions from "./../PropertyOptions";
+import PropertyOptions from "./../ui/PropertyOptions";
 
 class MatrixTransform extends Transform {
 	constructor(matrix) {

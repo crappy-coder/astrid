@@ -1,8 +1,8 @@
 import { ValueOrDefault } from "./../Engine";
-import MatrixTransform from "./../math/MatrixTransform";
-import Matrix2D from "./../math/Matrix2D";
+import MatrixTransform from "./../transforms/MatrixTransform";
+import Matrix2D from "./../Matrix2D";
 import Rectangle from "./../Rectangle";
-import Vector2D from "../math/Vector2D";
+import Vector2D from "./../Vector2D";
 
 
 class Camera2D {

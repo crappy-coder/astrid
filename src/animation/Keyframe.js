@@ -1,6 +1,6 @@
-import Equatable from "./Equatable";
+import Equatable from "./../Equatable";
 import LinearEase from "./LinearEase";
-import { ValueOrDefault } from "./Engine";
+import { ValueOrDefault } from "./../Engine";
 
 class Keyframe extends Equatable {
 	constructor(keyTime, value) {

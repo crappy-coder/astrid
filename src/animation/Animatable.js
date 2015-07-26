@@ -1,16 +1,10 @@
-<<<<<<< HEAD:src/Animatable.js
-import EventDispatcher from "./EventDispatcher";
-import PropertyOptions from "./PropertyOptions";
-import PropertyChangedEvent from "./PropertyChangedEvent";
-import Drawable from "./Drawable";
-import Tuple from "./Tuple";
-import Pair from "./Pair";
-import { AreNotEqual } from "./Engine";
-=======
 import EventDispatcher from "./../EventDispatcher";
-import PropertyOptions from "./../PropertyOptions";
+import PropertyOptions from "./../ui/PropertyOptions";
+import PropertyChangedEvent from "./../ui/PropertyChangedEvent";
+import Drawable from "./../ui/Drawable";
+import Tuple from "./../Tuple";
+import Pair from "./../Pair";
 import { AreNotEqual } from "./../Engine";
->>>>>>> origin/folders:src/animation/Animatable.js
 
 /**
  * @MIXIN

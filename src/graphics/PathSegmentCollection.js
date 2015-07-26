@@ -1,5 +1,5 @@
-import Equatable from "./Equatable";
-import Rectangle from "./Rectangle";
+import Equatable from "./../Equatable";
+import Rectangle from "./../Rectangle";
 import PathMoveSegment from "./PathMoveSegment";
 import PathQuadraticBezierSegment from "./PathQuadraticBezierSegment";
 import PathCubicBezierSegment from "./PathCubicBezierSegment";

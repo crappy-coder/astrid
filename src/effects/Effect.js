@@ -1,6 +1,6 @@
 import EventDispatcher from "./../EventDispatcher";
 import Rectangle from "./../Rectangle";
-import GraphicsUtil from "./../GraphicsUtil";
+import GraphicsUtil from "./../graphics/GraphicsUtil";
 import Animatable from "./../animation/Animatable";
 
 class Effect extends EventDispatcher {

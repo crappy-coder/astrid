@@ -1,6 +1,5 @@
-import Interpolator from "./../Interpolator";
-import Color from "./Color";
-import ColorInterpolator from "./ColorInterpolator";
+import Interpolator from "./Interpolator";
+import Color from "./../graphics/Color";
 
 class ColorInterpolator extends Interpolator {
 	constructor() {

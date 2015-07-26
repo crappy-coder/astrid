@@ -1,5 +1,5 @@
 import Equatable from "./Equatable";
-import { NegativeInfinity } from "./math/EngineMath";
+import { NegativeInfinity } from "./EngineMath";
 
 class Size extends Equatable {
 	constructor(width, height) {

@@ -1,14 +1,14 @@
 import EventDispatcher from "./../EventDispatcher";
 import SineEase from "./SineEase";
 import EasingMode from "./EasingMode";
-import NumberInterpolator from "./../math/NumberInterpolator";
-import RepeatBehavior from "./../RepeatBehavior";
+import NumberInterpolator from "./NumberInterpolator";
+import RepeatBehavior from "./RepeatBehavior";
 import Animation from "./Animation";
 import Timer from "./../Timer";
 import TimerEvent from "./../TimerEvent";
 import Animator from "./Animator";
 import AnimationEvent from "./AnimationEvent";
-import LinearEase from "./../LinearEase";
+import LinearEase from "./LinearEase";
 
 /**
  * SUMMARY:

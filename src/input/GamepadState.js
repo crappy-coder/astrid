@@ -2,8 +2,8 @@ import Equatable from "./../Equatable";
 import GamepadButtons from "./GamepadButtons";
 import Gamepad from "./Gamepad";
 import GamepadDeadZoneMode from "./GamepadDeadZoneMode";
-import Vector2D from "./../math/Vector2D";
-import EngineMath from "./../math/EngineMath";
+import Vector2D from "./../Vector2D";
+import EngineMath from "./../EngineMath";
 import { ValueOrDefault } from "./../Engine";
 
 class GamepadState extends Equatable {

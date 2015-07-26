@@ -1,5 +1,5 @@
 import BasicAnimation from "./BasicAnimation";
-import ColorInterpolator from "./../color/ColorInterpolator";
+import ColorInterpolator from "./ColorInterpolator";
 
 class ColorAnimation extends BasicAnimation {
 	constructor(target, propertyName, fromColor, toColor) {

@@ -1,5 +1,5 @@
-import Event from "./Event";
-import Vector2D from "./math/Vector2D";
+import Event from "./../Event";
+import Vector2D from "./../Vector2D";
 
 class EntityRayCastEvent extends Event {
 	constructor(type, bubbles, cancelable) {

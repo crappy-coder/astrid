@@ -1,7 +1,7 @@
 import Effect from "./Effect";
 import { ValueOrDefault } from "./../Engine";
-import PropertyOptions from "./../PropertyOptions";
-import Vector2D from "./../math/Vector2D";
+import PropertyOptions from "./../ui/PropertyOptions";
+import Vector2D from "./../Vector2D";
 import Rectangle from "./../Rectangle";
 
 class BoxBlurEffect extends Effect {

@@ -1,7 +1,7 @@
 import Transform from "./Transform";
 import { ValueOrDefault } from "./../Engine";
-import PropertyOptions from "./../PropertyOptions";
-import Matrix2D from "./../math/Matrix2D";
+import PropertyOptions from "./../ui/PropertyOptions";
+import Matrix2D from "./../Matrix2D";
 
 class TranslateTransform extends Transform {
 	constructor(x, y) {

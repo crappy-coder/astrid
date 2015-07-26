@@ -1,7 +1,7 @@
 import EventDispatcher from "./../EventDispatcher";
 import Animatable from "./../animation/Animatable";
 import SourceEvent from "./../SourceEvent";
-import PropertyOptions from "./../PropertyOptions";
+import PropertyOptions from "./../ui/PropertyOptions";
 import { AreEqual } from "./../Engine";
 
 class Brush extends EventDispatcher {

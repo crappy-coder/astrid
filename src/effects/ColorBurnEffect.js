@@ -1,5 +1,5 @@
 import Effect from "./Effect";
-import GraphicsUtil from "./../GraphicsUtil";
+import GraphicsUtil from "./../graphics/GraphicsUtil";
 
 class ColorBurnEffect extends Effect {
 	constructor() {

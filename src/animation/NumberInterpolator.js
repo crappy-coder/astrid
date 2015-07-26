@@ -1,4 +1,4 @@
-import Interpolator from "./../Interpolator";
+import Interpolator from "./Interpolator";
 
 class NumberInterpolator extends Interpolator {
 	constructor() {

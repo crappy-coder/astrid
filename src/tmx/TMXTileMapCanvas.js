@@ -1,4 +1,4 @@
-import Canvas from "./../Canvas";
+import Canvas from "./../ui/Canvas";
 import { ValueOrDefault } from "./../Engine";
 import TMXTileMapLayerCanvas from "./TMXTileMapLayerCanvas";
 

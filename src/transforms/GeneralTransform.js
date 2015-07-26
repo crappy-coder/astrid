@@ -1,6 +1,6 @@
-import Transform from "./../transforms/Transform";
-import PropertyOptions from "./../PropertyOptions";
-import Matrix2D from "./Matrix2D";
+import Transform from "./Transform";
+import PropertyOptions from "./../ui/PropertyOptions";
+import Matrix2D from "./../Matrix2D";
 
 class GeneralTransform extends Transform {
 	constructor() {

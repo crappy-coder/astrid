@@ -1,4 +1,4 @@
-import { MaxShort } from "./../math/EngineMath";
+import { MaxShort } from "./../EngineMath";
 
 var GamepadDeadZoneSize = {
 	None: 0,

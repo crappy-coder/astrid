@@ -1,4 +1,4 @@
-import ImageSource from "./../ImageSource";
+import ImageSource from "./../ui/ImageSource";
 import Size from "./../Size";
 
 class VideoSource extends ImageSource {

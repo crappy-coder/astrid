@@ -1,6 +1,6 @@
-import MouseEvent from "./useEvent";
-import MouseButton from "./useButton";
-import MouseWheelDirection from "./useWheelDirection";
+import MouseEvent from "./MouseEvent";
+import MouseButton from "./MouseButton";
+import MouseWheelDirection from "./MouseWheelDirection";
 
 class MouseWheelEvent extends MouseEvent {
 	constructor(type, delta, x, y, modifiers, bubbles, cancelable) {

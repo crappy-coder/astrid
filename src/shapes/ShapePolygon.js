@@ -1,6 +1,6 @@
 import Shape from "./Shape";
 import Rectangle from "./../Rectangle";
-import Vector2D from "./../math/Vector2D";
+import Vector2D from "./../Vector2D";
 
 class ShapePolygon extends Shape {
 	constructor(name) {

@@ -1,8 +1,8 @@
-import EventDispatcher from "./EventDispatcher";
-import { ValueOrDefault } from "./Engine";
-import Color from "./color/Color";
-import Animatable from "./animation/Animatable";
-import PropertyOptions from "./PropertyOptions";
+import EventDispatcher from "./../EventDispatcher";
+import { ValueOrDefault } from "./../Engine";
+import Color from "./../graphics/Color";
+import Animatable from "./../animation/Animatable";
+import PropertyOptions from "./../ui/PropertyOptions";
 
 class GradientStop extends EventDispatcher {
 	constructor(color, offset) {

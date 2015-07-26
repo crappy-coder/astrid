@@ -1,8 +1,8 @@
-import Canvas from "./../Canvas";
-import TextureSource from "./../TextureSource";
+import Canvas from "./../ui/Canvas";
+import TextureSource from "./../ui/TextureSource";
 import SourceEvent from "./../SourceEvent";
-import Rectangle from "./../Rectangle.js";
-import Vector2D from "./../math/Vector2D";
+import Rectangle from "./../Rectangle";
+import Vector2D from "./../Vector2D";
 import TMXTileMap from "./TMXTileMap";
 
 class TMXTileMapLayerTile {

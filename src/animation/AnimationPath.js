@@ -1,5 +1,5 @@
 import Equatable from "./../Equatable";
-import NumberInterpolator from "./../math/NumberInterpolator";
+import NumberInterpolator from "./NumberInterpolator";
 import { ValueOrDefault } from "./../Engine";
 
 /**

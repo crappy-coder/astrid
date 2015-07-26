@@ -1,5 +1,5 @@
 import EventDispatcher from "./../EventDispatcher";
-import Matrix2D from "./../math/Matrix2D";
+import Matrix2D from "./../Matrix2D";
 import Animatable from "./../animation/Animatable";
 
 class Transform extends EventDispatcher {

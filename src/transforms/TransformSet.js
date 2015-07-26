@@ -1,6 +1,6 @@
 import Transform from "./Transform";
-import PropertyOptions from "./../PropertyOptions";
-import Matrix2D from "./../math/Matrix2D";
+import PropertyOptions from "./../ui/PropertyOptions";
+import Matrix2D from "./../Matrix2D";
 import { AreNotEqual } from "./../Engine";
 
 class TransformSet extends Transform {
