@@ -50,7 +50,7 @@ Object.assign(MyAnimatable.prototype, Animatable);
 ```
 
 In the example above, the MyAnimatable has x and y properties that can be animated.
-The initializeAnimatablePropertiesCore marks these properties as being animatable by providing the name, the getter,
+The `initializeAnimatablePropertiesCore` marks these properties as being animatable by providing the name, the getter,
 the setter and what type of affect these properties have on the object when changed. Unless your object derives from a 
 SceneDrawable the property options will have no affect, for example, when the x value changes the framework will
 automatically call requestLayout and requestMeasure for you so that your drawable is updated. The other critical piece 
