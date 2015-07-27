@@ -3,7 +3,7 @@ astrid does much of the work behind-the-scenes, like managing it's own timing sy
 efficient redrawing of the animated content and much more. We provide a number of animation related classes that 
 enable you to focus on the effects of your game or app, instead of the underlying mechanics used to achieve those effects. 
 astrid also allows you to create your own custom animations using the same underlying system as the built-in animation classes.
- 
+
 Most objects and properties related to drawables can be animated, whether those properties are simple numbers or 
 complex objects. There are various parts that make up the animation system as a whole, the following is a brief 
 overview of these parts.
@@ -40,7 +40,7 @@ For a property to participate in the animation system, it must meet the followin
 astrid already contains many objects with animatable properties, such as SceneDrawable classes, Transform classes, Brush 
 classes and more. Animations don't always have to be visual, you can animate objects that are not part of the draw tree 
 as long as the meet the requirements above.
- 
+
 Let's look at an example that fades a shape out:
 
 ```js
@@ -63,7 +63,7 @@ fadeOutAnimation.play();
 
 In the above example, we create a drawable shape fill with the color red, then create an animation for that shape to 
 animate it's alpha property from 1 to 0, for a duration of 1000ms (or 1 second).
- 
+
 The BasicAnimation is (as the name suggest) the most basic way to animate a property, it simply takes an object, 
 the property name and the value to and from. By default, the BasicAnimation used a number interpolator, 
 NumberInterpolator, to interpolate the value over time. To animate a property with an object type, like a color, we 
@@ -78,10 +78,10 @@ instead use the ColorAnimation, which sets the interpolator for you._
  
 Interpolators allow you to animate various object types, if there isn't already a predefined interpolator for your type 
 you can create your own. See Creating a Custom Interpolator.
- 
+
 Animations also include various ways to control timing. You can specify the various timing values like it's duration, 
 the number of times it repeats, when it should start and even how fast the time progresses.
- 
+
 There will be times when you need to animate more than one property at a time, the BasicAnimation only allows you to 
 animate a single property, to animate more than one, you can group together multiple basic animations using one of the 
 grouping containers, see Grouping Multiple Animations below for more information. However, if you want to animate 
@@ -93,7 +93,7 @@ using keyframes and an interpolator. See Using Keyframe Animation.
 
 astrid provides other animation classes to help you organize your animations into various animation sets (or animation 
 containers). Animation sets derive from the AnimationSet class and include ParallelAnimation and SequenceAnimation.
- 
+
 As the name suggests, the parallel animation allows you to run run multiple animations in parallel with each other. 
 For example, suppose you want to grow a menu item when the user presses it, you can simply add two BasicAnimations to a 
 ParallelAnimation that modify the width and height, as the following shows:
@@ -146,7 +146,7 @@ to animate is omitted from the constructor of an animation set you must then inc
 (as the examples above shows), this allows you to specify multiple objects as an animation target. Alternatively, if you 
 are only going to be animating the same object, like we did above, we could have simply just passed the shape object to 
 the constructor of our ParallelAnimation or SequenceAnimation classes and omitted them from the BasicAnimation.
- 
+
 If neither the parallel or sequence animation is what you need, you can create your own custom animation set by 
 extending the AnimationSet class.
  
@@ -156,7 +156,7 @@ over time. However, instead of creating a value between two values (from and to)
 value among any number of values. A keyframe animation's values are defined by using individual keyframe objects. To set 
 the animations values, you create keyframe objects and add them to an animation path's list of keyframes. Then add that 
 animation path to an animation, when the animation is run, it transitions between the frames you specified.
- 
+
 As mentioned above, you first must add the keyframes to what we call an animation path. The animation path allows you to 
 specify the property and an optional interpolator (if not animating a number type). To animate using a keyframe 
 animation, you must:
@@ -215,8 +215,9 @@ performs (i.e. change how the animation interpolates). The three possible easing
 
 As mentioned above, instead of passing in a pre-defined easing mode, you could pass in a percentage value from 0 to 1.0, 
 in fact the pre-defined modes actually map to a percentage value, which are EaseOut = 0.0, EaseInOut = 0.5 and EaseIn = 1.0.
- 
-The following shows different graphs of each easing function and mode, where f(t) represents the animations progress and t represents the time.
+
+The following shows different graphs of each easing function and mode, where f(t) represents the animations progress and 
+t represents the time.
 
 ## Creating your Own Easing Function
 
@@ -264,16 +265,16 @@ class PowerEase extends EasingFunction {
         }
 }
 ```
- 
+
 Once implemented, you can set your easing function on an animation as a whole, or on individual keyframes.
- 
+
 ## How Interpolators Work
 
 Interpolators compute the values for animations and give animations the ability to interpolate between arbitrary values. 
 These interpolators take a value between 0.0 and 1.0 that indicates the current position of the animation where 0.0 
 represents the start and 1.0 represents the end of the animation. In more basic terms, an interpolator is responsible for 
 computing an output value for an animation at some point in time.
- 
+
 astrid already provides three built-in interpolators:
 * ColorInterpolator - Computes a value between one color object and another, using a parametric interpolation.
 * NumberInterpolator - Computes a value between one number and another, using a parametric interpolation.

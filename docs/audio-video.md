@@ -3,7 +3,7 @@
 1. Using Audio
 1. Using Video
 1. Supported Formats
- 
+
 ## Introduction
 
 astrid allows both audio and video playback through the use of the Audio and Video classes. Both of these classes 

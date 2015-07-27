@@ -6,7 +6,7 @@ There are a couple ways to use animations in astrid, the first is to simply use 
 property from a start value to an end value using an easing function and interpolator to do so. Another more advanced
 way to build an animation is by using an animation path, AnimationPath and key frames KeyFrame. 
 Keyframe animation give you more precise control over your animation but can also become quite complex.
- 
+
 The ability to animate an object requires that it be animatable, that is, implement the Animatable interface. 
 Unlike classes, the Animatable module is a mixin, a collection of methods, rather than a full class. 
 There are two basic requirements to create an animatable object, the first is that your object must derive from the 
@@ -49,7 +49,6 @@ class MyAnimatable extends EventDispatcher {
 Object.assign(MyAnimatable.prototype, Animatable);
 ```
 
- 
 In the example above, the MyAnimatable has x and y properties that can be animated.
 The initializeAnimatablePropertiesCore marks these properties as being animatable by providing the name, the getter,
 the setter and what type of affect these properties have on the object when changed. Unless your object derives from a 
