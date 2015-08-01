@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title>Mochica Brushes Tests</title>
+		<script type="text/javascript" src="mo-debug-web.js"></script>
+		<script type="text/javascript">
+			var g_app = null;
+			var g_tests = null;
+
+			function setup() {
+				g_app = new MoApplication();
+				
+				var surface = MoDisplaySurface.fromCanvas(document.getElementById("main"));
+
+				var content = new MoCanvas("mainContent");
+				content.setPercentWidth(100);
+				content.setPercentHeight(100);
+				content.setBackground(MoSolidColorBrush.fromColorHex("#efefef"));
+
+				surface.setChild(content);
+
+				g_app.addDisplaySurface(surface);
+				g_app.run();
+
+				/*
+				var shape = new MoShapeEllipse("myEllipse");
+				shape.setWidth(100);
+				shape.setHeight(100);
+				shape.setX(10);
+				shape.setY(10);
+				shape.setFill(new MoSolidColorBrush(MoColor.fromHex("#FFFFFF")));
+				
+				// sets a 2 pixel wide stroke using a green color
+				shape.setStrokeThickness(2);
+				shape.setStroke(new MoSolidColorBrush(MoColor.fromHex("#a6ce39")));
+				
+				// enables the stroke to be dashed
+				shape.setStrokeDashStyle(MoDashStyle.Dash);
+				
+				content.add(shape);
+				*/
+				
+				var lbl = new MoLabel("myLabel");
+				lbl.setX(10);
+				lbl.setY(10);
+				lbl.setFontName("Arial");
+				lbl.setFontSize("38");
+				lbl.setText("Silk!");
+				lbl.setForeground(new MoSolidColorBrush(MoColor.fromHex("#a6ce39")));
+				
+				content.add(lbl);
+			}
+		</script>
+		<style type="text/css">
+			html, body {
+				width: 100%;
+				height: 100%;
+				margin: 0px;
+			}
+		</style>
+	</head>
+	<body onload="setup()">
+		<canvas id="main" width="120px" height="120px" />
+	</body>
+</html>

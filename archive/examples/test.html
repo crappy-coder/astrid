@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title>Mochica Test</title>
+		<script type="text/javascript">			
+			function setup() {
+				var canvas = document.getElementById("main");
+				var context = canvas.getContext("2d");
+				
+				context.rect(0, 0, 800, 600);
+				context.fill();
+				
+				context.beginPath();
+				context.rect(10, 10, 50, 50);
+				context.rect(120, 10, 50, 50);
+				context.clip();
+				
+				context.beginPath();
+				context.rect(0, 0, 140, 140);
+				context.fillStyle = "red";
+				context.fill();
+			}
+		</script>
+		<style type="text/css">
+			html, body {
+				width: 100%;
+				height: 100%;
+				margin: 0px;
+			}
+		</style>
+	</head>
+	<body onload="setup()">
+		<canvas id="main" width="800px" height="600px" />
+	</body>
+</html>

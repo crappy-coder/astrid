@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mo-atlas>
+	<mo-textures>
+		<mo-texture url="hero_01_atlas.png" />
+	</mo-textures>
+	<mo-sprites>
+		<mo-sprite name="walk01" uv="0,0,0.1455078125,0.220703125" y="1" />
+		<mo-sprite name="walk02" uv="0.1484375,0,0.134765625,0.220703125" x="10" y="1" />
+		<mo-sprite name="walk03" uv="0.2861328125,0,0.140625,0.220703125" x="4" y="0" />
+		<mo-sprite name="walk04" uv="0.4296875,0,0.134765625,0.220703125" x="10" y="0" />
+		
+		<mo-sprite name="shoot01" uv="0,0.220703125,0.2099609375,0.2216796875" x="0" y="0" />
+		<mo-sprite name="shoot02" uv="0.2119140625,0.220703125,0.2041015625,0.2216796875" x="0" y="0" />
+		<mo-sprite name="shoot03" uv="0.41796875,0.220703125,0.205078125,0.220703125" x="0" y="0" />
+	</mo-sprites>
+	<mo-animations>
+		<mo-animation name="walk" duration="1000" repeat="0">
+			<mo-frame sprite="walk01" />
+			<mo-frame sprite="walk02" />
+			<mo-frame sprite="walk03" />
+			<mo-frame sprite="walk04" />
+		</mo-animation>
+		<mo-animation name="shoot" duration="1000" repeat="1">
+			<mo-frame sprite="shoot01" />
+			<mo-frame sprite="shoot02" />
+			<mo-frame sprite="shoot03" />
+		</mo-animation>
+	</mo-animations>
+</mo-atlas>

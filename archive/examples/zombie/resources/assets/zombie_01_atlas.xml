@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mo-atlas>
+	<mo-textures>
+		<mo-texture url="zombie_01_atlas.png" />
+	</mo-textures>
+	<mo-sprites>
+		<mo-sprite name="walk01" uv="0,0,0.1865234375,0.1943359375" />
+		<mo-sprite name="walk02" uv="0.1904296875,0,0.171875,0.1982421875" x="15" y="-4" />
+		<mo-sprite name="walk03" uv="0.365234375,0,0.166015625,0.1865234375" x="22" y="-4" />
+		<mo-sprite name="walk04" uv="0.5361328125,0,0.1650390625,0.189453125" x="22" y="0" />
+		<mo-sprite name="walk05" uv="0.7041015625,0,0.16796875,0.1884765625" x="20" y="0" />
+		
+		<mo-sprite name="getup01" uv="0,0.197265625,0.1884765625,0.1962890625" x="10" y="8" />
+		<mo-sprite name="getup02" uv="0.193359375,0.201171875,0.1923828125,0.1796875" x="0" y="0" />
+		<mo-sprite name="getup03" uv="0.388671875,0.189453125,0.1904296875,0.203125" x="0" y="-12" />
+		<mo-sprite name="getup04" uv="0.58203125,0.189453125,0.23046875,0.2001953125" x="0" y="0" />
+		<mo-sprite name="getup05" uv="0,0.396484375,0.23046875,0.0810546875" x="0" y="120" />
+		<mo-sprite name="getup06" uv="0.23046875,0.396484375,0.220703125,0.1318359375" x="0" y="60" />
+		<mo-sprite name="getup07" uv="0.45703125,0.396484375,0.1494140625,0.1650390625" x="30" y="30" />
+		
+		<mo-sprite name="slash01" uv="0,0.5615234375,0.150390625,0.2314453125" />
+		<mo-sprite name="slash02" uv="0.1533203125,0.5615234375,0.1787109375,0.228515625" x="0" y="3" />
+		<mo-sprite name="slash03" uv="0.3349609375,0.5615234375,0.18359375,0.189453125" x="0" y="43" />
+		<mo-sprite name="slash04" uv="0.521484375,0.5615234375,0.1875,0.193359375" x="0" y="38" />
+		
+		<mo-sprite name="bite01" uv="0.8154296875,0.1884765625,0.16796875,0.1904296875" x="0" y="0" />
+		<mo-sprite name="bite02" uv="0.8125,0.3818359375,0.1689453125,0.1904296875" x="0" y="0" />
+		<mo-sprite name="bite03" uv="0.8125,0.5751953125,0.1875,0.1923828125" x="0" y="-4" />
+		
+		<mo-sprite name="hit01" uv="0,0.794921875,0.173828125,0.203125" x="0" y="0" />
+		<mo-sprite name="hit02" uv="0.1767578125,0.794921875,0.15625,0.2021484375" x="11" y="0" />
+		<mo-sprite name="hit03" uv="0.3359375,0.794921875,0.1875,0.1943359375" x="11" y="9" />
+	</mo-sprites>
+	<mo-animations>
+		<mo-animation name="walk" duration="1250" repeat="0">
+			<mo-frame sprite="walk01" />
+			<mo-frame sprite="walk02" />
+			<mo-frame sprite="walk03" />
+			<mo-frame sprite="walk04" />
+			<mo-frame sprite="walk05" />
+		</mo-animation>
+		<mo-animation name="getup" duration="1000" repeat="1">
+			<mo-frame sprite="getup01" />
+			<mo-frame sprite="getup02" />
+			<mo-frame sprite="getup03" />
+			<mo-frame sprite="getup04" />
+			<mo-frame sprite="getup05" />
+			<mo-frame sprite="getup06" />
+			<mo-frame sprite="getup07" />
+			<mo-frame sprite="getup01" />
+		</mo-animation>
+		<mo-animation name="slash" duration="400" repeat="1">
+			<mo-frame sprite="slash01" />
+			<mo-frame sprite="slash02" />
+			<mo-frame sprite="slash03" />
+			<mo-frame sprite="slash04" />
+		</mo-animation>
+		<mo-animation name="bite" duration="400" repeat="1">
+			<mo-frame sprite="bite01" />
+			<mo-frame sprite="bite02" />
+			<mo-frame sprite="bite03" />
+		</mo-animation>
+		<mo-animation name="hit" duration="300" repeat="1">
+			<mo-frame sprite="hit01" />
+			<mo-frame sprite="hit02" />
+			<mo-frame sprite="hit03" />
+		</mo-animation>
+	</mo-animations>
+</mo-atlas>
