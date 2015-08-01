@@ -2,7 +2,9 @@
 
 The layout architecture is an important concept within the astrid framework, not only does it handle the general UI model but it is also at the core of all rendering. Here we will go into more detail on how layout, measuring and property changes affect the visual output and performance. There are three phases that occur when performing the overall layout operation. If you have worked with frameworks like Adobe Flex or Microsoft's WPF/Silverlight, you will find this familiar.
 
+
 ## Property Validation
+
 This is the first phase, this is a concept very similar to that of other UI frameworks, in that when properties on a drawable are changed it doesn't make sense to perform potentially heavy tasks each time a property is changed, but instead wait until all the tasks required for a property update can be batched up together in a single task.
 
 When handling property validation, you will want to override the drawable's own `commitProperties` method. This is used to coordinate any updates to a drawable's properties. Generally, you will only use this with those properties that affect the visual appearance of a drawable on the screen. To tell a drawable that one or more of it's properties has changed you would make a call to `invalidateProperties`, this will schedule a `commitProperties` call during the next layout cycle.
@@ -43,7 +45,9 @@ commitProperties: function() {
 
 As you can see above, the setter simply calls `invalidateProperties`, which immediately returns and does not perform any additional procession on the property itself. This allows you to leave the processing of the updated value to happen in the commitProperties method.
 
+
 ## Measuring
+
 This is the second phase that occurs when a drawable is unable to determine the size of itself, that is, when the size has not been explicitly set. This is useful when building various containers with different sizing characteristics.
 
 When handling the measuring of a drawable, you will want to override the drawable's own measure method, this is used to set the default size of the drawable. astrid schedules a call to the measure method when requested by calling `requestMeasure`. If you do not implement custom measuring the system will automatically do this for you. Once requested, the measure method will be called during the next layout cycle. If the drawable has an explicitly set width and height, the framework will automatically skip this phase because the drawable already knows it's exact size and does not need to be measured.
@@ -69,7 +73,9 @@ measure: function() {
 
 In the example above, the measured width and height are explicitly set to 100 and 20; respectively. In a more realistic example, you would probably iterate all the children to determine the maximum width or height.
 
+
 ## Layout
+
 This is the third and final phase, this is the most important of the three. Override the drawable's layout method to perform your layout logic. The layout method should size and position the children of your drawable based on previous measurements and property changes, and draws any visual elements that the drawable uses. The parent container of a drawable is responsible for determining the size of a drawable itself.
 
 A drawable will not appear on the screen until it's layout method is called. astrid schedules a call to the layout method when requested by calling requestLayout. Once requested, the layout method will be called during the next layout cycle.
@@ -105,5 +111,7 @@ layout: function(nativeWidth, nativeHeight) {
 
 In the example above, a red rectangle will be drawn at the same size of the drawable in the top left corner. Coordinates are relative to the drawable itself so in the example above, if the drawable's x coordinate is set to 100 pixels, the rectangle will be drawn 100 pixels from the left of its parent.
 
+
 ## Conclusion
+
 There is a lot of flexibility and control with drawables. By default, when a drawable is added to another drawable and/or various built-in properties are set, the `invalidateProperties`, `requestMeasure` and `requestLayout` are all called for you, as well as, if you specify an animation property that affects the rendering, layout or measurements of a drawable. For more information on animatable properties, see Animation System.

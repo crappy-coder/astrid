@@ -1,8 +1,5 @@
-## Table of Contents
-* Introduction
-* Creating Custom Effects
- 
-## Introduction
+# Effects
+
 astrid provides the ability to use custom effects with drawables. Every drawable allows you to call the `setRenderEffects` method which takes an array of Effect objects, thus allowing the use of multiple effects per drawable. For example, you could apply a drop shadow and a blur. Effects simply process a set of pixels according to some pixel processing algorithm or formula. Whenever a drawable's visual content changes the effect is reapplied.
 
 Currently, effects are processed through software using JavaScript only, because of this, effects will degrade performance, sometimes to the point that your game or app becomes unusable. Take caution when using effects. It is recommended to try and substitute an image for an effect or in someway fake it if possible. However, if you do use effects, we have made some optimizations.
@@ -20,11 +17,11 @@ rect.setY(20);
 rect.setWidth(200);
 rect.setHeight(125);
 rect.setStrokeThickness(5);
-rect.setStroke(new SolidColorBrush(MoColor.Blue));
+rect.setStroke(new SolidColorBrush(Color.Blue));
 
 // create and set the drop shadow effects, the render effects
 // takes an array as the parameter
-var effects = [ new MoDropShadowEffect() ];
+var effects = [ new DropShadowEffect() ];
 rect.setRenderEffects(effects);
 
 // add rect to some content
@@ -33,9 +30,10 @@ this.content.add(rect);
 
 See the Effect class for a list of built-in effects available to you.
 
+
 ## Creating Custom Effects
-astrid allows you to build your own custom effects by creating extending Effect and implementing the `processCore` method.
-This method simply takes a target drawable and the actual pixel data to be processed, the return result must be the process pixel data in a pixel array. The following example shows how one might implement a color burn effect:
+
+astrid allows you to build your own custom effects by creating extending Effect and implementing the `processCore` method. This method simply takes a target drawable and the actual pixel data to be processed, the return result must be the process pixel data in a pixel array. The following example shows how one might implement a color burn effect:
 
 ```js
 class MyColorBurnEffect extends Effect {

@@ -1,20 +1,8 @@
-## Table of Contents
-* Understanding the Draw Tree
-* Building a Custom Drawable
-* Drawable Rendering Order
-* Conclusion
- 
-In astrid, the base class to anything that can be drawn to the screen is the Drawable class. There are many built-in 
-classes that inherit from Drawable to draw text, images, shapes and more. A drawable doesn't always have to render it's 
-own content, it can also be considered a container for other drawables whose content is rendered to the screen. 
-Containers provide a way to make custom layouts.
+# Drawables
 
-The following is the full class hierarchy of all Mochica drawables:
- 
-As you can see in the diagram above, everything that is rendered to the screen extends from Drawable.
-Drawable itself can also be used to create and render content. For example, you can create a new Drawable, get it's 
-graphics object and use the drawing API to render content to it. The Drawable includes properties and methods essential 
-to displaying and controlling your rendered content on the screen, including:
+In astrid, the base class to anything that can be drawn to the screen is the Drawable class. There are many built-in classes that inherit from Drawable to draw text, images, shapes and more. A drawable doesn't always have to render it's own content, it can also be considered a container for other drawables whose content is rendered to the screen. Containers provide a way to make custom layouts.
+
+Drawable itself can also be used to create and render content. For example, you can create a new Drawable, get it's graphics object and use the drawing API to render content to it. The Drawable includes properties and methods essential to displaying and controlling your rendered content on the screen, including:
 
 * sizing (setWidth, setHeight, setPercentWidth, setPercentHeight, setMeasuredWidth, setMeasuredHeight) 
 * positioning (setX, setY)
@@ -23,18 +11,14 @@ to displaying and controlling your rendered content on the screen, including:
 * opacity (setAlpha)
 * visibility
  
-Because the Drawable extends NamedObjectCollection it also automatically acts as a container for other drawables. 
-As long as an object is a subclass of Drawable then it can be added to any other Drawable and will be rendered with it.
+A drawable can be a container for other drawables because it extends NamedObjectCollection. As long as an object extends Drawable then it can be added to any other Drawable and will be rendered with it.
+
 
 ## Understanding the Draw Tree
-Drawables by themselves provide only basic on-screen visual content. Usually you'll want to combine multiple drawables
-together to make a more complex composite drawable. For example, suppose you want to display an image with a watermark
-on it, when the image moves, rotates or changes in alpha you'll want the watermark to also move, rotate and change in
-alpha as well. To do this, you may combine the Image and Label objects into one of the containers. Since we want it to 
-be displayed above the image we want to use an absolute positioning container. For that we would use a Canvas instance.
 
-So to group the image and label together onto a canvas, we simply add the image and label drawables as children of a
-canvas container, like the following:
+Drawables by themselves provide only basic on-screen visual content. Usually you'll want to combine multiple drawables together to make a more complex composite drawable. For example, suppose you want to display an image with a watermark on it, when the image moves, rotates or changes in alpha you'll want the watermark to also move, rotate and change in alpha as well. To do this, you may combine the Image and Label objects into one of the containers. Since we want it to be displayed above the image we want to use an absolute positioning container. For that we would use an astrid Canvas instance.
+
+So to group the image and label together onto a canvas, we simply add the image and label drawables as children of a canvas container, like the following:
 
 ```js
 var image = new Image("myImage");
@@ -50,37 +34,28 @@ watermarkedImage.add(image);
 watermarkedImage.add(label);
 ```
 
-In the example above we add an image and a label to a canvas. You add your content in the order that you wish them to 
-display (from back to front), drawables added to other drawables are ordered like layers, placing the next over the top
-of the previous one.
+In the example above we add an image and a label to a canvas. You add your content in the order that you wish them to display (from back to front), drawables added to other drawables are ordered like layers, placing the next over the top of the previous one.
 
-Now that the canvas contains two children, manipulating the canvas will also manipulate the children of that canvas,
-for example to move everything 100 pixels over to the right, we can just do:
+Now that the canvas contains two children, manipulating the canvas will also manipulate the children of that canvas, for example to move everything 100 pixels over to the right, we can just do:
 
 ```js
 // move image and text 100 pixels to the right
 watermarkedImage.setX(100);
 ```
 
-Drawables also have their own coordinate system that starts with `0,0` at the top left corner that is always relative to
-their parent drawable. The following image shows a ShapeRectangle drawn at `40px,40px` then it shows an overlay of that
-same rectangle with a 45 degree rotation around the rectangles coordinate origin of `0,0`.
+Drawables also have their own coordinate system that starts with `0,0` at the top left corner that is always relative to their parent drawable. The following image shows a ShapeRectangle drawn at `40px,40px` then it shows an overlay of that same rectangle with a 45 degree rotation around the rectangles coordinate origin of `0,0`.
 
-_Note: Rotations are always in degrees, not radians._
+![Rotation around axis](https://sweay.fogbugz.com/default.asp?pg=pgDownload&pgType=pgWikiAttachment&ixAttachment=7&sFileName=axis.png)
 
-As shown above, the rotation happens around the default x, y position of 0,0, to change this, you can use the 
-`setTransformOrigin` method. This moves the point where all transformation properties originate from. It's important to
-understand how the coordinate system works. No matter how deep a drawable is nested within other drawables it always has
-its own coordinate system.
+_Note: Rotations are always given in degrees, not radians._
 
-There are various methods available to you for manipulating the draw tree, see NamedObjectCollection for a description
-of each one.
+As shown above, the rotation happens around the default x, y position of `0,0`. To change this, you can use the `setTransformOrigin` method. This moves the point where all transformation properties originate from. It's important to understand how the coordinate system works. No matter how deep a drawable is nested within other drawables it always has its own coordinate system.
+
+There are various methods available to you for manipulating the draw tree, see NamedObjectCollection for a description of each one.
 
 ## Building a Custom Drawable
-In the previous section, we talked about how to combine multiple drawables together to make composite drawables. 
-While this is fine way to do it, it doesn't allow for much reuse. Instead, using the same example we can create a custom
-drawable that can be reused multiple times. To do this, we need to create our own class. We'll call it
-`MyWatermarkedImage`, implement a few methods, then use it.
+
+In the previous section, we talked about how to combine multiple drawables together to make composite drawables. While this is fine way to do it, it doesn't allow for much reuse. Instead, using the same example we can create a custom drawable that can be reused multiple times. To do this, we need to create our own class. We'll call it `MyWatermarkedImage`, implement a few methods, then use it.
 
 The following example shows how you might go about creating the MyWatermarkedImage drawable:
 
@@ -138,8 +113,7 @@ class MyWatermarkedImage extends Drawable {
 });
 ```
 
-Finally, to use our custom drawable we just create a new instance of it and add it to the main scene or some other
-drawable, like so:
+Finally, to use our custom drawable we just create a new instance of it and add it to the main scene or some other drawable, like so:
 
 ```js
 // create 2 watermarked images
@@ -160,32 +134,28 @@ someDrawable.add(watermarkImage2);
 
 Creating custom drawables is a great way to create and reuse your own custom drawable library.
 
+
 ## Drawable Rendering Order
-The order in which visual content is rendered makes a big difference for how you provide your visual content. 
-The following figure shows the order in which graphics content (submitted via the drawables' Graphics object),
-the drawables' children, transformations, effects and alpha are rendered to the screen:
 
+The order in which visual content is rendered makes a big difference for how you provide your visual content. The following figure shows the order in which graphics content (submitted via the drawables' Graphics object), the drawables' children, transformations, effects and alpha are rendered to the screen:
 
-The rendering order includes two sets of transformations. The first is the layout transform (or layout matrix), this is
-the transform that is used when you modify the position, rotation, scale and/or skew properties of the drawable 
-directly. The layout transform also occurs around the transform origin of the drawable. 
-The render transform is the transformation that you set using `setRenderTransform`, this allows you to build your own
-custom transforms in the order and around an origin that you choose.
+![Rendering order](https://sweay.fogbugz.com/default.asp?pg=pgDownload&pgType=pgWikiAttachment&ixAttachment=8&sFileName=rendering-order.png)
 
-The layout transformation occurs either at the default `0,0` x/y coordinates or at the transform origin you specified
-using the `setTransformOrigin` method. The order in which the transformation happens is:
+The rendering order includes two sets of transformations. The first is the layout transform (or layout matrix), this is the transform that is used when you modify the position, rotation, scale and/or skew properties of the drawable directly. The layout transform also occurs around the transform origin of the drawable. The render transform is the transformation that you set using `setRenderTransform`, this allows you to build your own custom transforms in the order and around an origin that you choose.
+
+The layout transformation occurs either at the default `0,0` x/y coordinates or at the transform origin you specified using the `setTransformOrigin` method. The order in which the transformation happens is:
 
 * Scale (`setScaleX`, `setScaleY`) 
 * Skew (`setSkewX`, `setSkewY`) 
 * Rotate (`setRotation`) 
 * Translate (`setX`, `setY`) 
 
-## Conclusion
-To conclude this article, here's a quick recap and brief overview of some of the other features provided by a drawable.
 
-The Drawable is the core astrid object for displaying content on the screen. Its primary role is to provide support for
-rendering various content. Whether you are building a game or a GUI, drawables offer the flexibility to create all kinds
-of controls. The drawable object provides support for:
+## Conclusion
+
+Here's a quick recap and brief overview of some of the other features provided by a drawable.
+
+The Drawable is the core astrid object for displaying content on the screen. Its primary role is to provide support for rendering various content. Whether you are building a game or a GUI, drawables offer the flexibility to create all kinds of controls. The drawable object provides support for:
 
 * Visual Content - Rendering various types of visual content to the screen. 
 * Transformations - Performing various transformations, either by setX/Y, setScaleX/Y, setRotation, setSkewX/Y or more advanced transformations using `setRenderTransform`.
@@ -196,5 +166,4 @@ of controls. The drawable object provides support for:
 * Effects - Add multiple effects to a drawable, like drop shadows or blurs. 
 * Alpha and Alpha Masks - Change the alpha of drawables or use an alpha mask to mask portions of your rendered content from being shown. 
 
-When drawing content to a drawable, you never actually create an instance of the Graphics object but instead acquire it
-from the drawable that you wish to draw to.
+When drawing content to a drawable, you never actually create an instance of the Graphics object but instead acquire it from the drawable that you wish to draw to.

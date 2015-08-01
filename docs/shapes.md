@@ -13,6 +13,7 @@ The following is the list of available shapes:
 * ShapePolyline - Draws a series of connected straight lines.
 * ShapeRectangle - Draws a rectangular shape.
 
+
 ## Using a Dashed Stroke
 
 One special feature of using shapes is the ability to dash the shapes outline (or stroke), by default, the HTML5 canvas rendering context does not support dashing, instead we do a bit of magic to the shapes path to enable you to specify a dash pattern for your stroke. Because we currently perform the dashing through software via JavaScript, it should be only be used on smaller shapes or shapes that do not regularly require rendering, otherwise performance may be degraded.

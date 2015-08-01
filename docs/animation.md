@@ -126,7 +126,7 @@ parallelAnimation.add(new BasicAnimation(shape, "height", shape.getHeight(), sha
 // start the animation (default 1 second duration)
 parallelAnimation.play();
 ```
- 
+
 In the previous code example, when the parallel animation plays the shape will grow in size by 10 pixels of the current size. The sequence animation is used exactly the same way, except instead of running in parallel the animations will run in a sequence; one by one. The following shows an example of using a sequence animation to move the shape 100 pixels to the right and then grow by 10 pixels in height:
 
 ```js
