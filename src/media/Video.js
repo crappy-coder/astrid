@@ -1,12 +1,14 @@
 import MediaBase from "./MediaBase";
 import Event from "../Event";
-import { ValueOrDefault } from "../Engine";
+import { ValueOrDefault, Mixin } from "../Engine";
 import VideoSource from "./VideoSource";
 import Size from "../Size";
 import VideoEvent from "./VideoEvent";
 import Drawable from "../ui/Drawable";
 
-class Video extends Drawable {
+var Mixed = Mixin(Drawable, MediaBase);
+
+class Video extends Mixed {
 	constructor(name, sourceElement) {
 		super(name);
 
@@ -84,7 +86,5 @@ class Video extends Drawable {
 		return new Video(name, videoElement);
 	}
 }
-
-Object.assign(Video.prototype, MediaBase);
 
 export default Video;

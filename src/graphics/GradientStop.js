@@ -1,10 +1,12 @@
 import EventDispatcher from "../EventDispatcher";
-import { ValueOrDefault, AreEqual } from "../Engine";
+import { ValueOrDefault, AreEqual, Mixin } from "../Engine";
 import Color from "../graphics/Color";
 import Animatable from "../animation/Animatable";
 import PropertyOptions from "../ui/PropertyOptions";
 
-class GradientStop extends EventDispatcher {
+var Mixed = Mixin(EventDispatcher, Animatable);
+
+class GradientStop extends Mixed {
 	constructor(color, offset) {
 		super();
 
@@ -46,7 +48,5 @@ class GradientStop extends EventDispatcher {
 		return "GradientStop[ offset=" + this.getOffset() + ", color=" + this.getColor() + " ]";
 	}
 }
-
-Object.assign(GradientStop.prototype,  Animatable);
 
 export default GradientStop;

@@ -2,8 +2,11 @@ import EventDispatcher from "../EventDispatcher";
 import Rectangle from "../Rectangle";
 import GraphicsUtil from "../graphics/GraphicsUtil";
 import Animatable from "../animation/Animatable";
+import { Mixin } from "../Engine";
 
-class Effect extends EventDispatcher {
+var Mixed = Mixin(EventDispatcher, Animatable);
+
+class Effect extends Mixed {
 	constructor() {
 		super();
 
@@ -71,7 +74,5 @@ class Effect extends EventDispatcher {
 		return null;
 	}
 }
-
-Object.assign(Effect.prototype, Animatable);
 
 export default Effect;

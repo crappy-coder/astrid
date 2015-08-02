@@ -1,6 +1,6 @@
 import Animatable from "./Animatable";
 import EventDispatcher from "../EventDispatcher";
-import { ValueOrDefault } from "../Engine";
+import { ValueOrDefault, Mixin } from "../Engine";
 import EngineMath from "../EngineMath";
 import RotateTransform from "../transforms/RotateTransform";
 import Vector2D from "../Vector2D";
@@ -250,7 +250,9 @@ class IK {
 	}
 }
 
-class IKBone extends EventDispatcher {
+var Mixed = Mixin(EventDispatcher, Animatable);
+
+class IKBone extends Mixed {
 	constructor(name, length, angle, drawable) {
 		super();
 
@@ -329,8 +331,6 @@ class IKBone extends EventDispatcher {
 		return this.nextBone;
 	}
 }
-
-Object.assign(IKBone.prototype, Animatable);
 
 class IKContainer extends Canvas {
 	constructor(name, surface) {

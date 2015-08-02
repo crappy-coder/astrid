@@ -2,9 +2,11 @@ import EventDispatcher from "../EventDispatcher";
 import Animatable from "../animation/Animatable";
 import SourceEvent from "../SourceEvent";
 import PropertyOptions from "../ui/PropertyOptions";
-import { AreEqual } from "../Engine";
+import { AreEqual, Mixin } from "../Engine";
 
-class Brush extends EventDispatcher {
+var Mixed = Mixin(EventDispatcher, Animatable);
+
+class Brush extends Mixed {
 	constructor() {
 		super();
 
@@ -58,7 +60,5 @@ class Brush extends EventDispatcher {
 		return false;
 	}
 }
-
-Object.assign(Brush.prototype, Animatable);
 
 export default Brush;

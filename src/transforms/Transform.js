@@ -1,8 +1,11 @@
 import EventDispatcher from "../EventDispatcher";
 import Matrix2D from "../Matrix2D";
 import Animatable from "../animation/Animatable";
+import { Mixin } from "../Engine";
 
-class Transform extends EventDispatcher {
+var Mixed = Mixin(EventDispatcher, Animatable);
+
+class Transform extends Mixed {
 	constructor() {
 		super();
 		
@@ -25,7 +28,5 @@ class Transform extends EventDispatcher {
 		return this.getValue().transformRect(rect);
 	}
 }
-
-Object.assign(Transform.prototype, Animatable);
 
 export default Transform;

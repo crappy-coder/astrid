@@ -9,7 +9,7 @@ import LayoutManager from "./LayoutManager";
 import DirtyRegion from "./DirtyRegion";
 import DirtyRegionTracker from "./DirtyRegionTracker";
 import Vector2D from "../Vector2D";
-import { ValueOrDefault, PrintMeasureOrder, DebugWrite, DebugLevel } from "../Engine";
+import { ValueOrDefault, PrintMeasureOrder, DebugWrite, DebugLevel, Mixin } from "../Engine";
 import NavigationMode from "../input/NavigationMode";
 import Event from "../Event";
 import BorderMetrics from "./BorderMetrics";
@@ -32,7 +32,9 @@ var DrawableFlags = {
 	"UseBitmapCaching": 256
 };
 
-class Drawable extends NamedObjectCollection {
+var Mixed = Mixin(NamedObjectCollection, Animatable);
+
+class Drawable extends Mixed {
 	constructor(name) {
 		super(name);
 
@@ -1945,7 +1947,5 @@ class Drawable extends NamedObjectCollection {
 		}
 	}
 }
-
-Object.assign(Drawable.prototype, Animatable);
 
 export default Drawable;

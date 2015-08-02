@@ -21,7 +21,9 @@ import { AreNotEqual, ValueOrDefault } from "../Engine";
  *  Your class must also be a subclass of EventDispatcher, whether directly or indirectly.
  *
  * <code>
- *		class Ball extends EventDispatcher {
+ *		var Mixed = Mixin(EventDispatcher, Animatable);
+ *
+ *		class Ball extends Mixed {
  *			constructor() {
  *				super();
  *
@@ -42,8 +44,6 @@ import { AreNotEqual, ValueOrDefault } from "../Engine";
  *				this.setPropertyValue("size", value);
  *			}
  *		}
- *
- * 		Object.assign(Ball.prototype, Animatable);
  *	</code>
  *
  * @EVENT PropertyChangedEvent.PROPERTY_CHANGED

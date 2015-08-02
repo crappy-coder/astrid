@@ -1,8 +1,11 @@
 import NamedObject from "../NamedObject";
 import MediaBase from "./MediaBase";
 import AudioManager from "./AudioManager";
+import { Mixin } from "../Engine";
 
-class Audio extends NamedObject {
+var Mixed = Mixin(NamedObject, MediaBase);
+
+class Audio extends Mixed {
 	constructor(name, sourceElement) {
 		super(name);
 
@@ -58,7 +61,5 @@ class Audio extends NamedObject {
 		AudioManager.getInstance().seek(name, position);
 	}
 }
-
-Object.assign(Audio.prototype, MediaBase);
 
 export default Audio;

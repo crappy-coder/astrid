@@ -3,10 +3,12 @@ import Animatable from "../animation/Animatable";
 import PenLineCap from "./PenLineCap";
 import PenLineJoin from "./PenLineJoin";
 import DashStyle from "./DashStyle";
-import { ValueOrDefault, AreEqual } from "../Engine";
+import { ValueOrDefault, AreEqual, Mixin } from "../Engine";
 import PropertyOptions from "./PropertyOptions";
 
-class Pen extends EventDispatcher {
+var Mixed = Mixin(EventDispatcher, Animatable);
+
+class Pen extends Mixed {
 	constructor(brush, thickness) {
 		super();
 
@@ -98,7 +100,5 @@ class Pen extends EventDispatcher {
 		AreEqual(this.getBrush(), other.getBrush()));
 	}
 }
-
-Object.assign(Pen.prototype, Animatable);
 
 export default Pen;

@@ -337,3 +337,9 @@ export function EnableLocalReadPermission() {
 		DebugWrite("Unable to give local read access.", DebugLevel.Error);
 	}
 }
+
+export function Mixin(Parent, mixin) {
+	class Mixed extends Parent {}
+	Object.assign(Mixed.prototype, mixin);
+	return Mixed;
+}
