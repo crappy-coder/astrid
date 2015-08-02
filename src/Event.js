@@ -1,4 +1,5 @@
 import Equatable from "./Equatable";
+import { ValueOrDefault } from "./Engine";
 
 var EventPhase = {
 	"CAPTURING"	: 1,

@@ -26,3 +26,5 @@ Object.assign(TimerEvent, {
 	TICK: "timerTick",
 	COMPLETE: "timerComplete"
 });
+
+export default TimerEvent;

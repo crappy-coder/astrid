@@ -1,10 +1,11 @@
 import { ValueOrDefault } from "../Engine";
+import EasingMode from "./EasingMode";
 
 class EasingFunction {
 	constructor(easingModeOrPercent) {
 	
 		/** EasingMode / Number (0.0 - 1.0) **/
-		this.easingPercent = ValueOrDefault(easingModeOrPercent, MoEasingMode.Out);
+		this.easingPercent = ValueOrDefault(easingModeOrPercent, EasingMode.Out);
 	}
 	
 	getEasingModeOrPercent() {

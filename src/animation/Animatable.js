@@ -4,7 +4,7 @@ import PropertyChangedEvent from "../ui/PropertyChangedEvent";
 import Drawable from "../ui/Drawable";
 import Tuple from "../Tuple";
 import Pair from "../Pair";
-import { AreNotEqual } from "../Engine";
+import { AreNotEqual, ValueOrDefault } from "../Engine";
 
 /**
  * @MIXIN
