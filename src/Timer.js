@@ -7,22 +7,23 @@ class Timer extends EventDispatcher {
 		super();
 
 		/** Integer **/
-		this.repeatCount = ValueOrDefault(repeatCount, 0);
-
+		this.repeatCount = MoValueOrDefault(repeatCount, 0);
+		
 		/** Number **/
-		this.interval = ValueOrDefault(interval, 100);
-
+		this.interval = MoValueOrDefault(interval, 100);
+		
 		/** Integer **/
 		this.iterations = 0;
 
 		/** Boolean **/
 		this.isRunning = false;
-
+		
 		/** Date **/
 		this.lastTickTimestamp = 0;
-		this.lastTick = 0;
+        
 		this.req = null;
-		this.cb = this.onTimerCallback.asDelegate(this);
+		this.evt = new MoTimerEvent(MoTimerEvent.TICK, 0, 0);
+        this.cb = this.onTimerCallback.asDelegate(this);
 	}
 
 	getRepeatCount() {
@@ -63,65 +64,48 @@ class Timer extends EventDispatcher {
 	}
 
 	reset() {
-		if (this.isRunning) {
+		if (this.isRunning)
 			this.stop();
-		}
 
 		this.iterations = 0;
 		this.lastTickTimestamp = 0;
 	}
 
 	start() {
-		this.lastTickTimestamp = new Date();
+		this.lastTickTimestamp = 0;
 		this.isRunning = true;
 		this.requestNextSample();
 	}
 
 	stop() {
-		if (!this.isRunning) {
+		if(!this.isRunning)
 			return;
-		}
 
 		this.isRunning = false;
 
-		if (this.repeatCount == 0 || this.iterations == this.repeatCount) {
-			this.dispatchEvent(new TimerEvent(TimerEvent.COMPLETE, Date.now(), this.lastTickTimestamp));
-		}
+		if(this.repeatCount == 0 || this.iterations == this.repeatCount)
+			this.dispatchEvent(new MoTimerEvent(MoTimerEvent.COMPLETE, Date.now(), this.lastTickTimestamp));
 	}
 
 	onTimerCallback(t) {
-		if (!this.isRunning) {
+		if(!this.isRunning)
 			return;
-		}
 
-		var delta = t - this.lastTickTimestamp;
-		var useTimeout = true;
-
-		if (delta >= this.interval) {
-			useTimeout = false;
-
+		if((t - this.lastTickTimestamp) >= this.interval)
+		{
 			this.iterations++;
-			this.dispatchEvent(new TimerEvent(TimerEvent.TICK, t, this.lastTickTimestamp));
+			
+			this.evt.currentTickTime = t;
+			this.evt.lastTickTime = this.lastTickTimestamp;
+			this.dispatchEvent(this.evt);
+			
 			this.lastTickTimestamp = t;
 		}
 
-		if (this.isRunning && (this.repeatCount == 0 || this.iterations < this.repeatCount)) {
-			delta = (this.interval - delta);
-
-			if (useTimeout && delta < 16 && delta > 0) {
-				var me = this;
-
-				setTimeout(function () {
-					me.cb((new Date() - 0));
-				}, delta);
-			}
-			else {
-				this.requestNextSample();
-			}
-		}
-		else {
+		if(this.isRunning && (this.repeatCount == 0 || this.iterations < this.repeatCount))
+			this.requestNextSample();
+		else
 			this.stop();
-		}
 	}
 
 	requestNextSample() {
