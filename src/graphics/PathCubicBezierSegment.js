@@ -115,6 +115,8 @@ class PathCubicBezierSegment extends PathSegment {
 	}
 
 	getTangent(prevSegment, fromStart) {
+		this.curvePoints = this.getCurvePoints(prevSegment);
+
 		var pt0 = new Vector2D(prevSegment != null ? prevSegment.x : 0, prevSegment != null ? prevSegment.y : 0);
 		var pt1 = new Vector2D(this.curvePoints.c1.x, this.curvePoints.c1.y);
 		var pt2 = new Vector2D(this.curvePoints.a1.x, this.curvePoints.a1.y);
