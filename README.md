@@ -11,6 +11,8 @@ To run:
 
 ## Building
 
+Builds are currently done user-side which can be seen in the examples. Below are details on how to create a standalone framework build which is not yet supported.
+
 First install dependencies:
 
 `npm install`
