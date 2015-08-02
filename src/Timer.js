@@ -22,7 +22,7 @@ class Timer extends EventDispatcher {
 		this.lastTickTimestamp = 0;
         
 		this.req = null;
-		this.evt = new MoTimerEvent(MoTimerEvent.TICK, 0, 0);
+		this.evt = new TimerEvent(TimerEvent.TICK, 0, 0);
         this.cb = this.onTimerCallback.asDelegate(this);
 	}
 
@@ -84,7 +84,7 @@ class Timer extends EventDispatcher {
 		this.isRunning = false;
 
 		if(this.repeatCount == 0 || this.iterations == this.repeatCount)
-			this.dispatchEvent(new MoTimerEvent(MoTimerEvent.COMPLETE, Date.now(), this.lastTickTimestamp));
+			this.dispatchEvent(new TimerEvent(TimerEvent.COMPLETE, Date.now(), this.lastTickTimestamp));
 	}
 
 	onTimerCallback(t) {
