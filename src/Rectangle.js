@@ -237,9 +237,11 @@ class Rectangle extends Equatable {
 	}
 
 	toIntRect() {
-		var rect = new Rectangle(this.x, this.y, this.width, this.height);
+		return this.copy().round();
+	}
 
-		return rect.round();
+	copy() {
+		return new Rectangle(this.x, this.y, this.width, this.height);
 	}
 
 	static Empty() {
