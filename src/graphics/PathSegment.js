@@ -1,6 +1,5 @@
 import Equatable from "../Equatable";
 import { ValueOrDefault } from "../Engine";
-import PathLineSegment from "./PathLineSegment";
 import Line from "../Line";
 
 class PathSegment extends Equatable {
@@ -49,7 +48,7 @@ class PathSegment extends Equatable {
 		var step = 1.0 / steps;
 		var sx = this.getXAt(0, prevSegment);
 		var sy = this.getYAt(0, prevSegment);
-		var line = new PathLineSegment(sx, sy);
+		var line = new this.constructor(sx, sy);
 
 		this.flatSegments.push(line);
 
@@ -57,11 +56,11 @@ class PathSegment extends Equatable {
 			var nx = this.getXAt(t, prevSegment);
 			var ny = this.getYAt(t, prevSegment);
 
-			line = new PathLineSegment(nx, ny);
+			line = new this.constructor(nx, ny);
 			this.flatSegments.push(line);
 		}
 
-		line = new PathLineSegment(this.getXAt(1, prevSegment), this.getYAt(1, prevSegment));
+		line = new this.constructor(this.getXAt(1, prevSegment), this.getYAt(1, prevSegment));
 		this.flatSegments.push(line);
 
 		return this.flatSegments;
@@ -101,7 +100,7 @@ class PathSegment extends Equatable {
 			pixelCount = testLine.getPixelsOutside(xcoords, ycoords, pos);
 
 			if (pixelCount > threshold) {
-				this.flatSegments.push(new PathLineSegment(lastLine.x1, lastLine.y1, lastLine.x2, lastLine.y2));
+				this.flatSegments.push(new this.constructor(lastLine.x1, lastLine.y1, lastLine.x2, lastLine.y2));
 
 				x1 = lastLine.x2;
 				y1 = lastLine.y2;
@@ -123,7 +122,7 @@ class PathSegment extends Equatable {
 			}
 		}
 
-		this.flatSegments.push(new PathLineSegment(x1, y1, this.getXAt(1, prevSegment), this.getYAt(1, prevSegment)));
+		this.flatSegments.push(new this.constructor(x1, y1, this.getXAt(1, prevSegment), this.getYAt(1, prevSegment)));
 
 		return this.flatSegments;
 	}
