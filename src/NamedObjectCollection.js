@@ -83,7 +83,7 @@ class NamedObjectCollection extends NamedObject {
 	}
 
 	clear() {
-		this.children.clear();
+		this.children.length = 0;
 	}
 
 	isEmpty() {

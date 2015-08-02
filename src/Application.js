@@ -6,7 +6,7 @@ import TimerEvent from "./TimerEvent";
 import DeviceMotionEvent from "./DeviceMotionEvent";
 import DeviceOrientationEvent from "./DeviceOrientationEvent";
 import FrameEvent from "./FrameEvent";
-import FPSClock from "./FPSGraph";
+import { FPSClock } from "./FPSGraph";
 import Gamepad from "./input/Gamepad";
 import ScreenOrientation from "./ui/ScreenOrientation";
 import Color from "./graphics/Color";

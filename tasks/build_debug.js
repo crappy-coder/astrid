@@ -9,6 +9,7 @@ browserify({ debug: true })
 			"runtime"
 		]
 	}))
+	.add('./src/Extensions.js')
 	.require("./src/Astrid.js", { entry: true })
 	.bundle()
 	.on("error", function (err) {

@@ -63,7 +63,7 @@ Function.prototype.asDelegate = function(context) {
 	}
 
 	// if the context is null then just return this function
-	if (Object.isUndefined(context)) {
+	if (context == null) {
 		return this;
 	}
 
