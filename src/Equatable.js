@@ -50,7 +50,7 @@ class Equatable {
 	}
 
 	copy() {
-		return Object.clone(this);
+		return Object.assign({}, this);
 	}
 
 	/*

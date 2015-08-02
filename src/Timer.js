@@ -8,22 +8,22 @@ class Timer extends EventDispatcher {
 
 		/** Integer **/
 		this.repeatCount = ValueOrDefault(repeatCount, 0);
-		
+
 		/** Number **/
 		this.interval = ValueOrDefault(interval, 100);
-		
+
 		/** Integer **/
 		this.iterations = 0;
 
 		/** Boolean **/
 		this.isRunning = false;
-		
+
 		/** Date **/
 		this.lastTickTimestamp = 0;
-        
+
 		this.req = null;
 		this.evt = new TimerEvent(TimerEvent.TICK, 0, 0);
-        this.cb = this.onTimerCallback.asDelegate(this);
+		this.cb = this.onTimerCallback.asDelegate(this);
 	}
 
 	getRepeatCount() {
@@ -64,8 +64,9 @@ class Timer extends EventDispatcher {
 	}
 
 	reset() {
-		if (this.isRunning)
+		if (this.isRunning) {
 			this.stop();
+		}
 
 		this.iterations = 0;
 		this.lastTickTimestamp = 0;
@@ -78,34 +79,38 @@ class Timer extends EventDispatcher {
 	}
 
 	stop() {
-		if(!this.isRunning)
+		if (!this.isRunning) {
 			return;
+		}
 
 		this.isRunning = false;
 
-		if(this.repeatCount == 0 || this.iterations == this.repeatCount)
+		if (this.repeatCount == 0 || this.iterations == this.repeatCount) {
 			this.dispatchEvent(new TimerEvent(TimerEvent.COMPLETE, Date.now(), this.lastTickTimestamp));
+		}
 	}
 
 	onTimerCallback(t) {
-		if(!this.isRunning)
+		if (!this.isRunning) {
 			return;
+		}
 
-		if((t - this.lastTickTimestamp) >= this.interval)
-		{
+		if ((t - this.lastTickTimestamp) >= this.interval) {
 			this.iterations++;
-			
+
 			this.evt.currentTickTime = t;
 			this.evt.lastTickTime = this.lastTickTimestamp;
 			this.dispatchEvent(this.evt);
-			
+
 			this.lastTickTimestamp = t;
 		}
 
-		if(this.isRunning && (this.repeatCount == 0 || this.iterations < this.repeatCount))
+		if (this.isRunning && (this.repeatCount == 0 || this.iterations < this.repeatCount)) {
 			this.requestNextSample();
-		else
+		}
+		else {
 			this.stop();
+		}
 	}
 
 	requestNextSample() {

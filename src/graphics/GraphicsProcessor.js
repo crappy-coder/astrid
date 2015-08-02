@@ -1,5 +1,6 @@
 import Rectangle from "../Rectangle";
 import PathMoveSegment from "./PathMoveSegment";
+import PathLineSegment from "./PathLineSegment";
 import Vector2D from "../Vector2D";
 import GraphicsOp from "./GraphicsOp";
 

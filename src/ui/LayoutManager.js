@@ -72,11 +72,9 @@ class LayoutPriorityQueue {
 			}
 
 			// Remove the item with largest priority from our priority queue.
-			// Must use a for loop here since we're removing a specific item
-			// from a 'Dictionary' (no means of directly indexing).
 			var keys = bin.items.getKeys();
 
-			obj = keys[i];
+			obj = keys[0];
 			this.removeChild(obj, this.maxPriority);
 
 			// Update maxPriority if applicable.

@@ -9,6 +9,10 @@ class Rectangle extends Equatable {
 	constructor(x, y, width, height) {
 		super();
 
+		this.initialize(x, y, width, height);
+	}
+
+	initialize(x, y, width, height) {
 		this.x = ValueOrDefault(x, 0);
 		this.y = ValueOrDefault(y, 0);
 		this.width = ValueOrDefault(width, 0);
