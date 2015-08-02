@@ -7,10 +7,10 @@ class Timer extends EventDispatcher {
 		super();
 
 		/** Integer **/
-		this.repeatCount = MoValueOrDefault(repeatCount, 0);
+		this.repeatCount = ValueOrDefault(repeatCount, 0);
 		
 		/** Number **/
-		this.interval = MoValueOrDefault(interval, 100);
+		this.interval = ValueOrDefault(interval, 100);
 		
 		/** Integer **/
 		this.iterations = 0;
