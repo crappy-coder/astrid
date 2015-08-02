@@ -4,6 +4,7 @@ import { ValueOrDefault } from "../Engine";
 
 class Keyframe extends Equatable {
 	constructor(keyTime, value) {
+		super();
 	
 		/** Number **/
 		this.keyTime = ValueOrDefault(keyTime, -1);

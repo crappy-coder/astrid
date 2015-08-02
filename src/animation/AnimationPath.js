@@ -22,6 +22,7 @@ class AnimationPath extends Equatable {
 		 *
 		 * RETURNS (void):
 		 */
+		super();
 
 		this.property = ValueOrDefault(property, null);
 		this.keyframes = [];
