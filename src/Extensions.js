@@ -116,8 +116,8 @@ String.formatWithObjects = function(formatString, objects) {
 
 
 performance = performance || {
-		now: function () {
-			return Date.now() - this.offset;
-		},
-		offset: Date.now()
+	now: function () {
+		return Date.now() - this.offset;
+	},
+	offset: Date.now()
 };
