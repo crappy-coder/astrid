@@ -9,7 +9,7 @@ import TouchEvent from "../../../src/input/TouchEvent";
 import Vector2D from "../../../src/Vector2D";
 
 class BubbleVertex {
-	initialize(x, y) {
+	constructor(x, y) {
 		this.x = x;
 		this.y = y;
 		this.vx = 5 * Math.random();
