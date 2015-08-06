@@ -257,11 +257,7 @@ export function CreateHttpRequestObject() {
 	}
 }
 
-export function RequestAnimationFrame(callback, element) {
-
-	// TODO : need to fix for native platform
-	//return window.requestAnimationFrame(callback);
-
+export function RequestAnimationFrame(callback) {
 	var nativeFunc =
 		window.requestAnimationFrame ||
 		window.webkitRequestAnimationFrame ||
@@ -271,7 +267,7 @@ export function RequestAnimationFrame(callback, element) {
 
 		function (callback) {
 			return window.setTimeout(function () {
-				callback(Date.now());
+				callback(performance.now());
 			}, 0);
 		};
 

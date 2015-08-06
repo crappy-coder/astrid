@@ -10,7 +10,7 @@ class Timer extends EventDispatcher {
 		this.repeatCount = ValueOrDefault(repeatCount, 0);
 
 		/** Number **/
-		this.interval = ValueOrDefault(interval, 100);
+		this.interval = ValueOrDefault(interval, 1000 / 60);
 
 		/** Integer **/
 		this.iterations = 0;
@@ -18,11 +18,11 @@ class Timer extends EventDispatcher {
 		/** Boolean **/
 		this.isRunning = false;
 
-		/** Date **/
-		this.lastTickTimestamp = 0;
+		/** Timestamp **/
+		this.lastTickTimestamp = performance.now();
 
 		this.req = null;
-		this.evt = new TimerEvent(TimerEvent.TICK, 0, 0);
+		this.evt = new TimerEvent(TimerEvent.TICK, this.lastTickTimestamp, this.lastTickTimestamp);
 		this.cb = this.onTimerCallback.asDelegate(this);
 	}
 
@@ -69,11 +69,11 @@ class Timer extends EventDispatcher {
 		}
 
 		this.iterations = 0;
-		this.lastTickTimestamp = 0;
+		this.lastTickTimestamp = performance.now();
 	}
 
 	start() {
-		this.lastTickTimestamp = 0;
+		this.lastTickTimestamp = performance.now();
 		this.isRunning = true;
 		this.requestNextSample();
 	}
@@ -85,8 +85,8 @@ class Timer extends EventDispatcher {
 
 		this.isRunning = false;
 
-		if (this.repeatCount == 0 || this.iterations == this.repeatCount) {
-			this.dispatchEvent(new TimerEvent(TimerEvent.COMPLETE, Date.now(), this.lastTickTimestamp));
+		if (this.repeatCount == 0 || this.iterations === this.repeatCount) {
+			this.dispatchEvent(new TimerEvent(TimerEvent.COMPLETE, performance.now(), this.lastTickTimestamp));
 		}
 	}
 
@@ -95,17 +95,20 @@ class Timer extends EventDispatcher {
 			return;
 		}
 
-		if ((t - this.lastTickTimestamp) >= this.interval) {
+		var delta = t - this.lastTickTimestamp;
+
+		if (delta >= this.interval) {
 			this.iterations++;
 
 			this.evt.currentTickTime = t;
 			this.evt.lastTickTime = this.lastTickTimestamp;
+
 			this.dispatchEvent(this.evt);
 
-			this.lastTickTimestamp = t;
+			this.lastTickTimestamp = t - (delta % this.interval);
 		}
 
-		if (this.isRunning && (this.repeatCount == 0 || this.iterations < this.repeatCount)) {
+		if (this.isRunning && (this.repeatCount === 0 || this.iterations < this.repeatCount)) {
 			this.requestNextSample();
 		}
 		else {
@@ -114,7 +117,7 @@ class Timer extends EventDispatcher {
 	}
 
 	requestNextSample() {
-		this.req = RequestAnimationFrame(this.cb, null);
+		this.req = RequestAnimationFrame(this.cb);
 	}
 }
 

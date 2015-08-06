@@ -113,3 +113,11 @@ String.format = function(formatString) {
 String.formatWithObjects = function(formatString, objects) {
 	return String.format.apply(formatString, objects);
 };
+
+
+performance = performance || {
+	now: function () {
+		return Date.now() - this.offset;
+	},
+	offset: Date.now()
+};
