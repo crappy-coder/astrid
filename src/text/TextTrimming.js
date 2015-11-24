@@ -1,4 +1,4 @@
-var TextTrimming = {
+const TextTrimming = {
 	"None"		: 0,
 	"Character"	: 1,
 	"Word"		: 2

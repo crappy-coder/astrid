@@ -1,4 +1,4 @@
-var Key = {
+const Key = {
 	"None": 0,
 	"Cancel": 1,
 	"Back": 2,

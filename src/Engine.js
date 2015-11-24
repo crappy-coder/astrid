@@ -2,6 +2,7 @@ import Stack from "./Stack";
 import Application from "./Application";
 import System from "./System";
 import Equatable from "./Equatable";
+import Dictionary from "./Dictionary";
 
 /*
  *  astrid
@@ -285,6 +286,17 @@ export function ValueOrDefault(value, defaultValue) {
 
 export function StringContains(str, value) {
 	return (str.indexOf(value) != -1);
+}
+
+export function IsNull(value) {
+	return (value == undefined || value == null);
+}
+
+export function StringIsNullOrEmpty(value) {
+	if(IsNull(value))
+		return true;
+
+	return (value.length == 0);
 }
 
 export function AreEqual(a, b) {

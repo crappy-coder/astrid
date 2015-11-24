@@ -3,7 +3,8 @@
 
 ## Examples
 
-To run:
+To run the examples: 
+
 * Run `npm install` inside root astrid folder.
 * Run a local server from the root astrid folder.
 * Inside the folder for the example you want to load, run `node build.js`. This will look for the main.js file for that example, see what files it requires from the framework and build from that everything it needs into one file.

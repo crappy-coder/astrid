@@ -81,10 +81,10 @@ class StackPanel extends Panel {
 
 		var isHorizontal = (this.getOrientation() == Orientation.Horizontal);
 		var child = null;
-		var childWidth = 0;
-		var childHeight = 0;
 		var childX = 0;
 		var childY = 0;
+		var childWidth = 0;
+		var childHeight = 0;
 		var childMargin = null;
 
 		for (var i = 0, len = this.getCount(); i < len; ++i) {
@@ -108,13 +108,13 @@ class StackPanel extends Panel {
 				childHeight = unscaledHeight * (child.getPercentHeight() / 100);
 			}
 
-
 			// layout the children horizontally
-			if (isHorizontal) {
+			if(isHorizontal)
+			{
 				// calculate the vertical alignment position
 				childY = ((unscaledHeight - (childHeight + childMargin.getSizeY())) * child.getVerticalAlignment());
 
-				// update the child's layout position and actual size, with the margins
+				// update the childs layout position and actual size, with the margins
 				child.setLayoutPosition(childX + childMargin.getLeft(), childY + childMargin.getTop());
 				child.setActualSize(childWidth, childHeight);
 
@@ -123,11 +123,12 @@ class StackPanel extends Panel {
 			}
 
 			// otherwise, layout vertically
-			else {
+			else
+			{
 				// calculate the horizontal alignment position
 				childX = ((unscaledWidth - (childWidth + childMargin.getSizeX())) * child.getHorizontalAlignment());
 
-				// update the child's layout position and actual size, with the margins
+				// update the childs layout position and actual size, with the margins
 				child.setLayoutPosition(childX + childMargin.getLeft(), childY + childMargin.getTop());
 				child.setActualSize(childWidth, childHeight);
 

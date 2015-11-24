@@ -1,4 +1,4 @@
-var ModifierKeys = {
+const ModifierKeys = {
 	"None": 0,
 	"Alt": 1,
 	"Control": 2,

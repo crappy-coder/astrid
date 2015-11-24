@@ -1,17 +1,17 @@
-import EventDispatcher from "../EventDispatcher";
-import { IsFirefox, Gamepads, GetTimer } from "../Engine";
-import GamepadDeadZoneMode from "./GamepadDeadZoneMode";
-import GamepadDeadZoneSize from "./GamepadDeadZoneSize";
-import GamepadButtonMap from "./GamepadButtonMap";
-import GamepadState from "./GamepadState";
-import GamepadButtons from "./GamepadButtons";
-import Vector2D from "../Vector2D";
-import Application from "../Application.js";
-import Timer from "../Timer";
-import TimerEvent from "../TimerEvent";
-import GamepadButtonEvent from "./GamepadButtonEvent";
-import GamepadEvent from "./GamepadEvent";
-
+import EventDispatcher from "../EventDispatcher"
+import { IsFirefox, Gamepads, GetTimer } from "../Engine"
+import GamepadDeadZoneMode from "./GamepadDeadZoneMode"
+import GamepadDeadZoneSize from "./GamepadDeadZoneSize"
+import GamepadButtonMap from "./GamepadButtonMap"
+import GamepadAxesMap from "./GamepadAxesMap"
+import GamepadState from "./GamepadState"
+import GamepadButtons from "./GamepadButtons"
+import Vector2D from "../Vector2D"
+import Application from "../Application"
+import Timer from "../Timer"
+import TimerEvent from "../TimerEvent"
+import GamepadButtonEvent from "./GamepadButtonEvent"
+import GamepadEvent from "./GamepadEvent"
 
 class Gamepad extends EventDispatcher {
 	constructor() {
@@ -21,10 +21,10 @@ class Gamepad extends EventDispatcher {
 		this.timestamps = [0, 0, 0, 0];
 		this.states = [null, null, null, null];
 		this.prevStates = [null, null, null, null];
-		this.deadZoneSizes = [GamepadDeadZoneSize.Trigger, GamepadDeadZoneSize.LeftStick,
-													GamepadDeadZoneSize.RightStick];
+		this.deadZoneSizes = [GamepadDeadZoneSize.Trigger, GamepadDeadZoneSize.LeftStick, GamepadDeadZoneSize.RightStick];
 		this.deadZoneModes = [GamepadDeadZoneMode.Normal, GamepadDeadZoneMode.Normal, GamepadDeadZoneMode.Normal];
-		this.mapping = GamepadButtonMap.XBOX360;
+		this.buttonMapping = Application.getInstance().getGamepadButtonMap();
+		this.axesMapping = Application.getInstance().getGamepadAxesMap();
 		this.eventTimer = null;
 		this.eventTicks = [0, 0, 0, 0];
 		this.buttonEventCache = null;
@@ -144,23 +144,29 @@ class Gamepad extends EventDispatcher {
 		var buttons = GamepadButtons.None;
 
 		for (var i = 0, len = gp.buttons.length; i < len; ++i) {
-			buttons |= this.getFlagForButton(gp, i, this.mapping.get(i));
+			buttons |= this.getFlagForButton(gp, i, this.buttonMapping.get(i));
 		}
 
 		return buttons;
 	}
 
 	getStickValues(gp) {
-		return [new Vector2D(gp.axes[0], gp.axes[1]),
-						new Vector2D(gp.axes[2], gp.axes[3])];
+		var leftIndices = this.axesMapping.get(GamepadButtons.LeftStick);
+		var rightIndices = this.axesMapping.get(GamepadButtons.RightStick);
+
+		return [new Vector2D(gp.axes[leftIndices[0]], gp.axes[leftIndices[1]]),
+						new Vector2D(gp.axes[rightIndices[0]], gp.axes[rightIndices[1]])];
 	}
 
 	getTriggerValues(gp) {
-		return [gp.buttons[6], gp.buttons[7]];
+		var leftIndex = this.axesMapping.get(GamepadButtons.LeftTrigger);
+		var rightIndex = this.axesMapping.get(GamepadButtons.RightTrigger);
+
+		return [gp.buttons[leftIndex], gp.buttons[rightIndex]];
 	}
 
 	getFlagForButton(gp, idx, button) {
-		return (gp.buttons[idx] == 0 ? 0 : button);
+		return (gp.buttons[idx].value == 0 ? 0 : button);
 	}
 
 	enableEvents() {
@@ -211,7 +217,7 @@ class Gamepad extends EventDispatcher {
 			//         instead of clocking off the main frame rate.
 			//
 			lastFrameTick = this.eventTicks[i - 1];
-			includeDownEvents = (lastFrameTick == 0 || (tickNow - lastFrameTick) >= 150);
+			includeDownEvents = (lastFrameTick == 0 || (tickNow - lastFrameTick) >= 250);
 
 			// process any events
 			if (this.processStateEvents(i, lastState, state, includeDownEvents)) {

@@ -8,3 +8,5 @@ class SourceEvent extends Event {
 
 SourceEvent.READY = "sourceReady";
 SourceEvent.CHANGE = "sourceChange";
+
+export default SourceEvent;

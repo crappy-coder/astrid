@@ -1,4 +1,4 @@
-var FontStretch = {
+const FontStretch = {
 	"Normal" 			: 1,
 	"SemiCondensed" 	: 2,
 	"Condensed" 		: 3,

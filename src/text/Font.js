@@ -112,53 +112,38 @@ class Font extends Equatable {
 	}
 
 	measureString(str, maxWidth) {
-		var canvas = document.createElement("canvas");
-		var ctx = canvas.getContext("2d");
-		var metrics = null;
-		var actualWidth = 0;
+		maxWidth = ValueOrDefault(maxWidth, 10000);
 
-		canvas.font = this.toString();
-		metrics = ctx.measureText(str);
-		actualWidth = metrics.width;
+		if(!Font.MeasureTextElement)
+		{
+			Font.MeasureTextElement = document.createElement("span");
+			Font.MeasureTextElement.style.position = "absolute";
+			Font.MeasureTextElement.style.left = "-2000px";
+			Font.MeasureTextElement.style.top = "-2000px";
 
-		if (maxWidth != null && maxWidth < actualWidth) {
-			actualWidth = maxWidth;
+			document.body.appendChild(Font.MeasureTextElement);
 		}
 
-		// make sure these references are removed
-		// just in case
-		ctx = null;
-		canvas = null;
+		var textNode = document.createTextNode(str);
+		var size = new Size(0, 0);
 
-		////////////////////////////////////////////////////////
-		//                             can only approximate here
-		return new Size(actualWidth, this.fontSize * 1.2);
+		Font.MeasureTextElement.style.font = this.toString();
+		Font.MeasureTextElement.appendChild(textNode);
 
-		// var elLastChild = document.lastChild;
+		size.width = Math.max(0, Math.min(Font.MeasureTextElement.offsetWidth, maxWidth));
+		size.height = Math.max(0, Font.MeasureTextElement.offsetHeight);
 
-		// // create a temp span element, assign the text and font css style
-		// var elSpan = document.createElement("span");
-		// elSpan.textContent = str;
-		// elSpan.style.font = this.toString();
+		Font.MeasureTextElement.removeChild(textNode);
 
-		// if(maxWidth != null)
-		// {
-		// elSpan.style.display = "inline-block";
-		// elSpan.style.width = maxWidth + "px";
-		// }
+		return size;
+	}
 
-		// // add the span to the end of the document, just so we
-		// // can get the measurements
-		// elLastChild.appendChild(elSpan);
-
-		// // now get the measurements
-		// var bounds = elSpan.getBoundingClientRect();
-
-		// // finally, remove the span, this should be good enough to
-		// // avoid any flicker or wierdness with the current page
-		// elLastChild.removeChild(elSpan);
-
-		// return new Size(bounds.width, bounds.height);
+	isEqualTo(other) {
+		return (this.fontName === other.fontName &&
+				this.fontSize === other.fontSize &&
+				this.fontStretch === other.fontStretch &&
+				this.fontStyle === other.fontStyle &&
+				this.fontWeight === other.fontWeight);
 	}
 
 	toString() {
@@ -166,7 +151,7 @@ class Font extends Equatable {
 		var weightString = this.fontWeight.toString();
 		var styleString = this.getStyleCSSValue();
 
-		return styleString + " normal " + weightString + " " + sizeString + " " + this.fontName
+		return styleString + " normal " + weightString + " " + sizeString + " '" + this.fontName + "'";
 	}
 
 	toCSSFontRule(srcOrDataUri) {
@@ -189,6 +174,18 @@ class Font extends Equatable {
 		return rule;
 	}
 
+	static fromFont(font) {
+		var f = new Font();
+
+		f.setFontName(font.fontName);
+		f.setFontStyle(font.fontStyle);
+		f.setFontWeight(font.fontWeight);
+		f.setFontStretch(font.fontStretch);
+		f.setFontSize(font.fontSize);
+
+		return f;
+	}
+
 	static create(name, style, weight, stretch, size) {
 		var f = new Font();
 
@@ -201,5 +198,7 @@ class Font extends Equatable {
 		return f;
 	}
 }
+
+Font.MeasureTextElement = null;
 
 export default Font;

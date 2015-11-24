@@ -25,12 +25,8 @@ Array.prototype.removeAt = function(index) {
 
 Function.prototype.findEventHandler$ = function(context) {
 
-	// if there is no event handler table for this function instance
-	// create one, this is done at the instance level so we do not
-	// generate huge tables instead of using Function.prototype.eventHandlerTable
-	// which would be a single instance for all functions
-	if (this.eventHandlerTable == null) {
-		this.eventHandlerTable = [];
+	// no handler table has been created yet to search
+	if (!this.eventHandlerTable) {
 		return null;
 	}
 
@@ -47,6 +43,14 @@ Function.prototype.findEventHandler$ = function(context) {
 };
 
 Function.prototype.createEventHandler$ = function(context, handler) {
+	// if there is no event handler table for this function instance
+	// create one, this is done at the instance level so we do not
+	// generate huge tables instead of using Function.prototype.eventHandlerTable
+	// which would be a single instance for all functions
+	if (!this.eventHandlerTable) {
+		this.eventHandlerTable = [];
+	}
+
 	this.eventHandlerTable.push({context:context, handler:handler});
 
 	return handler;

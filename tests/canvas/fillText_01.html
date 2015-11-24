@@ -6,106 +6,121 @@
 	{
 		var canvas = document.getElementById("canvas");
 		var ctx = canvas.getContext("2d");
-		var x = 100;
+		var x = 250;
 		
 		
 		//10px sans-serif
-		console.log(ctx.font);
-		console.log(ctx.textAlign);
-		console.log(ctx.textBaseline);
-		
-		ctx.font = "24px Arial";
+//		console.log(ctx.font);
+//		console.log(ctx.textAlign);
+//		console.log(ctx.textBaseline);
 
-		ctx.fillStyle = "#ffffff";
-		ctx.fillText("TOP", 0, 20);
-			
-		drawText(ctx, "Start y g", x, 50, "start", "top");
-		drawText(ctx, "End y g", x, 100, "end", "top");
-		drawText(ctx, "Left y g", x, 150, "left", "top");
-		drawText(ctx, "Right y g", x, 200, "right", "top");
-		drawText(ctx, "Center y g", x, 250, "center", "top");
-		
-		ctx.fillStyle = "#ffffff";
-		ctx.textAlign = "start";
-		ctx.textBaseline = "alphabetic";
-		ctx.fillText("HANGING", 200, 20);
-			
-		x = 300;
-			
-		drawText(ctx, "Start y g", x, 50, "start", "hanging");
-		drawText(ctx, "End y g", x, 100, "end", "hanging");
-		drawText(ctx, "Left y g", x, 150, "left", "hanging");
-		drawText(ctx, "Right y g", x, 200, "right", "hanging");
-		drawText(ctx, "Center y g", x, 250, "center", "hanging");
-		
+		ctx.font = "24px Arial";
+		drawText(ctx, "START", 80, 50, "right", "middle", true);
+		drawText(ctx, "END", 80, 125, "right", "middle", true);
+		drawText(ctx, "LEFT", 80, 200, "right", "middle", true);
+		drawText(ctx, "RIGHT", 80, 275, "right", "middle", true);
+		drawText(ctx, "CENTER", 80, 350, "right", "middle", true);
+
+		ctx.font = "24px Arial";
 		ctx.fillStyle = "#ffffff";
 		ctx.textAlign = "start";
 		ctx.textBaseline = "alphabetic";
-		ctx.fillText("MIDDLE", 400, 20);
+		ctx.fillText("TOP", x, 20);
 			
-		x = 500;
-			
-		drawText(ctx, "Start y g", x, 50, "start", "middle");
-		drawText(ctx, "End y g", x, 100, "end", "middle");
-		drawText(ctx, "Left y g", x, 150, "left", "middle");
-		drawText(ctx, "Right y g", x, 200, "right", "middle");
-		drawText(ctx, "Center y g", x, 250, "center", "middle");
-		
+		drawText(ctx, "XWYG - xwyg", x, 50, "start", "top");
+		drawText(ctx, "XWYG - xwyg", x, 125, "end", "top");
+		drawText(ctx, "XWYG - xwyg", x, 200, "left", "top");
+		drawText(ctx, "XWYG - xwyg", x, 275, "right", "top");
+		drawText(ctx, "XWYG - xwyg", x, 350, "center", "top");
+
+		x += 325;
 		ctx.fillStyle = "#ffffff";
 		ctx.textAlign = "start";
 		ctx.textBaseline = "alphabetic";
-		ctx.fillText("ALPHABETIC", 600, 20);
-			
-		x = 700;
-			
-		drawText(ctx, "Start y g", x, 50, "start", "alphabetic");
-		drawText(ctx, "End y g", x, 100, "end", "alphabetic");
-		drawText(ctx, "Left y g", x, 150, "left", "alphabetic");
-		drawText(ctx, "Right y g", x, 200, "right", "alphabetic");
-		drawText(ctx, "Center y g", x, 250, "center", "alphabetic");
-		
+		ctx.fillText("HANGING", x, 20);
+
+		drawText(ctx, "XWYG - xwyg", x, 50, "start", "hanging");
+		drawText(ctx, "XWYG - xwyg", x, 125, "end", "hanging");
+		drawText(ctx, "XWYG - xwyg", x, 200, "left", "hanging");
+		drawText(ctx, "XWYG - xwyg", x, 275, "right", "hanging");
+		drawText(ctx, "XWYG - xwyg", x, 350, "center", "hanging");
+
+		x += 325;
 		ctx.fillStyle = "#ffffff";
 		ctx.textAlign = "start";
 		ctx.textBaseline = "alphabetic";
-		ctx.fillText("IDEOGRAPHIC", 800, 20);
-			
-		x = 900;
-			
-		drawText(ctx, "Start y g", x, 50, "start", "ideographic");
-		drawText(ctx, "End y g", x, 100, "end", "ideographic");
-		drawText(ctx, "Left y g", x, 150, "left", "ideographic");
-		drawText(ctx, "Right y g", x, 200, "right", "ideographic");
-		drawText(ctx, "Center y g", x, 250, "center", "ideographic");
-		
+		ctx.fillText("MIDDLE", x, 20);
+
+		drawText(ctx, "XWYG - xwyg", x, 50, "start", "middle");
+		drawText(ctx, "XWYG - xwyg", x, 125, "end", "middle");
+		drawText(ctx, "XWYG - xwyg", x, 200, "left", "middle");
+		drawText(ctx, "XWYG - xwyg", x, 275, "right", "middle");
+		drawText(ctx, "XWYG - xwyg", x, 350, "center", "middle");
+
+		x += 325;
 		ctx.fillStyle = "#ffffff";
 		ctx.textAlign = "start";
 		ctx.textBaseline = "alphabetic";
-		ctx.fillText("BOTTOM", 1000, 20);
-			
-		x = 1100;
-			
-		drawText(ctx, "Start y g", x, 50, "start", "bottom");
-		drawText(ctx, "End y g", x, 100, "end", "bottom");
-		drawText(ctx, "Left y g", x, 150, "left", "bottom");
-		drawText(ctx, "Right y g", x, 200, "right", "bottom");
-		drawText(ctx, "Center y g", x, 250, "center", "bottom");
+		ctx.fillText("ALPHABETIC", x, 20);
+
+		drawText(ctx, "XWYG - xwyg", x, 50, "start", "alphabetic");
+		drawText(ctx, "XWYG - xwyg", x, 125, "end", "alphabetic");
+		drawText(ctx, "XWYG - xwyg", x, 200, "left", "alphabetic");
+		drawText(ctx, "XWYG - xwyg", x, 275, "right", "alphabetic");
+		drawText(ctx, "XWYG - xwyg", x, 350, "center", "alphabetic");
+
+		x += 325;
+		ctx.fillStyle = "#ffffff";
+		ctx.textAlign = "start";
+		ctx.textBaseline = "alphabetic";
+		ctx.fillText("IDEOGRAPHIC", x, 20);
+
+		drawText(ctx, "XWYG - xwyg", x, 50, "start", "ideographic");
+		drawText(ctx, "XWYG - xwyg", x, 125, "end", "ideographic");
+		drawText(ctx, "XWYG - xwyg", x, 200, "left", "ideographic");
+		drawText(ctx, "XWYG - xwyg", x, 275, "right", "ideographic");
+		drawText(ctx, "XWYG - xwyg", x, 350, "center", "ideographic");
+
+		x += 325;
+		ctx.fillStyle = "#ffffff";
+		ctx.textAlign = "start";
+		ctx.textBaseline = "alphabetic";
+		ctx.fillText("BOTTOM", x, 20);
+
+		drawText(ctx, "XWYG - xwyg", x, 50, "start", "bottom");
+		drawText(ctx, "XWYG - xwyg", x, 100, "end", "bottom");
+		drawText(ctx, "XWYG - xwyg", x, 200, "left", "bottom");
+		drawText(ctx, "XWYG - xwyg", x, 275, "right", "bottom");
+		drawText(ctx, "XWYG - xwyg", x, 350, "center", "bottom");
 	}
 	
-	function drawText(ctx, text, x, y, align, baseline)
+	function drawText(ctx, text, x, y, align, baseline, noLines)
 	{
 		x += 0.5;
 		y += 0.5;
 	
 		var metrics = ctx.measureText(text);
-	
-		ctx.beginPath();
-		ctx.moveTo(x, y);
-		ctx.lineTo(x + metrics.width + 10, y);
-		ctx.moveTo(x, y);
-		ctx.lineTo(x, y - 24);
-		ctx.lineWidth = 1;
-		ctx.strokeStyle = "#ffffff";
-		ctx.stroke();
+
+		if(!noLines)
+		{
+			ctx.beginPath();
+
+			ctx.moveTo(x, y);
+			ctx.lineTo(x + metrics.width, y);
+
+			ctx.moveTo(x, y);
+			ctx.lineTo(x, y + 14);
+
+			ctx.moveTo(x, y);
+			ctx.lineTo(x - metrics.width, y);
+
+			ctx.moveTo(x, y);
+			ctx.lineTo(x, y - 14);
+
+			ctx.lineWidth = 1;
+			ctx.strokeStyle = "#ffffff";
+			ctx.stroke();
+		}
 
 		ctx.textAlign = align;
 		ctx.textBaseline = baseline;
@@ -115,6 +130,6 @@
   </script>
 </head>
 <body onload="draw()" style="background-color:#000000">
-	<canvas id="canvas" width="1600" height="800" ></canvas>
+	<canvas id="canvas" width="2048" height="800" ></canvas>
 </body>
 </html> 

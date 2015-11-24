@@ -21,8 +21,7 @@ class Brush extends Mixed {
 	}
 
 	initializeAnimatablePropertiesCore() {
-		this.enableAnimatableProperty("transform", this.getTransform, this.setTransform, PropertyOptions.AffectsLayout |
-			PropertyOptions.AffectsMeasure);
+		this.enableAnimatableProperty("transform", this.getTransform, this.setTransform, PropertyOptions.AffectsLayout | PropertyOptions.AffectsMeasure);
 		this.enableAnimatableProperty("opacity", this.getOpacity, this.setOpacity, PropertyOptions.AffectsLayout);
 	}
 

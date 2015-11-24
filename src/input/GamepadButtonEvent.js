@@ -25,3 +25,5 @@ class GamepadButtonEvent extends GamepadEvent {
 
 GamepadButtonEvent.DOWN = "gamepadButtonDown";
 GamepadButtonEvent.UP = "gamepadButtonUp";
+
+export default GamepadButtonEvent;

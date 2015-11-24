@@ -63,8 +63,6 @@ class Control extends Drawable {
 	}
 
 	commitProperties() {
-		super.commitProperties();
-
 		if (this.borderBrush != null && this.borderThickness > 0) {
 			if (this.pen == null) {
 				this.pen = new Pen(this.borderBrush, this.borderThickness);
@@ -88,8 +86,7 @@ class Control extends Drawable {
 			var thickness = this.getBorderThickness();
 			var inset = thickness * 0.5;
 
-			this.graphics.drawRect(inset, inset, Math.max(0, unscaledWidth - thickness), Math.max(0, unscaledHeight -
-				thickness));
+			this.graphics.drawRect(inset, inset, Math.max(0, unscaledWidth - thickness), Math.max(0, unscaledHeight - thickness));
 			this.drawBackground();
 			this.drawBorder();
 		}

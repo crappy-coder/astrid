@@ -98,11 +98,11 @@ class AnimationPath extends Equatable {
 	setKeyframes(value) {
 		/**
 		 * SUMMARY:
-		 *  Set a sequence of Keyframe objects that will represent the time/value pairs
-		 *  that the property will take duration animation. Each pair of keyframes determines
-		 *  the animation during the time interval between the two. If the later of the two
-		 *  keyframes contains an easing function, then it will be used to determine the
-		 *  behavior during that time interval.
+		 *  Sets a sequence of Keyframe objects which represent the time/value pairs that the
+		 *  property will take during animation. Each pair of keyframes determines the animation
+		 *  during the time interval between the two. If the later of the two keyframes contains
+		 *  an easing function, then it will be used to determine the behavior during that time
+		 *  interval.
 		 *
 		 *  The sequence of keyframes must be of increasing time values, sorted from lowest
 		 *  to highest.
@@ -154,10 +154,9 @@ class AnimationPath extends Equatable {
 		}
 
 		var keyframes = this.getKeyframes();
-		var len = keyframes.length;
 		var duration = 0;
 
-		for (var i = 0; i < len; i++) {
+		for (var i = 0, len = keyframes.length; i < len; ++i) {
 			duration = Math.max(keyframes[i].getKeyTime(), duration);
 		}
 
@@ -189,7 +188,7 @@ class AnimationPath extends Equatable {
 		var len = keyframes.length;
 
 		// only two key frames, so this is a from/to, just interpolate using the
-		// provided fraction, this may be outside of 0.0-1.0 for elastic type easing
+		// provided fraction, this may be outside of the [0.0 - 1.0] range (i.e. elastic easing)
 		if (len == 2 && keyframes[1].getTimeFraction() == 1) {
 			return this.interpolator.interpolate(
 				keyframes[1].getEaser() == null ? fraction : keyframes[1].getEaser().ease(fraction),

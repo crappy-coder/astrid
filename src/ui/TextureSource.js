@@ -101,12 +101,13 @@ class TextureSource extends ImageSource {
 			textureData = new TextureData();
 			textureData.addEventHandler(LoadEvent.SUCCESS, this.handleLoadEvent.asDelegate(this));
 			textureData.addEventHandler(LoadEvent.FAILURE, this.handleErrorEvent.asDelegate(this));
-			textureData.load(url);
 
 			// cache this texture now so that it can be re-used right away, even before it's fully loaded
 			if (this.shouldCacheTexture()) {
 				TextureCacheAdd(cacheKey, textureData);
 			}
+
+			textureData.load(url);
 		}
 
 		// the texture is cached, load from memory

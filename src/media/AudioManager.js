@@ -103,7 +103,7 @@ class AudioManager {
 
 	static getInstance() {
 		if (AudioManager.Instance == null) {
-			AudioManager.Instance = new this();
+			AudioManager.Instance = new AudioManager();
 		}
 
 		return AudioManager.Instance;

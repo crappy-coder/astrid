@@ -1,7 +1,7 @@
 import NamedObject from "../NamedObject";
 import MediaBase from "./MediaBase";
 import AudioManager from "./AudioManager";
-import { Mixin } from "../Engine";
+import { Mixin, ValueOrDefault } from "../Engine";
 
 var Mixed = Mixin(NamedObject, MediaBase);
 
@@ -9,7 +9,7 @@ class Audio extends Mixed {
 	constructor(name, sourceElement) {
 		super(name);
 
-		this.initializeMedia(MoValueOrDefault(sourceElement, document.createElement("audio")));
+		this.initializeMedia(ValueOrDefault(sourceElement, document.createElement("audio")));
 	}
 
 	static fromAudioElement(audioElement) {

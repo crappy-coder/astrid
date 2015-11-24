@@ -10,12 +10,11 @@ class TextureData extends EventDispatcher {
 	}
 
 	load(url) {
+		this.isLoaded = false;
 		this.image = new Image();
 		this.image.addEventListener("load", this.handleLoadEvent.asDelegate(this), false);
 		this.image.addEventListener("error", this.handleErrorEvent.asDelegate(this), false);
 		this.image.src = url;
-
-		this.isLoaded = false;
 	}
 
 	handleLoadEvent(e) {

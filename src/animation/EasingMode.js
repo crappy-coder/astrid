@@ -1,4 +1,4 @@
-var EasingMode = {
+const EasingMode = {
 
 /**
  * @CLASS

@@ -48,3 +48,5 @@ class EntityRayCastEvent extends Event {
 }
 
 EntityRayCastEvent.REPORT = "reportRayCast";
+
+export default EntityRayCastEvent;

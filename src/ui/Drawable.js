@@ -1212,33 +1212,41 @@ class Drawable extends Mixed {
 	}
 
 	validateProperties() {
-		if (this.getHasInvalidProperties()) {
+		if(this.getHasInvalidProperties())
+		{
+			// reset bitmap caches
+			if(this.getUseBitmapCaching())
+			{
+				// initialize a new bitmap cache
+				if(this.bitmapCache == null)
+				{
+					this.bitmapCache = document.createElement("canvas");
+					this.bitmapCache.width = 0;
+					this.bitmapCache.height = 0;
+				}
+			}
+			else
+			{
+				this.bitmapCache = null;
+				this.bitmapEffectCache = null;
+			}
+
+			// notify position change
+			if(this.getX() != this.lastX || this.getY() != this.lastY)
+				this.raisePositionChangedEvent();
+
+			// notify size change
+			if(this.getWidth() != this.lastWidth || this.getHeight() != this.lastHeight)
+				this.raiseResizedEvent();
+
+			// commit properties and reset
 			this.commitProperties();
 			this.setHasInvalidProperties(false);
 		}
 	}
 
 	commitProperties() {
-		if (this.getUseBitmapCaching()) {
-			// create the cached canvas that we will render into
-			if (this.bitmapCache == null) {
-				this.bitmapCache = document.createElement("canvas");
-				this.bitmapCache.width = 0;
-				this.bitmapCache.height = 0;
-			}
-		}
-		else {
-			this.bitmapCache = null;
-			this.bitmapEffectCache = null;
-		}
-
-		if (this.getX() != this.lastX || this.getY() != this.lastY) {
-			this.raisePositionChangedEvent();
-		}
-
-		if (this.getWidth() != this.lastWidth || this.getHeight() != this.lastHeight) {
-			this.raiseResizedEvent();
-		}
+		/** override **/
 	}
 
 	requestMeasure() {

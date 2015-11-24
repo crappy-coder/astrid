@@ -35,10 +35,8 @@ class ContentControl extends Control {
 		if (child != null && child.getIsLayoutVisible()) {
 			var childMargin = child.getMargin();
 
-			this.setMeasuredWidth(child.getExactOrMeasuredWidth() + childMargin.getLeft() + childMargin.getRight() +
-				thickness);
-			this.setMeasuredHeight(child.getExactOrMeasuredHeight() + childMargin.getTop() + childMargin.getBottom() +
-				thickness);
+			this.setMeasuredWidth(child.getExactOrMeasuredWidth() + childMargin.getLeft() + childMargin.getRight() + thickness);
+			this.setMeasuredHeight(child.getExactOrMeasuredHeight() + childMargin.getTop() + childMargin.getBottom() + thickness);
 		}
 		else {
 			this.setMeasuredWidth(thickness);

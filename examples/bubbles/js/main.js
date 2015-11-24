@@ -20,7 +20,7 @@ function setup() {
 
 	surface.setChild(content);
 
-	app.addDisplaySurface(surface);
+	app.setDisplaySurface(surface);
 
 	app.addEventHandler(Event.UI_ORIENTATION_CHANGE, handleOrientationChange);
 

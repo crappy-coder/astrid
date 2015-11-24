@@ -23,3 +23,5 @@ class EntityQueryEvent extends Event {
 }
 
 EntityQueryEvent.REPORT = "report";
+
+export default EntityQueryEvent;

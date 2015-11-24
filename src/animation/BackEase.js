@@ -1,10 +1,11 @@
+import { ValueOrDefault } from "../Engine";
 import EasingFunction from "./EasingFunction";
 
 class BackEase extends EasingFunction {
 	constructor(easingModeOrPercent, amplitude) {
 		super(easingModeOrPercent);
 
-		this.amplitude = MoValueOrDefault(amplitude, 1.2);
+		this.amplitude = ValueOrDefault(amplitude, 1.2);
 	}
 	
 	getAmplitude() {

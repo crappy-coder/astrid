@@ -2,8 +2,10 @@ import { ValueOrDefault } from "../Engine";
 import GamepadButtons from "./GamepadButtons";
 
 class GamepadButtonMap {
-	constructor(map) {
+	constructor(map, sticks, triggers) {
 		this.map = ValueOrDefault(map, []);
+		this.sticks = ValueOrDefault(sticks, []);
+		this.triggers = ValueOrDefault(triggers, []);
 
 		// just default to 32 available slots
 		if (map == null) {
@@ -63,6 +65,18 @@ GamepadButtonMap.XBOX360 = new GamepadButtonMap([
 	GamepadButtons.LeftStick, GamepadButtons.RightStick,
 	GamepadButtons.DPadUp, GamepadButtons.DPadDown,
 	GamepadButtons.DPadLeft, GamepadButtons.DPadRight
+]);
+
+GamepadButtonMap.PS4 = new GamepadButtonMap([
+	GamepadButtons.X, GamepadButtons.A,
+	GamepadButtons.B, GamepadButtons.Y,
+	GamepadButtons.LeftShoulder, GamepadButtons.RightShoulder,
+	GamepadButtons.None, GamepadButtons.None, // triggers are processed independantly
+	GamepadButtons.Back, GamepadButtons.Start,
+	GamepadButtons.LeftStick, GamepadButtons.RightStick,
+	GamepadButtons.Big, GamepadButtons.TouchPad,
+	GamepadButtons.DPadUp, GamepadButtons.DPadDown,
+	GamepadButtons.DPadLeft, GamepadButtons.DPadRight,
 ]);
 
 export default GamepadButtonMap;

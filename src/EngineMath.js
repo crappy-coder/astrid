@@ -21,8 +21,7 @@ export default {
 	},
 
 	isInfinity: function (num) {
-		return (this.isPositiveInfinity(num) ||
-		this.isNegativeInfinity(num));
+		return (this.isPositiveInfinity(num) || this.isNegativeInfinity(num));
 	},
 
 	isPositiveInfinity: function (num) {
@@ -81,7 +80,7 @@ export default {
 	},
 
 	normalizeZero: function (num) {
-		if (num <= 0 || EngineMath.isZero(num)) {
+		if (num <= 0 || this.isZero(num)) {
 			return 0;
 		}
 
@@ -89,9 +88,7 @@ export default {
 	},
 
 	pointOfAngle: function (radians) {
-		return new Vector2D(
-			Math.cos(radians),
-			Math.sin(radians));
+		return new Vector2D(Math.cos(radians), Math.sin(radians));
 	},
 
 	hypot: function (x, y) {
@@ -111,7 +108,7 @@ export default {
 	},
 
 	randomIntTo: function (max) {
-		return Math.round(EngineMath.randomTo(max));
+		return Math.round(this.randomTo(max));
 	},
 
 	randomInRange: function (min, max) {
@@ -119,7 +116,7 @@ export default {
 	},
 
 	randomIntInRange: function (min, max) {
-		return Math.round(EngineMath.randomInRange(min, max));
+		return Math.round(this.randomInRange(min, max));
 	},
 
 	round: function (value) {

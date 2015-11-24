@@ -297,7 +297,7 @@ class GamepadState extends Equatable {
 	}
 
 	copy() {
-		var c = new this();
+		var c = new GamepadState();
 		c.update(this.name, this.index, this.timestamp, this.isConnected, this.buttons, this.leftStickValue, this.rightStickValue, this.leftTrigger, this.rightTrigger);
 		return c;
 	}

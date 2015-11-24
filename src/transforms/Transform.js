@@ -11,7 +11,7 @@ class Transform extends Mixed {
 		
 		/** Matrix2D **/
 		this.identity = Matrix2D.createIdentity();
-		
+
 		this.initializeAnimatableProperties();
 	}
 	

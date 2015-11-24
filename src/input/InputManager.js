@@ -1,4 +1,5 @@
 import Vector2D from "../Vector2D";
+import DebugFlags from "../DebugFlags";
 import { IsIE, IsFirefox, ValueOrDefault } from "../Engine";
 import Gamepad from "./Gamepad";
 import GamepadButtonEvent from "./GamepadButtonEvent";
@@ -67,8 +68,13 @@ class InputManager extends EventDispatcher {
 		/** Boolean **/
 		this.hasMouse = false;
 
+		/** Vector2D **/
 		this.touchPosition = Vector2D.Zero();
+
+		/** Drawable[] **/
 		this.touchTargets = [];
+
+		/** Boolean **/
 		this.hasTouch = false;
 
 		/** Number **/
@@ -79,8 +85,27 @@ class InputManager extends EventDispatcher {
 		this.lastNavigationButton = 0;
 		this.lastNavigationTime = 0;
 
+		/** Object **/
+		this.registerEventsState = {
+			mouse: false,
+			keyboard: false,
+			touch: false,
+			gesture: false,
+			gamepad: false
+		};
+
 		// register all the events we plan to receive
-		this.registerEvents();
+		this.updateEventRegistration();
+
+		this.n = 0;
+	}
+
+	get isFocusDebuggingEnabled() {
+		return Application.getInstance().isDebugFlagEnabled(DebugFlags.Focus);
+	}
+
+	get isNavigationDebuggingEnabled() {
+		return Application.getInstance().isDebugFlagEnabled(DebugFlags.Navigation);
 	}
 
 	getTarget() {
@@ -91,53 +116,51 @@ class InputManager extends EventDispatcher {
 		return this.focusTarget;
 	}
 
-	unregisterEvents() {
+	updateEventRegistration() {
 		var canvas = this.getTarget().getNativeCanvas();
+		var app = Application.getInstance();
 
-		canvas.removeEventListener("mousedown", this.handleMouseDown.asDelegate(this), false);
-		canvas.removeEventListener("mouseup", this.handleMouseUp.asDelegate(this), false);
-		canvas.removeEventListener("mousemove", this.handleMouseMove.asDelegate(this), false);
-		canvas.removeEventListener("mouseover", this.handleMouseOver.asDelegate(this), false);
-		canvas.removeEventListener("mouseout", this.handleMouseOut.asDelegate(this), false);
-		canvas.removeEventListener("dblclick", this.handleDoubleClick.asDelegate(this), false);
-
-		if (window.isNativeHost) {
-			canvas.removeEventListener("mousewheel", this.handleMouseWheel.asDelegate(this), false);
+		if(app.getEnableMouseEvents()) {
+			this.registerMouseEvents(canvas);
 		}
 		else {
-			if (IsIE()) {
-				canvas.removeEventListener("mousewheel", this.handleMouseWheel.asDelegate(this), false);
-			}
-			else if (IsFirefox()) {
-				//canvas.addEventListener("MozMousePixelScroll", this.handleMouseWheel.asDelegate(this), false);		
-				canvas.removeEventListener("DOMMouseScroll", this.handleMouseWheel.asDelegate(this), false);
-			}
+			this.unregisterMouseEvents(canvas);
 		}
 
-		canvas.removeEventListener("contextmenu", this.handleContextMenu.asDelegate(this), false);
+		if(app.getEnableKeyboardEvents()) {
+			this.registerKeyboardEvents(canvas);
+		}
+		else {
+			this.unregisterKeyboardEvents(canvas);
+		}
 
-		canvas.removeEventListener("touchstart", this.handleTouchStart.asDelegate(this), false);
-		canvas.removeEventListener("touchend", this.handleTouchEnd.asDelegate(this), false);
-		canvas.removeEventListener("touchmove", this.handleTouchMove.asDelegate(this), false);
-		canvas.removeEventListener("touchcancel", this.handleTouchCancel.asDelegate(this), false);
+		if(app.getEnableTouchEvents()) {
+			this.registerTouchEvents(canvas);
+		}
+		else {
+			this.unregisterTouchEvents(canvas);
+		}
 
-		canvas.removeEventListener("gesturestart", this.handleGestureStart.asDelegate(this), false);
-		canvas.removeEventListener("gesturechange", this.handleGestureChange.asDelegate(this), false);
-		canvas.removeEventListener("gestureend", this.handleGestureEnd.asDelegate(this), false);
+		if(app.getEnableGestureEvents()) {
+			this.registerGestureEvents(canvas);
+		}
+		else {
+			this.unregisterGestureEvents(canvas);
+		}
 
-		window.removeEventListener("keydown", this.handleKeyDown.asDelegate(this), false);
-		window.removeEventListener("keyup", this.handleKeyUp.asDelegate(this), false);
-		window.removeEventListener("keypress", this.handleKeyDown.asDelegate(this), false);
+		if(app.getEnableGamepadEvents()) {
+			this.registerGamepadEvents(canvas);
+		}
+		else {
+			this.unregisterGamepadEvents(canvas);
+		}
 	}
 
-	registerEvents() {
-		this.registerMouseEvents();
-		this.registerKeyboardEvents();
-		this.registerGamepadEvents();
-	}
+	registerMouseEvents(canvas) {
+		if(this.registerEventsState.mouse)
+			return;
 
-	registerMouseEvents() {
-		var canvas = this.getTarget().getNativeCanvas();
+		this.registerEventsState.mouse = true;
 
 		// we only want to listen to these events from the canvas, this will give
 		// use greater control while handling multi-canvas applications
@@ -164,28 +187,138 @@ class InputManager extends EventDispatcher {
 		}
 
 		canvas.addEventListener("contextmenu", this.handleContextMenu.asDelegate(this), false);
+	}
+
+	registerKeyboardEvents(canvas) {
+		if(this.registerEventsState.keyboard)
+			return;
+
+		this.registerEventsState.keyboard = true;
+
+		window.addEventListener("keydown", this.handleKeyDown.asDelegate(this), false);
+		window.addEventListener("keyup", this.handleKeyUp.asDelegate(this), false);
+		window.addEventListener("keypress", this.handleKeyDown.asDelegate(this), false);
+	}
+
+	registerTouchEvents(canvas) {
+		if(this.registerEventsState.touch)
+			return;
+
+		this.registerEventsState.touch = true;
 
 		canvas.addEventListener("touchstart", this.handleTouchStart.asDelegate(this), false);
 		canvas.addEventListener("touchend", this.handleTouchEnd.asDelegate(this), false);
 		canvas.addEventListener("touchmove", this.handleTouchMove.asDelegate(this), false);
 		canvas.addEventListener("touchcancel", this.handleTouchCancel.asDelegate(this), false);
+	}
+
+	registerGestureEvents(canvas) {
+		if(this.registerEventsState.gesture)
+			return;
+
+		this.registerEventsState.gesture = true;
 
 		canvas.addEventListener("gesturestart", this.handleGestureStart.asDelegate(this), false);
 		canvas.addEventListener("gesturechange", this.handleGestureChange.asDelegate(this), false);
 		canvas.addEventListener("gestureend", this.handleGestureEnd.asDelegate(this), false);
 	}
 
-	registerKeyboardEvents() {
-		window.addEventListener("keydown", this.handleKeyDown.asDelegate(this), false);
-		window.addEventListener("keyup", this.handleKeyUp.asDelegate(this), false);
-		window.addEventListener("keypress", this.handleKeyDown.asDelegate(this), false);
-	}
-
 	registerGamepadEvents() {
+		if(this.registerEventsState.gamepad)
+			return;
+
 		var gp = Gamepad.getInstance();
+
+		this.registerEventsState.gamepad = true;
 
 		gp.addEventHandler(GamepadButtonEvent.DOWN, this.handleGamepadButtonDown.d(this));
 		gp.addEventHandler(GamepadButtonEvent.UP, this.handleGamepadButtonUp.d(this));
+	}
+
+	clearEventRegistration() {
+		var canvas = this.getTarget().getNativeCanvas();
+
+		this.unregisterMouseEvents(canvas);
+		this.unregisterKeyboardEvents(canvas);
+		this.unregisterTouchEvents(canvas);
+		this.unregisterGestureEvents(canvas);
+		this.unregisterGamepadEvents();
+	}
+
+
+	unregisterMouseEvents(canvas) {
+		if(!this.registerEventsState.mouse)
+			return;
+
+		this.registerEventsState.mouse = false;
+
+		canvas.removeEventListener("mousedown", this.handleMouseDown.asDelegate(this), false);
+		canvas.removeEventListener("mouseup", this.handleMouseUp.asDelegate(this), false);
+		canvas.removeEventListener("mousemove", this.handleMouseMove.asDelegate(this), false);
+		canvas.removeEventListener("mouseover", this.handleMouseOver.asDelegate(this), false);
+		canvas.removeEventListener("mouseout", this.handleMouseOut.asDelegate(this), false);
+		canvas.removeEventListener("dblclick", this.handleDoubleClick.asDelegate(this), false);
+
+		if (window.isNativeHost) {
+			canvas.removeEventListener("mousewheel", this.handleMouseWheel.asDelegate(this), false);
+		}
+		else {
+			if (IsIE()) {
+				canvas.removeEventListener("mousewheel", this.handleMouseWheel.asDelegate(this), false);
+			}
+			else if (IsFirefox()) {
+				//canvas.addEventListener("MozMousePixelScroll", this.handleMouseWheel.asDelegate(this), false);
+				canvas.removeEventListener("DOMMouseScroll", this.handleMouseWheel.asDelegate(this), false);
+			}
+		}
+
+		canvas.removeEventListener("contextmenu", this.handleContextMenu.asDelegate(this), false);
+	}
+
+	unregisterKeyboardEvents(canvas) {
+		if(!this.registerEventsState.keyboard)
+			return;
+
+		this.registerEventsState.keyboard = false;
+
+		window.removeEventListener("keydown", this.handleKeyDown.asDelegate(this), false);
+		window.removeEventListener("keyup", this.handleKeyUp.asDelegate(this), false);
+		window.removeEventListener("keypress", this.handleKeyDown.asDelegate(this), false);
+	}
+
+	unregisterTouchEvents(canvas) {
+		if(!this.registerEventsState.touch)
+			return;
+
+		this.registerEventsState.touch = false;
+
+		canvas.removeEventListener("touchstart", this.handleTouchStart.asDelegate(this), false);
+		canvas.removeEventListener("touchend", this.handleTouchEnd.asDelegate(this), false);
+		canvas.removeEventListener("touchmove", this.handleTouchMove.asDelegate(this), false);
+		canvas.removeEventListener("touchcancel", this.handleTouchCancel.asDelegate(this), false);
+	}
+
+	unregisterGestureEvents(canvas) {
+		if(!this.registerEventsState.gesture)
+			return;
+
+		this.registerEventsState.gesture = false;
+
+		canvas.removeEventListener("gesturestart", this.handleGestureStart.asDelegate(this), false);
+		canvas.removeEventListener("gesturechange", this.handleGestureChange.asDelegate(this), false);
+		canvas.removeEventListener("gestureend", this.handleGestureEnd.asDelegate(this), false);
+	}
+
+	unregisterGamepadEvents() {
+		if(!this.registerEventsState.gamepad)
+			return;
+
+		var gp = Gamepad.getInstance();
+
+		this.registerEventsState.gamepad = false;
+
+		gp.removeEventHandler(GamepadButtonEvent.DOWN, this.handleGamepadButtonDown.d(this));
+		gp.removeEventHandler(GamepadButtonEvent.UP, this.handleGamepadButtonUp.d(this));
 	}
 
 	// TODO : need to implement a custom context menu and/or allowing the native context menu
@@ -239,43 +372,91 @@ class InputManager extends EventDispatcher {
 	focus(target, isMouse) {
 		isMouse = ValueOrDefault(isMouse, false);
 
+
+		var id = ++this.n;
+		var lastTarget = this.focusTarget;
+
 		// focus if we have moved to a new target drawable
-		if (target != this.focusTarget) {
-			if (!isMouse || (isMouse && target != null && target.getIsMouseFocusEnabled())) {
-				// focus out for the previously focused target
-				if (this.focusTarget != null) {
-					// allow any listeners to cancel the event and keep focus, in which
-					// case we simply bail out so the new target doesn't take focus
-					if (!this.focusTarget.handleEvent(new Event(Event.FOCUS_OUT, false, true))) {
+		if (target !== lastTarget) {
+
+			if(this.isFocusDebuggingEnabled)
+				console.log("[FOCUS %d] - PROCESSING: %s", id, (target ? target.getName() : "-"));
+
+			// there is no target or target does not allow focus from mouse events
+			if (isMouse && (!target || !target.getIsMouseFocusEnabled()))
+				return;
+
+			// focus out for the previously focused target
+			if (lastTarget !== null) {
+				this.focusTarget = null;
+
+				// allow any listeners to cancel the event and keep focus, in which
+				// case we simply bail out so the new target doesn't take focus
+				lastTarget.setIsFocused(false);
+
+				if (!lastTarget.handleEvent(new Event(Event.FOCUS_OUT, false, true))) {
+
+					if(this.isFocusDebuggingEnabled)
+						console.log("[FOCUS %d] - CANCELLED: %s", id, lastTarget.getName());
+
+					this.focusTarget = lastTarget;
+					this.focusTarget.setIsFocused(true);
+					return;
+				}
+
+				if(this.isFocusDebuggingEnabled)
+					console.log("[FOCUS %d] - LEAVE: %s", id, lastTarget.getName());
+			}
+
+			// focus in to the new target
+			if (target !== null) {
+				// navigation zone's should not be allowed to receive focus directly
+				// however, their children possibly can, so we need to see there is
+				// a suitable target to take the focus
+				if (target.getIsNavigationZone()) {
+
+					if(this.isFocusDebuggingEnabled)
+						console.log("[FOCUS %d] - NAVIGATION ZONE: %s", id, target.getName());
+
+					target = this.findFirstAvailableFocusTarget(target);
+
+					// no suitable target to take focus or new target is already focused, just abort
+					if (target == null || target === lastTarget) {
+
+						if(this.isFocusDebuggingEnabled && target === null)
+							console.log("[FOCUS %d] - NAVIGATION ZONE: NO TARGET", id);
+
 						return;
 					}
 
-					this.focusTarget.setIsFocused(false);
-					this.focusTarget = null;
+					if(this.isFocusDebuggingEnabled)
+						console.log("[FOCUS %d] - NAVIGATION TARGET: %s", id, target.getName());
 				}
 
-				// focus in to the new target
-				if (target != null) {
-					// navigation zone's should not be allowed to receive focus directly
-					// however, their children possibly can, so we need to see there is
-					// a suitable target to take the focus
-					if (target.getIsNavigationZone()) {
-						target = this.findFirstAvailableFocusTarget(target);
+				this.focusTarget = target;
+				this.focusTarget.setIsFocused(true);
 
-						// no suitable target to take focus, just abort
-						if (target == null) {
-							return;
-						}
-					}
+				// focus in on the target as long as the user didn't cancel, we also make sure the focus target and original target
+				// are still the same, it's possible the focus in can also focus in on another element, thus invalidating the
+				// original focus target
+				if (this.focusTarget.handleEvent(new Event(Event.FOCUS_IN, false, true)))
+				{
+					if(this.focusTarget !== target)
+						target.setIsFocused(false);
 
-					this.focusTarget = target;
-
-					// focus in on the target as long as the user didn't cancel
-					if (this.focusTarget.handleEvent(new Event(Event.FOCUS_IN, false, true))) {
+					if(this.isFocusDebuggingEnabled)
+						console.log("[FOCUS %d] - ENTER: %s, FROM: %s", id, this.focusTarget.getName());
+				}
+				else
+				{
+					if(this.focusTarget === target)
+					{
+						this.focusTarget = lastTarget;
 						this.focusTarget.setIsFocused(true);
 					}
 				}
 			}
+
 		}
 	}
 
@@ -439,8 +620,7 @@ class InputManager extends EventDispatcher {
 
 			var key = Key.fromKeyCode(evt.keyCode);
 
-			if ((keyEvent == null || (keyEvent != null && !keyEvent.getIsDefaultPrevented())) &&
-					this.isNavigationKey(key)) {
+			if ((keyEvent == null || (keyEvent != null && !keyEvent.getIsDefaultPrevented())) && this.isNavigationKey(key)) {
 				this.processKeyboardNavigationEvent(key);
 			}
 
@@ -485,6 +665,7 @@ class InputManager extends EventDispatcher {
 
 		// check if the event came from the current input gamepad
 		// and try to process and navigation
+
 		if (e.getIndex() == Gamepad.getInputIndex() && this.isNavigationButton(e.getButton())) {
 			if (this.lastNavigationTime == 0 || (e.getTimestamp() - this.lastNavigationTime > 100)) {
 				this.lastNavigationTime = e.getTimestamp();
@@ -505,6 +686,22 @@ class InputManager extends EventDispatcher {
 		if (this.focusTarget.getIsFocused()) {
 			this.focusTarget.handleEvent(new GamepadButtonEvent(GamepadButtonEvent.UP, e.getIndex(), e.getButton(), e.getIsDown(), e.getTimestamp(), true));
 		}
+	}
+
+	getNavigationDirectionName(direction) {
+		switch(direction)
+		{
+			case NavigationDirection.Up:
+				return "UP";
+			case NavigationDirection.Down:
+				return "DOWN";
+			case NavigationDirection.Left:
+				return "LEFT";
+			case NavigationDirection.Right:
+				return "RIGHT";
+		}
+
+		return "UNKNOWN";
 	}
 
 	processGamepadNavigationEvent(e) {
@@ -549,6 +746,10 @@ class InputManager extends EventDispatcher {
 		var currentFocusTarget = this.focusTarget;
 		var currentNavigationZone = (currentFocusTarget == null ? null : currentFocusTarget.getNavigationZone());
 
+		if(this.isNavigationDebuggingEnabled)
+			console.log("[NAVIGATION] - PROCESS EVENT (%s): %s", this.getNavigationDirectionName(direction), (currentFocusTarget ? currentFocusTarget.getName() : "-"));
+
+
 		// try to find the first available navigation zone if the current 
 		// focus target does not have one or if there is no focus target
 		if (currentFocusTarget == null || currentNavigationZone == null) {
@@ -557,6 +758,8 @@ class InputManager extends EventDispatcher {
 
 		// unable to find a suitable navigation zone to search in
 		if (currentNavigationZone == null) {
+			if(this.isNavigationDebuggingEnabled)
+				console.log("\t[NAVIGATION] - NO ZONE");
 			return;
 		}
 
@@ -603,12 +806,17 @@ class InputManager extends EventDispatcher {
 	}
 
 	navigate(direction, targetFrom, targetTo) {
+		if(this.isNavigationDebuggingEnabled)
+			console.log("\t[NAVIGATION] - FROM: %s, TO: %s ", (targetFrom ? targetFrom.getName() : "-"), (targetTo ? targetTo.getName() : "-"));
+
 		// send a leave event to the current target
 		if (targetFrom != null) {
 			var navLeaveEvent = new NavigationEvent(NavigationEvent.LEAVE, direction, targetFrom, targetTo, true, true);
 
 			// allow the navigation to be cancelled
 			if (!targetFrom.handleEvent(navLeaveEvent)) {
+				if(this.isNavigationDebuggingEnabled)
+					console.log("\t[NAVIGATION] - CANCELLED LEAVE: %s", targetFrom.getName());
 				return false;
 			}
 		}
@@ -620,6 +828,8 @@ class InputManager extends EventDispatcher {
 			// also check if it was cancelled, this will still allow listeners
 			// to focus or run other custom navigation rules without auto-focusing
 			if (!targetTo.handleEvent(navEnterEvent)) {
+				if(this.isNavigationDebuggingEnabled)
+					console.log("\t[NAVIGATION] - CANCELLED ENTER: %s", targetTo.getName());
 				return false;
 			}
 

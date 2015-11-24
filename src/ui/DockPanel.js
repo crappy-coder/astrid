@@ -67,8 +67,8 @@ class DockPanel extends Panel {
 		var right = 0;
 		var top = 0;
 		var bottom = 0;
-		var width = this.getExactOrMeasuredWidth();
-		var height = this.getExactOrMeasuredHeight();
+		var width = unscaledWidth;
+		var height = unscaledHeight;
 
 		for (var i = 0; i < count; ++i) {
 			child = this.getAt(i);
@@ -81,11 +81,11 @@ class DockPanel extends Panel {
 			var childHeight = child.getExactOrMeasuredHeight();
 
 			if (!isNaN(child.getPercentWidth())) {
-				childWidth = unscaledWidth * (child.getPercentWidth() / 100);
+				childWidth = width * (child.getPercentWidth() / 100);
 			}
 
 			if (!isNaN(child.getPercentHeight())) {
-				childHeight = unscaledHeight * (child.getPercentHeight() / 100);
+				childHeight = height * (child.getPercentHeight() / 100);
 			}
 
 			var rect = new Rectangle(left, top, Math.max(0, width - (left + right)), Math.max(0, height - (top + bottom)));

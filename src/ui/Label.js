@@ -4,7 +4,7 @@ import TextTrimming from "../text/TextTrimming";
 import Font from "../text/Font";
 import Rectangle from "../Rectangle";
 import Pen from "./Pen";
-import { AreNotEqual, ValueOrDefault } from "../Engine";
+import { AreNotEqual, ValueOrDefault, IsNull } from "../Engine";
 import Application from "../Application";
 
 class Label extends Control {
@@ -91,6 +91,21 @@ class Label extends Control {
 	setLineHeight(value) {
 		if (this.lineHeight != value) {
 			this.lineHeight = value;
+
+			this.invalidateText();
+			this.requestMeasure();
+			this.requestLayout();
+		}
+	}
+
+	getFont() {
+		return this.font;
+	}
+
+	setFont(value) {
+		if(!IsNull(value) && AreNotEqual(this.font, value))
+		{
+			this.font = Font.fromFont(value);
 
 			this.invalidateText();
 			this.requestMeasure();
@@ -337,8 +352,7 @@ class Label extends Control {
 					this.textLines.length = i;
 
 					// now we can just truncate the last line
-					newLine = this.textBlock.createLine(this.textLines[Math.max(this.textLines.length -
-							2, 0)], maxWidth, this.textTrimming);
+					newLine = this.textBlock.createLine(this.textLines[Math.max(this.textLines.length - 2, 0)], maxWidth, this.textTrimming);
 
 					// make sure the line created actually fits (just in case)
 					if ((newLine.x + newLine.width) <= width) {
@@ -457,7 +471,7 @@ class Label extends Control {
 			}
 
 			// increment the vertical position
-			nextY += (n == 0 ? 0 : actualLineHeight);
+			nextY += (n === 0 ? 0 : actualLineHeight);
 
 			// if we don't need to measure the height, check whether or
 			// not this line has exceeded our available height and allow
@@ -573,18 +587,7 @@ class TextBlock {
 	constructor(text, font) {
 		this.text = text;
 		this.font = font;
-		this.nativeCanvas = this.getFirstAvailableNativeCanvas();
-	}
-
-	// TODO : update the use of this so that the Font.getStringWidth creates a new canvas
-	//        for measuring, this would break if multiple display surfaces are used with fonts
-	//        that are different.
-	getFirstAvailableNativeCanvas() {
-		if (Application.getInstance().getDisplaySurfaceCount() > 0) {
-			return Application.getInstance().getDisplaySurfaceAt(0).getNativeCanvas();
-		}
-
-		return null;
+		this.nativeCanvas = Application.getInstance().getDisplaySurface().getNativeCanvas();
 	}
 
 	createLine(previousLine, width, trimStyle) {

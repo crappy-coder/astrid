@@ -465,7 +465,7 @@ var MediaBase = {
 				return MediaBase.ERR_SRC_BAD_MSG;
 		}
 
-		return "An unknown error occured.";
+		return "An unknown error occurred.";
 	}
 };
 

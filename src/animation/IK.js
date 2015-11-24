@@ -336,7 +336,7 @@ class IKContainer extends Canvas {
 	constructor(name, surface) {
 		super(name);
 
-		surface = ValueOrDefault(surface, Application.getInstance().getDisplaySurfaceAt(0));
+		surface = ValueOrDefault(surface, Application.getInstance().getDisplaySurface());
 
 		this.ik = surface.createArmature(name, 0, 0);
 	}

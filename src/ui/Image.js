@@ -8,6 +8,7 @@ import ImageSource from "./ImageSource";
 import CanvasSource from "./CanvasSource";
 import VideoSource from "../media/VideoSource";
 import TextureSource from "./TextureSource";
+import PropertyOptions from "./PropertyOptions";
 
 class Image extends Drawable {
 	constructor(name, source, sourceRect, enableSourceTiling) {
@@ -34,8 +35,7 @@ class Image extends Drawable {
 		super.initializeAnimatablePropertiesCore();
 
 		this.enableAnimatableProperty("enableSourceTiling", this.getEnableSourceTiling, this.setEnableSourceTiling, PropertyOptions.AffectsLayout);
-		this.enableAnimatableProperty("sourceRect", this.getSourceRect, this.setSourceRect, PropertyOptions.AffectsLayout |
-				PropertyOptions.AffectsMeasure);
+		this.enableAnimatableProperty("sourceRect", this.getSourceRect, this.setSourceRect, PropertyOptions.AffectsLayout | PropertyOptions.AffectsMeasure);
 	}
 
 	getAutoLoad() {

@@ -1,48 +1,58 @@
-import EventDispatcher from "./EventDispatcher";
-import LayoutManager from "./ui/LayoutManager";
-import Timer from "./Timer";
-import Event from "./Event";
-import TimerEvent from "./TimerEvent";
-import DeviceMotionEvent from "./DeviceMotionEvent";
-import DeviceOrientationEvent from "./DeviceOrientationEvent";
-import FrameEvent from "./FrameEvent";
-import { FPSClock } from "./FPSGraph";
-import Gamepad from "./input/Gamepad";
-import ScreenOrientation from "./ui/ScreenOrientation";
-import Color from "./graphics/Color";
-import Size from "./Size";
-import DisplaySurface from "./ui/DisplaySurface";
+import EventDispatcher from "./EventDispatcher"
+import LayoutManager from "./ui/LayoutManager"
+import Timer from "./Timer"
+import Event from "./Event"
+import TimerEvent from "./TimerEvent"
+import DeviceMotionEvent from "./DeviceMotionEvent"
+import DeviceOrientationEvent from "./DeviceOrientationEvent"
+import FrameEvent from "./FrameEvent"
+import { FPSClock } from "./FPSGraph"
+import Gamepad from "./input/Gamepad"
+import GamepadButtonMap from "./input/GamepadButtonMap"
+import GamepadAxesMap from "./input/GamepadAxesMap"
+import ScreenOrientation from "./ui/ScreenOrientation"
+import Color from "./graphics/Color"
+import Size from "./Size"
+import DebugFlags from "./DebugFlags"
+import DisplaySurface from "./ui/DisplaySurface"
 
 class Application extends EventDispatcher {
-	constructor() {
+	constructor(width, height) {
 		super();
 
 		Application.Instance = this;
 
-		this.startTime = (window.getHighResTimer ? window.getHighResTimer() : new Date());
+		this.debugFlags = DebugFlags.None;
+		this.startTime = (window.getHighResTimer ? window.getHighResTimer() : performance.now());
 		this.isPaused = true;
 		this.isAutoPaused = false;
-		this.isFullSizeDisplaySurface = false;
-		this.initialSurfaceWidth = null;
-		this.initialSurfaceHeight = null;
-		this.hasManagedDisplaySurface = false;
+		this.autoScaleDisplaySurface = false;
+		this.autoResizeDisplaySurface = (arguments.length === 0);
+		this.hasManagedDisplaySurface = true;
 		this.hasPendingRender = false;
 		this.hasLoaded = false;
+		this.gamepadButtonMap = GamepadButtonMap.XBOX360;
+		this.gamepadAxesMap = GamepadAxesMap.XBOX360;
 		this.enableDirtyRegions = true;
 		this.enableDebugVisuals = false;
-		this.enableNativeGestures = true;
+		this.enableMouseEvents = true;
+		this.enableKeyboardEvents = true;
+		this.enableTouchEvents = true;
+		this.enableGestureEvents = true;
+		this.enableGamepadEvents = false;
 		this.enableDeviceOrientationEvents = false;
 		this.enableDeviceMotionEvents = false;
-		this.enableGamepadEvents = false;
+		this.enableNativeGestures = true;
 		this.enableStatsGraph = false;
 		this.enableAutoSuspendResume = true;
 		this.fpsClock = new FPSClock();
 		this.frameRate = 60;
 		this.frameTimer = new Timer(1000 / this.frameRate);
 		this.frameTimer.addEventHandler(TimerEvent.TICK, this.handleFrameTimerTick.asDelegate(this));
+		this.displaySurface = null;
+		this.displaySurfaceSize = (arguments.length === 0 ? new Size(window.innerWidth, window.innerHeight) : new Size(width, height));
 		this.mainSurfaceCanvas = null;
 		this.newSurfaceCanvas = null;
-		this.surfaces = [];
 		this.cameras = [];
 
 		LayoutManager.getInstance().addEventHandler(Event.LAYOUT_UPDATED, this.handleLayoutManagerUpdated.asDelegate(this));
@@ -58,11 +68,19 @@ class Application extends EventDispatcher {
 		}
 	}
 
+	getAutoScaleDisplaySurface() {
+		return this.autoScaleDisplaySurface;
+	}
+
+	setAutoScaleDisplaySurface(value) {
+		this.autoScaleDisplaySurface = value;
+	}
+
 	getRunningTime() {
 		if (window.getHighResTimer)
 			return (window.getHighResTimer() - this.startTime);
 
-		return ((new Date()) - this.startTime);
+		return (performance.now() - this.startTime);
 	}
 
 	getFrameRate() {
@@ -74,6 +92,22 @@ class Application extends EventDispatcher {
 			this.frameRate = value;
 			this.frameTimer.setInterval(1000 / this.frameRate);
 		}
+	}
+
+	getGamepadButtonMap() {
+		return this.gamepadButtonMap;
+	}
+
+	setGamepadButtonMap(value) {
+		this.gamepadButtonMap = value;
+	}
+
+	getGamepadAxesMap() {
+		return this.gamepadAxesMap;
+	}
+
+	setGamepadAxesMap(value) {
+		this.gamepadAxesMap = value;
 	}
 
 	getEnableDirtyRegions() {
@@ -92,6 +126,18 @@ class Application extends EventDispatcher {
 		this.enableDebugVisuals = value;
 	}
 
+	getDebugFlags() {
+		return this.debugFlags;
+	}
+
+	setDebugFlags(value) {
+		this.debugFlags = value;
+	}
+
+	isDebugFlagEnabled(flag) {
+		return ((this.debugFlags & flag) != DebugFlags.None);
+	}
+
 	getEnableAutoSuspendResume() {
 		return this.enableAutoSuspendResume;
 	}
@@ -107,9 +153,64 @@ class Application extends EventDispatcher {
 	setEnableStatsGraph(value) {
 		this.enableStatsGraph = value;
 
-		for (var i = 0, len = this.getDisplaySurfaceCount(); i < len; ++i) {
-			this.getDisplaySurfaceAt(i).invalidate();
-		}
+		if(this.displaySurface)
+			this.displaySurface.invalidate();
+	}
+
+	getEnableMouseEvents() {
+		return this.enableMouseEvents;
+	}
+
+	setEnableMouseEvents(value) {
+		if(this.enableMouseEvents === value)
+			return;
+
+		this.enableMouseEvents = value;
+
+		if(this.displaySurface)
+			this.displaySurface.refreshInputEventRegistration();
+	}
+
+	getEnableKeyboardEvents() {
+		return this.enableKeyboardEvents;
+	}
+
+	setEnableKeyboardEvents(value) {
+		if(this.enableKeyboardEvents === value)
+			return;
+
+		this.enableKeyboardEvents = value;
+
+		if(this.displaySurface)
+			this.displaySurface.refreshInputEventRegistration();
+	}
+
+	getEnableTouchEvents() {
+		return this.enableTouchEvents;
+	}
+
+	setEnableTouchEvents(value) {
+		if(this.enableTouchEvents === value)
+			return;
+
+		this.enableTouchEvents = value;
+
+		if(this.displaySurface)
+			this.displaySurface.refreshInputEventRegistration();
+	}
+
+	getEnableGestureEvents() {
+		return this.enableGestureEvents;
+	}
+
+	setEnableGestureEvents(value) {
+		if(this.enableGestureEvents === value)
+			return;
+
+		this.enableGestureEvents = value;
+
+		if(this.displaySurface)
+			this.displaySurface.refreshInputEventRegistration();
 	}
 
 	getEnableGamepadEvents() {
@@ -117,7 +218,13 @@ class Application extends EventDispatcher {
 	}
 
 	setEnableGamepadEvents(value) {
+		if(this.enableGamepadEvents === value)
+			return;
+
 		this.enableGamepadEvents = value;
+
+		if(this.displaySurface)
+			this.displaySurface.refreshInputEventRegistration();
 
 		Gamepad.setEnableEvents(this.enableGamepadEvents);
 	}
@@ -127,15 +234,16 @@ class Application extends EventDispatcher {
 	}
 
 	setEnableDeviceOrientationEvents(value) {
-		if (this.enableDeviceOrientationEvents === value) return;
+		if (this.enableDeviceOrientationEvents === value)
+			return;
 
 		this.enableDeviceOrientationEvents = value;
 
 		if (this.enableDeviceOrientationEvents) {
-			window.addEventListener("deviceorientation", this.handleSystemDeviceOrientationEvent.asDelegate(this));
+			window.addEventListener("deviceorientation", this.handleSystemDeviceOrientationEvent.d(this));
 		}
 		else {
-			window.removeEventListener("deviceorientation", this.handleSystemDeviceOrientationEvent.asDelegate(this));
+			window.removeEventListener("deviceorientation", this.handleSystemDeviceOrientationEvent.d(this));
 		}
 	}
 
@@ -144,15 +252,16 @@ class Application extends EventDispatcher {
 	}
 
 	setEnableDeviceMotionEvents(value) {
-		if (this.enableDeviceMotionEvents == value) return;
+		if (this.enableDeviceMotionEvents == value)
+			return;
 
 		this.enableDeviceMotionEvents = value;
 
 		if (this.enableDeviceMotionEvents) {
-			window.addEventListener("devicemotion", this.handleSystemDeviceMotionEvent.asDelegate(this));
+			window.addEventListener("devicemotion", this.handleSystemDeviceMotionEvent.d(this));
 		}
 		else {
-			window.removeEventListener("devicemotion", this.handleSystemDeviceMotionEvent.asDelegate(this));
+			window.removeEventListener("devicemotion", this.handleSystemDeviceMotionEvent.d(this));
 		}
 	}
 
@@ -194,7 +303,7 @@ class Application extends EventDispatcher {
 	}
 
 	getSize() {
-		return new Size(window.innerWidth, window.innerHeight);
+		return this.displaySurfaceSize;
 	}
 
 	getCameraCount() {
@@ -223,97 +332,102 @@ class Application extends EventDispatcher {
 		this.cameras = [];
 	}
 
-	getDisplaySurfaceCount() {
-		return this.surfaces.length;
+	getDisplaySurface() {
+		return this.displaySurface;
 	}
 
-	getDisplaySurfaceAt(index) {
-		return this.surfaces[index];
-	}
+	setDisplaySurface(value) {
+		this.displaySurface = value;
+		this.hasManagedDisplaySurface = false;
 
-	addDisplaySurface(surface) {
-		if (surface != null && !this.surfaces.contains(surface)) {
-			this.surfaces.push(surface);
-		}
-	}
-
-	removeDisplaySurface(surface) {
-		this.surfaces.remove(surface);
-	}
-
-	clearDisplaySurfaces() {
-		this.surfaces = [];
+		// TODO: need to remove previous canvas if it is moving from a managed to a non-managed canvas
 	}
 
 	createManagedDisplaySurface() {
-		if (!this.hasLoaded) throw new Error("Unable to create a managed display surface until the window has fully loaded.");
-
-		// determine the initial size, if the initialSurface sizes are null then we must
-		// need a full size display surface
-		var width = this.initialSurfaceWidth || window.innerWidth;
-		var height = this.initialSurfaceHeight || window.innerHeight;
+		if (!this.hasLoaded)
+			throw new Error("Unable to create a managed display surface until the window has fully loaded.");
 
 		// create the html canvas element and add it to the document body
 		this.mainSurfaceCanvas = document.createElement("canvas");
 		this.mainSurfaceCanvas.id = "managed-display-surface";
-		this.mainSurfaceCanvas.width = width;
-		this.mainSurfaceCanvas.height = height;
+		this.mainSurfaceCanvas.width = this.displaySurfaceSize.width;
+		this.mainSurfaceCanvas.height = this.displaySurfaceSize.height;
 
 		document.body.appendChild(this.mainSurfaceCanvas);
 
 		// add the display surface
-		this.addDisplaySurface(DisplaySurface.fromCanvas(this.mainSurfaceCanvas));
+		this.displaySurface = DisplaySurface.fromCanvas(this.mainSurfaceCanvas);
 
 		// finally make sure the body doesn't show any scrollbars and setup
-		// a resize handler, this will recreate our surfaces so things render
-		// nicely
-		if (this.isFullSizeDisplaySurface) {
-			//document.body.style.overflow = "hidden";
+		// a resize handler, this will recreate our surface so things render nicely
+		if(this.autoResizeDisplaySurface || this.autoScaleDisplaySurface)
 			window.addEventListener("resize", this.handleResize.asDelegate(this));
-		}
 	}
 
 	invalidate() {
-		if (this.hasPendingRender) return;
+		if (this.hasPendingRender)
+			return;
 
 		this.hasPendingRender = true;
 		this.dispatchEvent(new Event(Event.RENDER));
 	}
 
-	invalidateSurfacePositions() {
-		var len = this.getDisplaySurfaceCount();
+	invalidateDisplaySurfacePosition() {
+		this.getDisplaySurface().invalidatePositionOnScreen();
+	}
 
-		for (var i = 0; i < len; ++i) {
-			this.getDisplaySurfaceAt(i).invalidatePositionOnScreen();
+	scaleDisplaySurface() {
+		if(this.autoScaleDisplaySurface)
+		{
+			var sourceWidth = this.displaySurfaceSize.width;
+			var sourceHeight = this.displaySurfaceSize.height;
+			var newWidth = window.innerWidth;
+			var newHeight = window.innerHeight;
+			var scale = Math.min(newWidth / sourceWidth, newHeight / sourceHeight);
+
+			newWidth = sourceWidth * scale;
+			newHeight = sourceHeight * scale;
+
+			this.mainSurfaceCanvas.style.width = newWidth + "px";
+			this.mainSurfaceCanvas.style.height = newHeight + "px";
 		}
 	}
 
 	handleResize() {
-		if (!this.hasLoaded || !this.isFullSizeDisplaySurface) return;
+		// no need to handle the window resize event until dom has loaded
+		if(!this.hasLoaded)
+			return;
 
-		// we have to recreate a new native canvas surface, otherwise
-		// things would just stretch out and get out of wack if we
-		// just resized it
-		var surface = this.getDisplaySurfaceAt(0);
-		var width = window.innerWidth;
-		var height = window.innerHeight;
+		// apply auto-scaling if it's enabled
+		this.scaleDisplaySurface();
 
-		this.newSurfaceCanvas = document.createElement("canvas");
-		this.newSurfaceCanvas.id = this.mainSurfaceCanvas.id;
-		this.newSurfaceCanvas.width = width;
-		this.newSurfaceCanvas.height = height;
+		// we create a new canvas element to swap out with the old one
+		// this helps avoid flickering and re-rendering issues when we
+		// are auto-resizing
+		if(!this.autoScaleDisplaySurface)
+		{
+			var surface = this.getDisplaySurface();
 
-		surface.setNativeCanvas(this.newSurfaceCanvas);
+			this.newSurfaceCanvas = document.createElement("canvas");
+			this.newSurfaceCanvas.id = this.mainSurfaceCanvas.id;
+			this.newSurfaceCanvas.width = window.innerWidth;
+			this.newSurfaceCanvas.height = window.innerHeight;
+
+			surface.setNativeCanvas(this.newSurfaceCanvas);
+		}
+
+		// notify of application resize
+		this.dispatchEvent(new Event(Event.RESIZED));
 	}
 
 	handleLoad() {
 		this.hasLoaded = true;
 
 		// this application is managing it's own display surface
-		if (this.hasManagedDisplaySurface) {
+		if(this.hasManagedDisplaySurface)
 			this.createManagedDisplaySurface();
-		}
 
+		this.scaleDisplaySurface();
 		this.resume();
 		this.dispatchEvent(new Event(Event.APPLICATION_START));
 	}
@@ -362,7 +476,7 @@ class Application extends EventDispatcher {
 
 		var needsRender = this.hasPendingRender;
 		var i, len;
-		var surface;
+		var surface = null;
 		var delta = event.getTickDelta();
 
 		// clear pending flag
@@ -378,47 +492,41 @@ class Application extends EventDispatcher {
 			this.cameras[i].update(delta);
 		}
 
-		// render each surface and update any active AI
-		len = this.surfaces.length;
+		// render the display surface and update any active AI
+		surface = this.displaySurface;
 
-		for (i = 0; i < len; ++i) {
-			surface = this.surfaces[i];
+		if (surface != null && surface.getIsRunning()) {
+			// update physics
+			surface.updatePhysics(delta);
 
-			if (surface != null && surface.getIsRunning()) {
-				// update physics
-				surface.updatePhysics(delta);
+			// update AI
+			surface.updateAI(delta);
 
-				// update AI
-				surface.updateAI(delta);
+			// update all other
+			surface.updateOther(delta);
 
-				// update all other
-				surface.updateOther(delta);
-
-				// do the full surface render
-				//    - if the stats graph is enabled then we also need to perform a full render
-				//      this will handle clearing the background and redrawing so the fps graph
-				//      can be overlayed on top
-				if (needsRender || this.getEnableStatsGraph()) {
-					surface.performRender();
-				}
+			// do the full surface render
+			//    - if the stats graph is enabled then we also need to perform a full render
+			//      this will handle clearing the background and redrawing so the fps graph
+			//      can be overlayed on top
+			if (needsRender || this.getEnableStatsGraph()) {
+				surface.performRender();
 			}
 		}
 
 		// notify listeners that rendering has completed
-		if (needsRender) {
-			// once we have rendered a new frame, then we can swap out
-			// our native canvas surfaces, this way things look much more
-			// seamless instead of flickering
-			if (this.hasManagedDisplaySurface && this.isFullSizeDisplaySurface) {
-				if (this.newSurfaceCanvas != null) {
-					surface = this.getDisplaySurfaceAt(0);
+		if (needsRender)
+		{
+			// swap out old with new canvas to avoid flickering during resize
+			if (this.newSurfaceCanvas != null)
+			{
+				var newCanvas = this.newSurfaceCanvas;
+				this.newSurfaceCanvas = null;
 
-					document.body.removeChild(this.mainSurfaceCanvas);
-					document.body.appendChild(this.newSurfaceCanvas);
+				document.body.removeChild(this.mainSurfaceCanvas);
+				document.body.appendChild(newCanvas);
 
-					this.mainSurfaceCanvas = this.newSurfaceCanvas;
-					this.newSurfaceCanvas = null;
-				}
+				this.mainSurfaceCanvas = newCanvas;
 			}
 
 			this.dispatchEvent(new Event(Event.RENDER_COMPLETE));
@@ -443,36 +551,6 @@ class Application extends EventDispatcher {
 
 	static getInstance() {
 		return Application.Instance;
-	}
-
-	static create() {
-		var type = Application;
-
-		// user passed in a subclass
-		if (arguments.length == 1 || arguments.length == 3) {
-			type = arguments[0];
-		}
-
-		var app = new type();
-
-		if (!(app instanceof type)) {
-			throw new Error("Your application does not inherit from the astrid Application class.");
-		}
-
-		app.hasManagedDisplaySurface = true;
-
-		if (arguments.length <= 1) {
-			app.isFullSizeDisplaySurface = true;
-			app.initialSurfaceWidth = null;
-			app.initialSurfaceHeight = null;
-		}
-		else if (arguments.length <= 3) {
-			app.isFullSizeDisplaySurface = false;
-			app.initialSurfaceWidth = arguments[arguments.length-2];
-			app.initialSurfaceHeight = arguments[arguments.length-1];
-		}
-
-		return app;
 	}
 }
 

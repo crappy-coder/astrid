@@ -13,7 +13,7 @@ app.setEnableStatsGraph(true);
 app.addEventHandler(Event.APPLICATION_START, onApplicationStart);
 
 function onApplicationStart(e) {
-	var surface = app.getDisplaySurfaceAt(0);
+	var surface = app.getDisplaySurface();
 	var content = new Canvas("mainContent");
 	content.setPercentWidth(100);
 	content.setPercentHeight(100);

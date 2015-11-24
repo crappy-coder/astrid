@@ -28,7 +28,10 @@ class AnimationSet extends EventDispatcher {
 	}
 
 	getAnimationAt(index) {
-		return this.animations[index];
+		if(index >= 0 && index < this.animations.length)
+			return this.animations[index];
+
+		return null;
 	}
 	
 	getAnimationCount() {

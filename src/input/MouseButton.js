@@ -1,4 +1,4 @@
-var MouseButton = {
+const MouseButton = {
 	"Unknown"	: 0,
 	"Left"		: 1,
 	"Right"		: 2,

@@ -339,7 +339,7 @@ class DisplaySurface extends ContentControl {
 
 	setNativeCanvas(value) {
 		// unregister any existing native event handlers
-		this.inputManager.unregisterEvents();
+		this.inputManager.clearEventRegistration();
 
 		// now update the canvas and invalidate our properties
 		this.nativeCanvas = value;
@@ -354,7 +354,7 @@ class DisplaySurface extends ContentControl {
 		}
 
 		// need to register the input manager to get native events
-		this.inputManager.registerEvents();
+		this.refreshInputEventRegistration();
 	}
 
 	getNativeGraphicsContext() {
@@ -367,6 +367,10 @@ class DisplaySurface extends ContentControl {
 
 	setIsRunning(value) {
 		this.isRunning = value;
+	}
+
+	refreshInputEventRegistration() {
+		this.inputManager.updateEventRegistration();
 	}
 
 	setupPhysicsWorld() {
@@ -412,38 +416,23 @@ class DisplaySurface extends ContentControl {
 		this.resizeWidth = isNaN(this.getExactWidth());
 		this.resizeHeight = isNaN(this.getExactHeight());
 
-		if (this.resizeWidth || this.resizeHeight) {
-			this.handleResizeEvent(new Event(Event.RESIZED));
+		if(this.resizeWidth || this.resizeHeight)
+		{
+			if(!this.percentBoundsChanged)
+			{
+				this.updateBounds();
 
-			if (!this.resizeHandlerRegistered) {
-				Application.getInstance().addEventHandler(Event.RESIZED, this.handleResizeEvent.asDelegate(this));
-				this.resizeHandlerRegistered = true;
+				if(this.resizeLive)
+					LayoutManager.getInstance().validateNow();
 			}
-		}
-		else {
-			if (this.resizeHandlerRegistered) {
-				Application.getInstance().removeEventHandler(Event.RESIZED, this.handleResizeEvent.asDelegate(this));
-				this.resizeHandlerRegistered = false;
-			}
-		}
 
-		if (this.percentBoundsChanged) {
+			this.invalidatePositionOnScreen();
+		}
+		else if(this.percentBoundsChanged)
+		{
 			this.updateBounds();
 			this.percentBoundsChanged = false;
 		}
-	}
-
-	handleResizeEvent(event) {
-
-		if (!this.percentBoundsChanged) {
-			this.updateBounds();
-
-			if (this.resizeLive) {
-				LayoutManager.getInstance().validateNow();
-			}
-		}
-
-		this.invalidatePositionOnScreen();
 	}
 
 	updateBounds() {

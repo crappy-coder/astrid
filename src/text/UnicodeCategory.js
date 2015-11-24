@@ -1,4 +1,4 @@
-var UnicodeCategory = {
+const UnicodeCategory = {
 	"UppercaseLetter": 0,
 	"LowercaseLetter": 1,
 	"TitlecaseLetter": 2,

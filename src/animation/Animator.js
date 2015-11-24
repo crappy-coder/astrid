@@ -278,7 +278,6 @@ class Animator extends EventDispatcher {
 	}
 
 	start() {
-
 		var actualStartTime = 0;
 
 		if (!this.playInReverse) {
@@ -729,7 +728,7 @@ class Animator extends EventDispatcher {
 	static animationTimerTick(event) {
 		var i = 0;
 
-		Animator.CurrentTimeTick = this.pulse();
+		Animator.CurrentTimeTick = Animator.pulse();
 
 		while (i < Animator.ActiveAnimators.length) {
 			var incrementIndex = true;
