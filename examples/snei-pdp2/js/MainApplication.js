@@ -19,6 +19,12 @@ class MainApplication extends Application {
 	constructor(width, height) {
 		super(width, height);
 
+		if(grandCentralDevice)
+		{
+			this.sys = grandCentralDevice.makeService('system');
+			this.sys.init();
+		}
+
 		this.surface = null;
 		this.mainContent = null;
 		this.setEnableGamepadEvents(true);
@@ -75,6 +81,9 @@ class MainApplication extends Application {
 		this.mainContent.focus();
 
 		this.surface.setChild(this.mainContent);
+
+		if(grandCentralDevice)
+			this.sys.ready();
 	}
 }
 
