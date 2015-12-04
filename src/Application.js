@@ -14,6 +14,7 @@ import ScreenOrientation from "./ui/ScreenOrientation"
 import Color from "./graphics/Color"
 import Size from "./Size"
 import DebugFlags from "./DebugFlags"
+import RenderMode from "./RenderMode"
 import DisplaySurface from "./ui/DisplaySurface"
 
 class Application extends EventDispatcher {
@@ -23,6 +24,7 @@ class Application extends EventDispatcher {
 		Application.Instance = this;
 
 		this.debugFlags = DebugFlags.None;
+		this.renderMode = RenderMode.AUTO;
 		this.startTime = (window.getHighResTimer ? window.getHighResTimer() : performance.now());
 		this.isPaused = true;
 		this.isAutoPaused = false;
@@ -74,6 +76,17 @@ class Application extends EventDispatcher {
 
 	setAutoScaleDisplaySurface(value) {
 		this.autoScaleDisplaySurface = value;
+	}
+
+	getRenderMode() {
+		return this.renderMode;
+	}
+
+	setRenderMode(value) {
+		if(this.renderMode === value)
+			return;
+
+		this.renderMode = value;
 	}
 
 	getRunningTime() {

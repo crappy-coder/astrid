@@ -8,6 +8,7 @@ import SolidColorBrush from "../../../src/brushes/SolidColorBrush"
 import ShapeRectangle from "../../../src/shapes/ShapeRectangle"
 import Vector2D from "../../../src/Vector2D"
 import DebugFlags from "../../../src/DebugFlags"
+import RenderMode from "../../../src/RenderMode"
 
 class MainApplication extends Application {
 	constructor(width, height) {
@@ -15,6 +16,7 @@ class MainApplication extends Application {
 
 		this.surface = null;
 		this.mainContent = null;
+		this.setRenderMode(RenderMode.HARDWARE);
 		this.setEnableKeyboardEvents(true);
 		this.setEnableMouseEvents(true);
 		this.setEnableTouchEvents(false);
