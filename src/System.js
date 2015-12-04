@@ -1,31 +1,31 @@
-import { StringContains, Version } from "./Engine";
+import { StringContains } from "./Engine";
 
-var SystemInfo = {
+const VERSION = "1.1";
+const MAX_DEFAULT_TEXTURE_SIZE = 16384;
+
+const SystemInfo = {
 	"Name": 1,
 	"Model": 2,
-	"Environment": 3,
-	"Version": 4,
-	"Architecture": 5,
-	"PlatformName": 6,
-	"PlatformVersion": 7,
-	"DeviceID": 8,
-	"DeviceIP": 9,
-	"MaxTextureSize": 10,
-	"NPOTTextures": 11
+	"Version": 3,
+	"Architecture": 4,
+	"PlatformName": 5,
+	"PlatformVersion": 6,
+	"DeviceID": 7,
+	"MaxTextureSize": 8,
+	"NonPowerOfTwoTextureStatus": 9,
+	"AvailableCPUCount": 10,
+	"MaxTouchPoints": 11
 };
 
-var System = {
-	getInfo: function (infoId) {
-
+const System = {
+	getInfo: function getInfo(infoId) {
 		switch (infoId) {
 			case SystemInfo.Name:
 				return System.getSystemName();
 			case SystemInfo.Model:
 				return System.getSystemModel();
-			case SystemInfo.Environment:
-				return System.getSystemEnvironment();
 			case SystemInfo.Version:
-				return System.getMochicaVersion();
+				return VERSION;
 			case SystemInfo.Architecture:
 				return System.getSystemArchitecture();
 			case SystemInfo.PlatformName:
@@ -34,23 +34,25 @@ var System = {
 				return System.getPlatformVersion();
 			case SystemInfo.DeviceID:
 				return System.getDeviceID();
-			case SystemInfo.DeviceIP:
-				return System.getDeviceIP();
 			case SystemInfo.MaxTextureSize:
 				return System.getMaxTextureSize();
-			case SystemInfo.NPOTTextures:
-				return System.getAllowsNPOTTextures();
+			case SystemInfo.NonPowerOfTwoTextureStatus:
+				return System.getIsNonPowerOfTwoTexturesAllowed();
+			case SystemInfo.AvailableCPUCount:
+				return System.getAvailableCPUCount();
+			case SystemInfo.MaxTouchPoints:
+				return System.getMaxTouchPoints();
 		}
 
 		return null;
 	},
 
-	getSystemName: function () {
-		return window.navigator.appName || "";
+	getSystemName: function getSystemName() {
+		return (window.navigator && window.navigator.appName) || "";
 	},
 
-	getSystemModel: function () {
-		var ua = window.navigator.userAgent || window.navigator.vendor || "";
+	getSystemModel: function getSystemModel() {
+		var ua = (window.navigator && (window.navigator.userAgent || window.navigator.vendor)) || "";
 
 		if (StringContains(ua, "Chrome/")) {
 			return "Chrome";
@@ -68,24 +70,18 @@ var System = {
 			return "Safari";
 		}
 
-		return window.navigator.product || "";
+		return (window.navigator && window.navigator.product) || "";
 	},
 
-	getSystemEnvironment: function () {
-		return window.navigator.moEnvironment || "web";
+	getSystemArchitecture: function getSystemArchitecture() {
+		return (window.navigator && window.navigator.cpuClass) || "";
 	},
 
-	getSystemArchitecture: function () {
-		return window.navigator.cpuClass || "";
-	},
+	getPlatformName: function getPlatformName() {
+		var platform = (window.navigator && window.navigator.platform) || "";
+		var ua = (window.navigator && (window.navigator.userAgent || window.navigator.vendor)) || "";
 
-	getPlatformName: function () {
-		var platform = window.navigator.platform || "";
-		var ua = window.navigator.userAgent || window.navigator.vendor || "";
-
-		if (StringContains(platform, "Win32") ||
-				StringContains(platform, "Win64") ||
-				StringContains(ua, "Windows NT")) {
+		if (StringContains(platform, "Win32") || StringContains(platform, "Win64") || StringContains(ua, "Windows NT")) {
 			return "Windows";
 		}
 
@@ -100,29 +96,46 @@ var System = {
 		return platform;
 	},
 
-	getPlatformVersion: function () {
-		return window.navigator.platformVersion || "";
+	getPlatformVersion: function getPlatformVersion() {
+		return (window.navigator && window.navigator.platformVersion) || "";
 	},
 
-	getMochicaVersion: function () {
-		return Version;
+	getDeviceID: function getDeviceID() {
+		return (window.navigator && window.navigator.buildID) || "";
 	},
 
-	getDeviceID: function () {
-		return window.navigator.buildID || "";
+	getMaxTextureSize: function getMaxTextureSize() {
+		if (document) {
+			var canvas = document.createElement("canvas");
+			var gl = canvas.getContext("webgl");
+
+			if(gl)
+				return gl.getParameter(gl.MAX_TEXTURE_SIZE);
+		}
+
+		return MAX_DEFAULT_TEXTURE_SIZE;
 	},
 
-	getDeviceIP: function () {
-		return window.navigator.moDeviceIP || "127.0.0.1";
+	getIsNonPowerOfTwoTexturesAllowed: function getIsNonPowerOfTwoTexturesAllowed() {
+		return (window.navigator && window.navigator.moNPOTTextures) || true;
 	},
 
-	getMaxTextureSize: function () {
-		return window.navigator.moMaxTextureSize || 16384;
+	getAvailableCPUCount: function getAvailableCPUCount() {
+		return (window.navigator && window.navigator.hardwareConcurrency) || 1;
 	},
 
-	getAllowsNPOTTextures: function () {
-		return window.navigator.moNPOTTextures || true;
+	getMaxTouchPoints: function getMaxTouchPoints() {
+		return (window.navigator && window.navigator.maxTouchPoints) || 0;
+	},
+
+	isWebGLAvailable: function isWebGLAvailable() {
+		if (document) {
+			var canvas = document.createElement("canvas");
+			var gl = canvas.getContext("webgl");
+
+			return !!gl;
+		}
 	}
 };
 
-export default System;
+export { System as default, SystemInfo };

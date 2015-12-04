@@ -14,7 +14,6 @@ import Dictionary from "./Dictionary";
  *
  */
 
-export var Version = "1.0";
 export var PrintMeasureOrder = false;
 export var PrintLayoutOrder = false;
 
