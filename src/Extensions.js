@@ -100,16 +100,19 @@ Function.prototype.d = function(context) {
  */
 String.format = function(formatString) {
 
-	if (arguments.length > 1) {
-		var template = new Template(formatString);
-		var dict = {};
+	// TODO: The 'Template' class was originally used from Prototype.js framework. This is no longer
+	//       referenced so need to build out own formatter class to support string formatting.
 
-		for (var i = 1; i < arguments.length; i++) {
-			dict[(i-1).toString()] = arguments[i];
-		}
-
-		return template.evaluate(dict);
-	}
+	//if (arguments.length > 1) {
+	//	var template = new Template(formatString);
+	//	var dict = {};
+	//
+	//	for (var i = 1; i < arguments.length; i++) {
+	//		dict[(i-1).toString()] = arguments[i];
+	//	}
+	//
+	//	return template.evaluate(dict);
+	//}
 
 	return formatString;
 };
