@@ -9,7 +9,7 @@ import LayoutManager from "./LayoutManager";
 import DirtyRegion from "./DirtyRegion";
 import DirtyRegionTracker from "./DirtyRegionTracker";
 import Vector2D from "../Vector2D";
-import { ValueOrDefault, PrintMeasureOrder, DebugWrite, DebugLevel, Mixin } from "../Engine";
+import { ValueOrDefault, DebugWrite, DebugLevel, Mixin } from "../Engine";
 import NavigationMode from "../input/NavigationMode";
 import Event from "../Event";
 import BorderMetrics from "./BorderMetrics";
@@ -1262,10 +1262,6 @@ class Drawable extends Mixed {
 	validateMeasure(recursive) {
 		recursive = ValueOrDefault(recursive, false);
 
-		if (PrintMeasureOrder) {
-			DebugWrite("Measure Validation: drawable: #{0}, recursive: #{1}, pending: #{2}", DebugLevel.Info, this.getName(), recursive, this.getIsPendingMeasure());
-		}
-
 		if (recursive) {
 			var len = this.getCount();
 			var child = null;
@@ -1281,10 +1277,6 @@ class Drawable extends Mixed {
 
 		if (this.getIsPendingMeasure()) {
 			var hasSizeChanged = this.performMeasure();
-
-			if (PrintMeasureOrder) {
-				DebugWrite("\tSize Changed: #{0}", DebugLevel.Info, hasSizeChanged);
-			}
 
 			if (hasSizeChanged) {
 				this.invalidate();
@@ -1307,16 +1299,7 @@ class Drawable extends Mixed {
 		// if we don't have an exact size we can skip the measure pass, as long
 		// as the control hasn't ask to always measure
 		if (!this.hasExactSize() || this.alwaysMeasure) {
-			if (PrintMeasureOrder) {
-				DebugWrite("\tRan measure(): #{0}", DebugLevel.Info, "yes");
-			}
-
 			this.measure();
-		}
-		else {
-			if (PrintMeasureOrder) {
-				DebugWrite("\tRan measure(): #{0}", DebugLevel.Info, "no");
-			}
 		}
 
 		// the measurement is no longer invalid
@@ -1337,10 +1320,6 @@ class Drawable extends Mixed {
 		if (newHeight != this.lastExactHeight) {
 			this.lastExactHeight = newHeight;
 			hasSizeChanged = true;
-		}
-
-		if (PrintMeasureOrder) {
-			DebugWrite("\tSize: #{0}, #{1}", DebugLevel.Info, newWidth, newHeight);
 		}
 
 		return hasSizeChanged;

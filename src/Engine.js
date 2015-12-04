@@ -14,9 +14,6 @@ import Dictionary from "./Dictionary";
  *
  */
 
-export var PrintMeasureOrder = false;
-export var PrintLayoutOrder = false;
-
 export var DebugLevel = {
 	"Normal": 1,
 	"Info": 2,
