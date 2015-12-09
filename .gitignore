@@ -1,3 +1,4 @@
 /examples/*/app.js
 .idea
 node_modules
+*.log
