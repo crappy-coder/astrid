@@ -9,7 +9,8 @@ import Matrix2D from "../Matrix2D";
 import Pair from "../Pair";
 import GraphicsOp from "./GraphicsOp";
 import CompositeOperator from "./CompositeOperator";
-import { ValueOrDefault, DebugWrite, DebugLevel } from "../Engine";
+import { ValueOrDefault } from "../Engine";
+import Debug from "../Debug";
 import PathMoveSegment from "./PathMoveSegment";
 import PathLineSegment from "./PathLineSegment";
 import PathQuadraticBezierSegment from "./PathQuadraticBezierSegment";
@@ -739,7 +740,7 @@ class Graphics {
 		}
 		catch (e) {
 			success = false;
-			DebugWrite(e.toString(), DebugLevel.Error);
+			Debug.error(e.toString());
 		}
 		finally {
 			// restore back to our previous state
@@ -841,7 +842,7 @@ class Graphics {
 		}
 		catch (e) {
 			success = false;
-			DebugWrite(e.toString(), DebugLevel.Error);
+			Debug.error(e.toString());
 		}
 		finally {
 			// restore back to our previous state
@@ -909,7 +910,7 @@ class Graphics {
 		} else if (brush instanceof VideoBrush) {
 			params = this.createParamsFromVideoBrush(brush);
 		} else {
-			DebugWrite("Graphics.createParamsFromBrush() found an unknown brush type.", DebugLevel.Warning);
+			Debug.warn("Graphics.createParamsFromBrush() found an unknown brush type.");
 
 			// the brush is unknown so just return a solid type with the fallback color
 			params = [GraphicsBrushType.Solid, this.createFallbackStyle()];
@@ -1017,7 +1018,7 @@ class Graphics {
 			return this.createStyleFromVideoBrush(ctx, boundsRect, brushParams, isStroking);
 		}
 
-		DebugWrite("Graphics.fill() found an unknown brush type. " + type, DebugLevel.Warning);
+		Debug.warn("Graphics.fill() found an unknown brush type. " + type);
 
 		return this.createFallbackStyle();
 	}

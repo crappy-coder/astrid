@@ -1,10 +1,6 @@
-import {
-		ValueOrDefault,
-		CreateHttpRequestObject,
-		DebugWrite,
-		DebugLevel,
-		GetPlatformType
-} from "../Engine";
+import { ValueOrDefault } from "../Engine";
+import System from "../System"
+import Debug from "../Debug";
 import Rectangle from "../Rectangle";
 import RepeatBehavior from "../animation/RepeatBehavior";
 import Sprite from "./Sprite";
@@ -284,14 +280,14 @@ class TextureAtlas extends EventDispatcher {
 	}
 
 	load(url) {
-		var request = CreateHttpRequestObject();
+		var request = System.createHTTPRequest();
 		var requestUrl = url;
 
 		this.url = requestUrl;
 		this.baseUrl = requestUrl.substring(0, requestUrl.lastIndexOf("/") + 1);
 
 		if (request == null) {
-			DebugWrite("Unable to create XMLHttpRequest object.", DebugLevel.Error);
+			Debug.error("Unable to create XMLHttpRequest object.");
 			this.dispatchEvent(new LoadEvent(LoadEvent.FAILURE));
 
 			return;
@@ -304,7 +300,7 @@ class TextureAtlas extends EventDispatcher {
 					this.parse(request.responseXML);
 				}
 				else {
-					DebugWrite("Unable to load texture atlas from url: #{0}, reason=#{1}, responseCode=#{2}", DebugLevel.Error, requestUrl, request.statusText, request.status);
+					Debug.error("Unable to load texture atlas from url: #{0}, reason=#{1}, responseCode=#{2}", requestUrl, request.statusText, request.status);
 					this.dispatchEvent(new LoadEvent(LoadEvent.FAILURE));
 				}
 			}
@@ -399,7 +395,7 @@ class TextureAtlas extends EventDispatcher {
 
 		// otherwise let's try and find the right texture, textures
 		// with platform specific rules trump everything else
-		var possibles = this.getTexturesForPlatform(this.textures, GetPlatformType());
+		var possibles = this.getTexturesForPlatform(this.textures, System.platformType);
 
 		// only one texture with platform found
 		if (possibles.length == 1) {

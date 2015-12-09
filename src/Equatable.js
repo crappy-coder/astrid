@@ -7,6 +7,7 @@
  *  </code>
  */
 class Equatable {
+
 	isEqualTo(other) {
 		/**
 		 * SUMMARY:

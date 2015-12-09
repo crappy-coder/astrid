@@ -7,6 +7,8 @@ import PathLineSegment from "./PathLineSegment";
 
 class PathSegmentCollection extends Equatable {
 	constructor(data) {
+		super();
+
 		this.segments = [];
 		this.boundsRect = null;
 		this.charPos = 0;

@@ -1,5 +1,6 @@
 import EventDispatcher from "./EventDispatcher";
-import { ValueOrDefault, RequestAnimationFrame } from "./Engine";
+import { ValueOrDefault } from "./Engine";
+import System from "./System";
 import TimerEvent from "./TimerEvent";
 
 class Timer extends EventDispatcher {
@@ -117,7 +118,7 @@ class Timer extends EventDispatcher {
 	}
 
 	requestNextSample() {
-		this.req = RequestAnimationFrame(this.cb);
+		this.req = System.requestAnimationFrame(this.cb);
 	}
 }
 

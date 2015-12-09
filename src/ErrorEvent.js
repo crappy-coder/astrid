@@ -1,4 +1,5 @@
-import { ValueOrDefault } from "./Engine";
+import { ValueOrDefault } from "./Engine"
+import Event from "./Event"
 
 class ErrorEvent extends Event {
 	constructor(type, code, message, bubbles, cancelable) {
@@ -25,3 +26,5 @@ class ErrorEvent extends Event {
 }
 
 ErrorEvent.ERROR = "error";
+
+export default ErrorEvent;

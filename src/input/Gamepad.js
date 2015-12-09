@@ -1,5 +1,5 @@
 import EventDispatcher from "../EventDispatcher"
-import { IsFirefox, Gamepads, GetTimer } from "../Engine"
+import System from "../System"
 import GamepadDeadZoneMode from "./GamepadDeadZoneMode"
 import GamepadDeadZoneSize from "./GamepadDeadZoneSize"
 import GamepadButtonMap from "./GamepadButtonMap"
@@ -30,7 +30,7 @@ class Gamepad extends EventDispatcher {
 		this.buttonEventCache = null;
 		this.inputIndex = 0;
 
-		if (IsFirefox()) {
+		if (System.isFirefox) {
 			navigator.mozGamepads = [];
 
 			window.addEventListener("MozGamepadConnected", this.onMozGamepadConnected);
@@ -85,7 +85,7 @@ class Gamepad extends EventDispatcher {
 		}
 
 		var idx = index - 1;
-		var gp = Gamepads()[idx];
+		var gp = System.gamepads[idx];
 		var ts = this.timestamps[idx];
 		var lastState = this.prevStates[idx];
 		var state = null;
@@ -193,7 +193,7 @@ class Gamepad extends EventDispatcher {
 		var lastFrameTick = 0;
 		var lastState = null;
 		var state = null;
-		var tickNow = GetTimer();
+		var tickNow = System.getTimer();
 		var includeDownEvents = false;
 
 		for (var i = 1; i <= 4; ++i) {
@@ -240,7 +240,7 @@ class Gamepad extends EventDispatcher {
 			// dispatch down event
 			if (includeDownEvents && state.isDown(buttonFlag)) {
 				downEventProcessed = true;
-				this.dispatchEvent(this.createButtonEvent(GamepadButtonEvent.DOWN, index, buttonFlag, true, GetTimer()));
+				this.dispatchEvent(this.createButtonEvent(GamepadButtonEvent.DOWN, index, buttonFlag, true, System.getTimer()));
 			}
 
 			// unable to check for up events without a 
@@ -251,7 +251,7 @@ class Gamepad extends EventDispatcher {
 
 			// dispatch up event
 			if (lastState.isDown(buttonFlag) && !state.isDown(buttonFlag)) {
-				this.dispatchEvent(this.createButtonEvent(GamepadButtonEvent.UP, index, buttonFlag, true, GetTimer()));
+				this.dispatchEvent(this.createButtonEvent(GamepadButtonEvent.UP, index, buttonFlag, true, System.getTimer()));
 			}
 		}
 
@@ -274,14 +274,15 @@ class Gamepad extends EventDispatcher {
 	}
 
 	validateConnectionStatus() {
+		var gamepads = System.gamepads;
+
 		for (var i = 0; i < 4; ++i) {
 			var oldValue = this.connected[i];
-			var newValue = (Gamepads()[i] != null);
+			var newValue = (gamepads[i] !== null);
 
-			if (oldValue != newValue) {
+			if (oldValue !== newValue) {
 				this.connected[i] = newValue;
-				this.dispatchEvent(new GamepadEvent((newValue ? GamepadEvent.CONNECTED : GamepadEvent.DISCONNECTED), (i +
-				1)));
+				this.dispatchEvent(new GamepadEvent((newValue ? GamepadEvent.CONNECTED : GamepadEvent.DISCONNECTED), i + 1));
 			}
 		}
 	}
@@ -299,7 +300,7 @@ class Gamepad extends EventDispatcher {
 	}
 
 	static getIsAvailable() {
-		return (Gamepads() != null);
+		return System.hasGamepads;
 	}
 
 	static getInputIndex() {

@@ -4,6 +4,8 @@ import EngineMath from "./EngineMath";
 
 class Vector3D extends Equatable {
 	constructor(x, y, z) {
+		super();
+
 		this.x = ValueOrDefault(x, 0);
 		this.y = ValueOrDefault(y, 0);
 		this.z = ValueOrDefault(z, 0);

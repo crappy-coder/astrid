@@ -12,7 +12,8 @@ class StringBuffer {
 	}
 
 	prependFormat(format) {
-		this.str = String.formatWithObjects(format, arguments) + this.str;
+		var args = Array.prototype.splice.call(arguments, 1);
+		this.str = String.format(format, args) + this.str;
 	}
 
 	append(str) {
@@ -28,7 +29,8 @@ class StringBuffer {
 	}
 
 	appendFormat(format) {
-		this.str += String.formatWithObjects(format, arguments);
+		var args = Array.prototype.splice.call(arguments, 1);
+		this.str += String.format(format, args);
 	}
 
 	clear() {

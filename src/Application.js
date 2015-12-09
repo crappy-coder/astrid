@@ -1,3 +1,4 @@
+import "./Extensions"
 import EventDispatcher from "./EventDispatcher"
 import LayoutManager from "./ui/LayoutManager"
 import Timer from "./Timer"

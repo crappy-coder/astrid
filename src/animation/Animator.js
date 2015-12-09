@@ -1,6 +1,7 @@
 import EventDispatcher from "../EventDispatcher";
 import RepeatBehavior from "./RepeatBehavior";
-import { ValueOrDefault, GetTimer } from "../Engine";
+import { ValueOrDefault } from "../Engine";
+import System from "../System";
 import LinearEase from "./LinearEase";
 import Keyframe from "./Keyframe";
 import Dictionary from "../Dictionary";
@@ -765,10 +766,10 @@ class Animator extends EventDispatcher {
 		var currentTime;
 
 		if (startTime < 0) {
-			startTime = GetTimer();
+			startTime = System.getTimer();
 		}
 
-		currentTime = GetTimer() - startTime;
+		currentTime = System.getTimer() - startTime;
 
 		Animator.CurrentStartTime = startTime;
 		Animator.CurrentTime = currentTime;

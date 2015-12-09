@@ -1,5 +1,5 @@
 import EngineMath from "./EngineMath";
-import { GetTimer } from "./Engine";
+import System from "./System";
 import Application from "./Application";
 
 class FPSClock {
@@ -52,7 +52,7 @@ class FPSClock {
 	}
 	
 	reset() {
-		this.lastTime = GetTimer();
+		this.lastTime = System.getTimer();
 		this.totalTime = 0;
 		this.elapsedTime = 0;
 		this.currentTime = this.lastTime;
@@ -72,7 +72,7 @@ class FPSClock {
 	resume() {
 		if(--this.suspendCount <= 0)
 		{
-			var ts = GetTimer();
+			var ts = System.getTimer();
 			
 			this.suspendCount = 0;
 			this.suspendElapsedTime += ts - this.suspendStartTime;
@@ -84,11 +84,11 @@ class FPSClock {
 		this.suspendCount++;
 		
 		if(this.suspendCount == 1)
-			this.suspendStartTime = GetTimer();
+			this.suspendStartTime = System.getTimer();
 	}
 	
 	update() {
-		var ts = GetTimer();
+		var ts = System.getTimer();
 		
 		this.frameCount++;
 		this.lastTime = this.lastTime + this.suspendElapsedTime;

@@ -493,13 +493,11 @@ class DisplaySurface extends ContentControl {
 		var source = this.getNativeCanvas();
 		var pos = Vector2D.Zero();
 
-		if (!window.isNativeHost) {
-			while (source != null) {
-				pos.x += source.offsetLeft;
-				pos.y += source.offsetTop;
+		while (source != null) {
+			pos.x += source.offsetLeft;
+			pos.y += source.offsetTop;
 
-				source = source.offsetParent;
-			}
+			source = source.offsetParent;
 		}
 
 		this.absoluteSourcePosition = pos;
@@ -551,12 +549,8 @@ class DisplaySurface extends ContentControl {
 
 		dirtyRectTracker.clear();
 
-		//PerfMark("RENDER");
-
 		// now recursively render all of our content
 		this.renderRecursive(gfx);
-
-		//PerfUnmark();
 
 		if (this.isPhysicsEnabled) {
 			this.physicsController.renderDebugData(gfx);

@@ -9,7 +9,7 @@ class AudioManager {
 	addSource(name, audioSource) {
 		var audio = null;
 
-		if (!this.sourceLookup.containsKey(name)) {
+		if (!this.sourceLookup.exists(name)) {
 			audio = new Audio(name);
 			audio.setAutoPlay(false);
 
@@ -21,7 +21,7 @@ class AudioManager {
 	}
 
 	clearSources(name) {
-		if (this.sourceLookup.containsKey(name)) {
+		if (this.sourceLookup.exists(name)) {
 			var audio = this.sourceLookup.get(name);
 			audio.stop();
 
@@ -30,7 +30,7 @@ class AudioManager {
 	}
 
 	clearAll() {
-		var keys = this.sourceLookup.getKeys();
+		var keys = this.sourceLookup.keys;
 
 		for (var i = 0; i < keys.length; i++) {
 			this.clearSources(keys[i]);
@@ -54,7 +54,7 @@ class AudioManager {
 	}
 
 	playAll() {
-		var keys = this.sourceLookup.getKeys();
+		var keys = this.sourceLookup.keys;
 
 		for (var i = 0; i < keys.length; i++) {
 			this.play(keys[i]);
@@ -70,7 +70,7 @@ class AudioManager {
 	}
 
 	pauseAll() {
-		var keys = this.sourceLookup.getKeys();
+		var keys = this.sourceLookup.keys;
 
 		for (var i = 0; i < keys.length; i++) {
 			this.pause(keys[i]);
@@ -86,7 +86,7 @@ class AudioManager {
 	}
 
 	stopAll() {
-		var keys = this.sourceLookup.getKeys();
+		var keys = this.sourceLookup.keys;
 
 		for (var i = 0; i < keys.length; i++) {
 			this.stop(keys[i]);

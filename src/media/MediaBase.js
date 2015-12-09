@@ -1,7 +1,8 @@
 import MediaState from "./MediaState";
 import Timer from "../Timer";
 import TimerEvent from "../TimerEvent";
-import { ValueOrDefault, DebugWrite, DebugLevel } from "../Engine";
+import { ValueOrDefault } from "../Engine";
+import Debug from "../Debug";
 import Event from "../Event";
 import ErrorEvent from "../ErrorEvent";
 import MediaEvent from "./MediaEvent";
@@ -282,7 +283,7 @@ var MediaBase = {
 		// could not find a source to use
 		if(bestSourceIndex == -1)
 		{
-			DebugWrite("Unable to find a compatible media source.", DebugLevel.Warning);
+			Debug.warn("Unable to find a compatible media source.");
 			return;
 		}
 
@@ -322,7 +323,7 @@ var MediaBase = {
 		var errorMessage = MediaBase.getErrorMessageFromCode(errorCode);
 		var source = this.getCurrentSource();
 
-		DebugWrite("#{0} url: '#{1}', code: #{2}", DebugLevel.Error, errorMessage, (source == null ? "Unknown" : source.getUrl()), errorCode);
+		Debug.error("#{0} url: '#{1}', code: #{2}", errorMessage, (source == null ? "Unknown" : source.getUrl()), errorCode);
 
 		this.dispatchEvent(new ErrorEvent(ErrorEvent.ERROR, errorCode, errorMessage));
 	},

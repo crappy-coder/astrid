@@ -1,63 +1,93 @@
+import Utils from "./Utils"
+
 class Dictionary {
 	constructor() {
-		this.keys = [];
-		this.values = [];
+		this.state = {
+			// stores entries that DO NOT use a string as the key
+			objKeys:   [],
+			objValues: [],
+
+			// stores entries that DO use a string as the key
+			map: Object.create(null)
+		}
 	}
 
-	getKeys() {
-		return this.keys;
-	}
-
-	getValues() {
-		return this.values;
-	}
-
-	getCount() {
+	get count() {
 		return this.keys.length;
 	}
 
+	get keys() {
+		return Object.keys(this.state.map).concat(this.state.objKeys);
+	}
+
+	get values() {
+		var values = Object.keys(this.state.map).map(function (k) {
+			return this.state.map[k];
+		}, this);
+
+		return values.concat(this.state.objValues);
+	}
+
 	get(key) {
-		var idx = this.keys.indexOf(key);
+		if(Utils.isString(key))
+			return (key in this.state.map ? this.state.map[key] : null);
 
-		if (idx == -1) {
-			return null;
-		}
+		var idx = this.state.objKeys.indexOf(key);
 
-		return this.values[idx];
+		if(~idx)
+			return this.state.objValues[idx];
+
+		return null;
 	}
 
 	set(key, value) {
-		var idx = this.keys.indexOf(key);
+		if(Utils.isString(key)) {
+			var isNewEntry = !(key in this.state.map);
 
-		if (idx == -1) {
-			this.keys.push(key);
-			this.values.push(value);
+			this.state.map[key] = value;
+			return isNewEntry;
 		}
-		else {
-			this.values[idx] = value;
+
+		var idx = this.state.objKeys.indexOf(key);
+
+		if(~idx) {
+			this.state.objValues[idx] = value;
+			return false;
 		}
+
+		this.state.objKeys.push(key);
+		this.state.objValues.push(value);
+		return true;
 	}
 
 	remove(key) {
-		var idx = this.keys.indexOf(key);
+		if(!this.exists(key))
+			return false;
 
-		if (idx != -1) {
-			this.keys.removeAt(idx);
-			this.values.removeAt(idx);
+		if(Utils.isString(key)) {
+			delete this.state.map[key];
+			return true;
 		}
+
+		var idx = this.state.objKeys.indexOf(key);
+
+		this.state.objKeys.removeAt(idx);
+		this.state.objValues.removeAt(idx);
+		return true;
 	}
 
 	clear() {
-		this.keys = [];
-		this.values = [];
+		this.state.objKeys.length = 0;
+		this.state.objValues.length = 0;
+		this.state.map = Object.create(null);
 	}
 
-	containsKey(key) {
-		return (this.keys.indexOf(key) != -1);
-	}
+	exists(key) {
+		if(Utils.isString(key)) {
+			return (key in this.state.map);
+		}
 
-	containsValue(value) {
-		return (this.values.indexOf(value) != -1);
+		return !!(~this.state.objKeys.indexOf(key));
 	}
 
 	toString() {

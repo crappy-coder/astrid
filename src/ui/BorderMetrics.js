@@ -66,7 +66,7 @@ class BorderMetrics extends Equatable {
 	}
 
 	static Zero() {
-		return new this(0, 0, 0, 0);
+		return new BorderMetrics(0, 0, 0, 0);
 	}
 
 	static fromUniform(value) {

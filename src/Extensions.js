@@ -1,130 +1,110 @@
-//--------------------------------------------------------------------------
-//  Array Extensions
-//--------------------------------------------------------------------------
+import Utils from "./Utils"
 
-Array.prototype.contains = function(item) {
-	return (this.indexOf(item) != -1);
-};
+(function () {
 
-Array.prototype.remove = function(item) {
-	for (var i = this.length-1; i >= 0; i--) {
-		if (this[i] == item) {
-			this.removeAt(i);
-		}
-	}
-};
+    //--------------------------------------------------------------------------
+    //  Array Extensions
+    //--------------------------------------------------------------------------
+    Array.prototype.contains = Array.prototype.contains || function (item) {
+        return !!(~this.indexOf(item));
+    };
 
-Array.prototype.removeAt = function(index) {
-	this.splice(index, 1);
-};
+    Array.prototype.remove = Array.prototype.remove || function (item) {
+        for (var i = this.length - 1; i >= 0; i--) {
+            if (this[i] == item) {
+                this.removeAt(i);
+            }
+        }
+    };
 
+    Array.prototype.removeAt = Array.prototype.removeAt || function (index) {
+        if(index >= 0 && index < this.length)
+            this.splice(index, 1);
+    };
 
-//--------------------------------------------------------------------------
-//  Function Extensions
-//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    //  Function Extensions
+    //--------------------------------------------------------------------------
 
-Function.prototype.findEventHandler$ = function(context) {
+    Function.prototype.findEventHandler$ = Function.prototype.findEventHandler$ || function (context) {
 
-	// no handler table has been created yet to search
-	if (!this.eventHandlerTable) {
-		return null;
-	}
+        // no handler table has been created yet to search
+        if (!this.eventHandlerTable) {
+            return null;
+        }
 
-	// iterate through the table and see if we can find the handler
-	// for the specified context, this way we can have multiple handlers
-	// for each unique object context
-	var len = this.eventHandlerTable.length;
+        // iterate through the table and see if we can find the handler
+        // for the specified context, this way we can have multiple handlers
+        // for each unique object context
+        var len = this.eventHandlerTable.length;
 
-	for (var i = 0; i < len; ++i) {
-		if (this.eventHandlerTable[i].context == context) {
-			return this.eventHandlerTable[i].handler;
-		}
-	}
-};
+        for (var i = 0; i < len; ++i) {
+            if (this.eventHandlerTable[i].context == context) {
+                return this.eventHandlerTable[i].handler;
+            }
+        }
+    };
 
-Function.prototype.createEventHandler$ = function(context, handler) {
-	// if there is no event handler table for this function instance
-	// create one, this is done at the instance level so we do not
-	// generate huge tables instead of using Function.prototype.eventHandlerTable
-	// which would be a single instance for all functions
-	if (!this.eventHandlerTable) {
-		this.eventHandlerTable = [];
-	}
+    Function.prototype.createEventHandler$ = Function.prototype.createEventHandler$ || function (context, handler) {
+        // if there is no event handler table for this function instance
+        // create one, this is done at the instance level so we do not
+        // generate huge tables instead of using Function.prototype.eventHandlerTable
+        // which would be a single instance for all functions
+        if (!this.eventHandlerTable) {
+            this.eventHandlerTable = [];
+        }
 
-	this.eventHandlerTable.push({context:context, handler:handler});
+        this.eventHandlerTable.push({context: context, handler: handler});
 
-	return handler;
-};
+        return handler;
+    };
 
-Function.prototype.executeHandler = function() {
+    Function.prototype.asDelegate = Function.prototype.asDelegate || function (context) {
+        // if no context then just return ourself
+        if (!context) {
+            return this;
+        }
 
-};
+        // see if we can find an existing handler, otherwise
+        // create one
+        var funcImpl = this;
+        var funcHandler = this.findEventHandler$(context);
 
-Function.prototype.asDelegate = function(context) {
+        if (funcHandler == null) {
+            return this.createEventHandler$(context, function handlerFunc() {
+                return funcImpl.apply(context, arguments);
+            });
+        }
 
-	if (arguments.length != 1) {
-		throw new Error("Invalid number of arguments. expected: 1, actual: " + arguments.length.toString());
-	}
+        return funcHandler;
+    };
 
-	// if the context is null then just return this function
-	if (context == null) {
-		return this;
-	}
+    // short hand for asDelegate
+    Function.prototype.d = Function.prototype.d || Function.prototype.asDelegate;
 
-	// see if we can find an existing handler, otherwise
-	// create one
-	var funcImpl = this;
-	var funcHandler = this.findEventHandler$(context);
+    //--------------------------------------------------------------------------
+    //  String Extensions
+    //--------------------------------------------------------------------------
 
-	if (funcHandler == null) {
-		return this.createEventHandler$(context, function handlerFunc() {
-			return funcImpl.apply(context, arguments);
-		});
-	}
+    /**
+     *  Formats a given string in a similar way as printf.
+     */
+    String.format = String.format || function (formatString) {
+        if (arguments.length === 0) {
+            return formatString;
+        }
 
-	return funcHandler;
-};
+        return Utils.format.apply(this, arguments);
+    };
 
-// short hand for asDelegate
-Function.prototype.d = function(context) {
-	return this.asDelegate(context);
-};
+    String.prototype.contains = String.prototype.contains || function (value) {
+        return !!(~this.indexOf(value));
+    };
 
-//--------------------------------------------------------------------------
-//  String Extensions
-//--------------------------------------------------------------------------
-
-/**
- *  Formats a given string in a similar way as printf or the C#
- *  String.Format, except without type/precision specifiers (i.e. {0:C2}, {0:X}, etc...)
- */
-String.format = function(formatString) {
-
-	// TODO: The 'Template' class was originally used from Prototype.js framework. This is no longer
-	//       referenced so need to build out own formatter class to support string formatting.
-
-	//if (arguments.length > 1) {
-	//	var template = new Template(formatString);
-	//	var dict = {};
-	//
-	//	for (var i = 1; i < arguments.length; i++) {
-	//		dict[(i-1).toString()] = arguments[i];
-	//	}
-	//
-	//	return template.evaluate(dict);
-	//}
-
-	return formatString;
-};
-
-String.formatWithObjects = function(formatString, objects) {
-	return String.format.apply(formatString, objects);
-};
-
-
-performance = performance || {
-	now: function () {
-		return Date.now() - this.offset;
-	},
-	offset: Date.now()
-};
+    window.performance = window.performance || {
+        now: function () {
+            return Date.now() - this.offset;
+        },
+        offset: Date.now()
+    };
+})();

@@ -1,6 +1,7 @@
 import Vector2D from "../Vector2D";
 import DebugFlags from "../DebugFlags";
-import { IsIE, IsFirefox, ValueOrDefault } from "../Engine";
+import { ValueOrDefault } from "../Engine";
+import System from "../System"
 import Gamepad from "./Gamepad";
 import GamepadButtonEvent from "./GamepadButtonEvent";
 import GamepadButtons from "./GamepadButtons";
@@ -172,18 +173,13 @@ class InputManager extends EventDispatcher {
 		canvas.addEventListener("dblclick", this.handleDoubleClick.asDelegate(this), false);
 
 		// TODO : see what the other browsers support for mouse wheel scrolling
-		if (window.isNativeHost) {
+		if (System.isInternetExplorer) {
 			canvas.addEventListener("mousewheel", this.handleMouseWheel.asDelegate(this), false);
 		}
-		else {
-			if (IsIE()) {
-				canvas.addEventListener("mousewheel", this.handleMouseWheel.asDelegate(this), false);
-			}
-			else if (IsFirefox()) {
-				// for firefox we need to use the special DOMMouseScroll event
-				//canvas.addEventListener("MozMousePixelScroll", this.handleMouseWheel.asDelegate(this), false);		
-				canvas.addEventListener("DOMMouseScroll", this.handleMouseWheel.asDelegate(this), false);
-			}
+		else if (System.isFirefox) {
+			// for firefox we need to use the special DOMMouseScroll event
+			//canvas.addEventListener("MozMousePixelScroll", this.handleMouseWheel.asDelegate(this), false);
+			canvas.addEventListener("DOMMouseScroll", this.handleMouseWheel.asDelegate(this), false);
 		}
 
 		canvas.addEventListener("contextmenu", this.handleContextMenu.asDelegate(this), false);
@@ -259,17 +255,12 @@ class InputManager extends EventDispatcher {
 		canvas.removeEventListener("mouseout", this.handleMouseOut.asDelegate(this), false);
 		canvas.removeEventListener("dblclick", this.handleDoubleClick.asDelegate(this), false);
 
-		if (window.isNativeHost) {
+		if (System.isInternetExplorer) {
 			canvas.removeEventListener("mousewheel", this.handleMouseWheel.asDelegate(this), false);
 		}
-		else {
-			if (IsIE()) {
-				canvas.removeEventListener("mousewheel", this.handleMouseWheel.asDelegate(this), false);
-			}
-			else if (IsFirefox()) {
-				//canvas.addEventListener("MozMousePixelScroll", this.handleMouseWheel.asDelegate(this), false);
-				canvas.removeEventListener("DOMMouseScroll", this.handleMouseWheel.asDelegate(this), false);
-			}
+		else if (System.isFirefox) {
+			//canvas.addEventListener("MozMousePixelScroll", this.handleMouseWheel.asDelegate(this), false);
+			canvas.removeEventListener("DOMMouseScroll", this.handleMouseWheel.asDelegate(this), false);
 		}
 
 		canvas.removeEventListener("contextmenu", this.handleContextMenu.asDelegate(this), false);

@@ -9,7 +9,7 @@ import LayoutManager from "./LayoutManager";
 import DirtyRegion from "./DirtyRegion";
 import DirtyRegionTracker from "./DirtyRegionTracker";
 import Vector2D from "../Vector2D";
-import { ValueOrDefault, DebugWrite, DebugLevel, Mixin } from "../Engine";
+import { ValueOrDefault, Mixin } from "../Engine";
 import NavigationMode from "../input/NavigationMode";
 import Event from "../Event";
 import BorderMetrics from "./BorderMetrics";

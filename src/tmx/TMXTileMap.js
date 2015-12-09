@@ -1,5 +1,6 @@
 import EventDispatcher from "../EventDispatcher";
-import { CreateHttpRequestObject, DebugWrite, DebugLevel } from "../Engine";
+import System from "../System";
+import Debug from "../Debug";
 import Dictionary from "../Dictionary";
 
 class TMXTileMap extends EventDispatcher {
@@ -97,10 +98,10 @@ class TMXTileMap extends EventDispatcher {
 	}
 
 	static load(tmxXmlFilePath, readyCallback) {
-		var request = CreateHttpRequestObject();
+		var request = System.createHTTPRequest();
 
 		if (request == null) {
-			DebugWrite("Unable to create XMLHttpRequest object.", DebugLevel.Error);
+			Debug.error("Unable to create XMLHttpRequest object.");
 			return;
 		}
 
@@ -167,7 +168,7 @@ class TMXTileMap extends EventDispatcher {
 					}
 				}
 				else {
-					DebugWrite("Unable to load tmx map from url: #{0}, reason=#{1}, responseCode=#{2}", DebugLevel.Error, tmxXmlFilePath, request.statusText, request.status);
+					Debug.error("Unable to load tmx map from url: #{0}, reason=#{1}, responseCode=#{2}", tmxXmlFilePath, request.statusText, request.status);
 				}
 			}
 		};

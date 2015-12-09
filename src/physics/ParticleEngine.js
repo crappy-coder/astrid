@@ -20,6 +20,8 @@ import FrameEvent from "../FrameEvent";
 
 class Particle extends Equatable {
 	constructor() {
+		super();
+
 		this.position = Vector2D.Zero();
 		this.startPosition = Vector2D.Zero();
 		this.direction = Vector2D.Zero();

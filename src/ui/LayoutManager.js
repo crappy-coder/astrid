@@ -72,7 +72,7 @@ class LayoutPriorityQueue {
 			}
 
 			// Remove the item with largest priority from our priority queue.
-			var keys = bin.items.getKeys();
+			var keys = bin.items.keys;
 
 			obj = keys[0];
 			this.removeChild(obj, this.maxPriority);
@@ -111,7 +111,7 @@ class LayoutPriorityQueue {
 					}
 				}
 				else {
-					var keys = bin.items.getKeys();
+					var keys = bin.items.keys;
 					var key = null;
 
 					for (var i = 0; i < keys.length; ++i) {
@@ -156,7 +156,7 @@ class LayoutPriorityQueue {
 			// Must use a for loop here since we're removing a specific item
 			// from a 'Dictionary' (no means of directly indexing).
 
-			var keys = bin.items.getKeys();
+			var keys = bin.items.keys;
 
 			obj = keys[0];
 			this.removeChild(obj, this.minPriority);
@@ -192,7 +192,7 @@ class LayoutPriorityQueue {
 					}
 				}
 				else {
-					var keys = bin.items.getKeys();
+					var keys = bin.items.keys;
 					var key;
 
 					for (var i = 0; i < keys.length; ++i) {
