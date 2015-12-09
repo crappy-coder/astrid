@@ -91,14 +91,15 @@ class Dictionary {
 	}
 
 	toString() {
-		var str = "Dictionary (count=" + this.getCount() + ") :\n";
-		var len = this.getCount();
+		var str = "Dictionary (count=" + this.count + ") :\n";
+		var len = this.count;
 		var key = null;
+		var keys = this.keys;
 		var value = null;
 
-		for (var i = 0; i < len; i++) {
-			key = this.keys[i];
-			value = this.values[i];
+		for (var i = 0; i < keys.length; i++) {
+			key = keys[i];
+			value = this.get(key);
 
 			str += "[key=" + key + ", value=" + value + "]\n";
 		}
