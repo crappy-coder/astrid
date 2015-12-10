@@ -1,9 +1,8 @@
-import { ValueOrDefault } from "../Engine";
 
 class LinearEase {
 	constructor(easeInFraction, easeOutFraction) {
-		this.easeInFraction = ValueOrDefault(easeInFraction, 0);
-		this.easeOutFraction = ValueOrDefault(easeOutFraction, 0);
+		this.easeInFraction = astrid.valueOrDefault(easeInFraction, 0);
+		this.easeOutFraction = astrid.valueOrDefault(easeOutFraction, 0);
 	}
 
 	getEaseInFraction() {

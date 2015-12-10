@@ -4,7 +4,6 @@ import TextTrimming from "../text/TextTrimming";
 import Font from "../text/Font";
 import Rectangle from "../Rectangle";
 import Pen from "./Pen";
-import { AreNotEqual, ValueOrDefault, IsNull } from "../Engine";
 import Application from "../Application";
 
 class Label extends Control {
@@ -103,7 +102,7 @@ class Label extends Control {
 	}
 
 	setFont(value) {
-		if(!IsNull(value) && AreNotEqual(this.font, value))
+		if(astrid.isNotNull(value) && astrid.areNotEqual(this.font, value))
 		{
 			this.font = Font.fromFont(value);
 
@@ -188,7 +187,7 @@ class Label extends Control {
 	}
 
 	setStroke(value) {
-		if (AreNotEqual(this.stroke, value)) {
+		if (astrid.areNotEqual(this.stroke, value)) {
 			this.stroke = value;
 
 			this.invalidateProperties();
@@ -591,9 +590,9 @@ class TextBlock {
 	}
 
 	createLine(previousLine, width, trimStyle) {
-		trimStyle = ValueOrDefault(trimStyle, TextTrimming.Word);
-		previousLine = ValueOrDefault(previousLine, null);
-		width = ValueOrDefault(width, 100000);
+		trimStyle = astrid.valueOrDefault(trimStyle, TextTrimming.Word);
+		previousLine = astrid.valueOrDefault(previousLine, null);
+		width = astrid.valueOrDefault(width, 100000);
 
 		// won't be able to measure anything without a native canvas
 		if (this.nativeCanvas == null) {

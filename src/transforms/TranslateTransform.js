@@ -1,5 +1,4 @@
 import Transform from "./Transform";
-import { ValueOrDefault } from "../Engine";
 import PropertyOptions from "../ui/PropertyOptions";
 import Matrix2D from "../Matrix2D";
 
@@ -7,8 +6,8 @@ class TranslateTransform extends Transform {
 	constructor(x, y) {
 		super();
 
-		this.setX(ValueOrDefault(x, 0));
-		this.setY(ValueOrDefault(y, 0));
+		this.setX(astrid.valueOrDefault(x, 0));
+		this.setY(astrid.valueOrDefault(y, 0));
 	}
 
 	initializeAnimatablePropertiesCore() {

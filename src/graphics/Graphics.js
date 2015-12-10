@@ -9,14 +9,12 @@ import Matrix2D from "../Matrix2D";
 import Pair from "../Pair";
 import GraphicsOp from "./GraphicsOp";
 import CompositeOperator from "./CompositeOperator";
-import { ValueOrDefault } from "../Engine";
 import Debug from "../Debug";
 import PathMoveSegment from "./PathMoveSegment";
 import PathLineSegment from "./PathLineSegment";
 import PathQuadraticBezierSegment from "./PathQuadraticBezierSegment";
 import PathCubicBezierSegment from "./PathCubicBezierSegment";
 import SweepDirection from "./SweepDirection";
-import EngineMath from "../EngineMath";
 import { GraphicsImageItem } from "./GraphicsProcessor";
 import VideoSource from "../media/VideoSource";
 import DashStyle from "../ui/DashStyle";
@@ -85,14 +83,14 @@ class Graphics {
 	}
 
 	fill(brush, compositeOp) {
-		compositeOp = ValueOrDefault(compositeOp, CompositeOperator.SourceOver);
+		compositeOp = astrid.valueOrDefault(compositeOp, CompositeOperator.SourceOver);
 
 		this.drawable.registerGraphicsObject(brush);
 		this.pushOp(GraphicsOp.Fill, this.createParamsFromBrush(brush), compositeOp);
 	}
 
 	stroke(pen, compositeOp) {
-		compositeOp = ValueOrDefault(compositeOp, CompositeOperator.SourceOver);
+		compositeOp = astrid.valueOrDefault(compositeOp, CompositeOperator.SourceOver);
 
 		this.drawable.registerGraphicsObject(pen);
 		this.pushOp(GraphicsOp.Stroke, this.createParamsFromPen(pen), compositeOp);
@@ -124,14 +122,14 @@ class Graphics {
 	}
 
 	arcTo(x, y, width, height, startAngle, sweepAngle, direction) {
-		direction = ValueOrDefault(direction, SweepDirection.Clockwise);
+		direction = astrid.valueOrDefault(direction, SweepDirection.Clockwise);
 
 		this.makeArcPath(x, y, width, height, startAngle, sweepAngle, direction, true);
 	}
 
 	drawOpenArc(x, y, width, height, startAngle, sweepAngle, direction, fromCenter) {
-		direction = ValueOrDefault(direction, SweepDirection.Clockwise);
-		fromCenter = ValueOrDefault(fromCenter, true);
+		direction = astrid.valueOrDefault(direction, SweepDirection.Clockwise);
+		fromCenter = astrid.valueOrDefault(fromCenter, true);
 
 		if (!fromCenter) {
 			x += width * 0.5;
@@ -148,7 +146,7 @@ class Graphics {
 	}
 
 	drawEllipse(x, y, width, height, isCenter) {
-		isCenter = ValueOrDefault(isCenter, true);
+		isCenter = astrid.valueOrDefault(isCenter, true);
 
 		var radiusX = width * 0.5;
 		var radiusY = height * 0.5;
@@ -183,11 +181,11 @@ class Graphics {
 	}
 
 	drawImageComplex(imageSource, srcX, srcY, srcWidth, srcHeight, dstX, dstY, dstWidth, dstHeight, repeat, matrix) {
-		dstX = ValueOrDefault(dstX, 0);
-		dstY = ValueOrDefault(dstY, 0);
-		dstWidth = ValueOrDefault(dstWidth, srcWidth);
-		dstHeight = ValueOrDefault(dstHeight, srcHeight);
-		repeat = ValueOrDefault(repeat, false);
+		dstX = astrid.valueOrDefault(dstX, 0);
+		dstY = astrid.valueOrDefault(dstY, 0);
+		dstWidth = astrid.valueOrDefault(dstWidth, srcWidth);
+		dstHeight = astrid.valueOrDefault(dstHeight, srcHeight);
+		repeat = astrid.valueOrDefault(repeat, false);
 
 		// identity matrices still have an overhead of transformations
 		// and state changes, so skip omit these
@@ -224,7 +222,7 @@ class Graphics {
 	}
 
 	drawRoundRect(x, y, width, height, radius) {
-		radius = ValueOrDefault(radius, 0);
+		radius = astrid.valueOrDefault(radius, 0);
 
 		// not a rounded rectangle, just draw as a normal rectangle
 		if (radius <= 0) {
@@ -246,7 +244,7 @@ class Graphics {
 	}
 
 	drawPoly(points, dontClosePath) {
-		dontClosePath = ValueOrDefault(dontClosePath, false);
+		dontClosePath = astrid.valueOrDefault(dontClosePath, false);
 
 		var len = points.length;
 		var pt = null;
@@ -318,8 +316,8 @@ class Graphics {
 		var rx = width * 0.5;
 		var ry = height * 0.5;
 
-		startAngle = EngineMath.degreesToRadians(startAngle);
-		sweepAngle = EngineMath.degreesToRadians(sweepAngle);
+		startAngle = astrid.math.degreesToRadians(startAngle);
+		sweepAngle = astrid.math.degreesToRadians(sweepAngle);
 
 		if (Math.abs(sweepAngle) > 2 * Math.PI) {
 			sweepAngle = 2 * Math.PI;
@@ -653,8 +651,8 @@ class Graphics {
 		}
 
 		// round the dimensions to whole numbers		
-		this.offscreenSurface.width = EngineMath.round(srcWidth);
-		this.offscreenSurface.height = EngineMath.round(srcHeight);
+		this.offscreenSurface.width = astrid.math.round(srcWidth);
+		this.offscreenSurface.height = astrid.math.round(srcHeight);
 
 		// create and reset the offscreen context, then render the tile
 		// into it at 0,0
@@ -1210,8 +1208,8 @@ class Graphics {
 		}
 
 		// round the dimensions to whole numbers		
-		this.offscreenStyleSurface.width = EngineMath.round(surfaceWidth);
-		this.offscreenStyleSurface.height = EngineMath.round(surfaceHeight);
+		this.offscreenStyleSurface.width = astrid.math.round(surfaceWidth);
+		this.offscreenStyleSurface.height = astrid.math.round(surfaceHeight);
 
 		var ctx = this.offscreenStyleSurface.getContext("2d");
 
@@ -1308,7 +1306,7 @@ class Graphics {
 		}
 
 		// unable to actual perform an dashing
-		if (Math.abs(EngineMath.toPrecision(sumDashLength, 2)) <= 0.01) {
+		if (Math.abs(astrid.math.toPrecision(sumDashLength, 2)) <= 0.01) {
 			return false;
 		}
 
@@ -1346,7 +1344,7 @@ class Graphics {
 		}
 
 		// round down to an even number
-		dashCount = EngineMath.evenRoundDown(dashes.length);
+		dashCount = astrid.math.evenRoundDown(dashes.length);
 
 		// get the inverse of the sum of the dash lengths
 		sumInvDashLength = 1 / sumDashLength;

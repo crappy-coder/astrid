@@ -1,6 +1,5 @@
 import Transform from "./Transform";
 import Matrix2D from "../Matrix2D";
-import { ValueOrDefault, AreEqual } from "../Engine";
 import PropertyOptions from "../ui/PropertyOptions";
 
 class MatrixTransform extends Transform {
@@ -8,7 +7,7 @@ class MatrixTransform extends Transform {
 		super();
 
 		this.tmp = new Matrix2D();
-		this.setMatrix(ValueOrDefault(matrix, new Matrix2D()));
+		this.setMatrix(astrid.valueOrDefault(matrix, new Matrix2D()));
 	}
 
 	initializeAnimatablePropertiesCore() {
@@ -33,7 +32,7 @@ class MatrixTransform extends Transform {
 	}
 
 	isEqualTo(other) {
-		return (AreEqual(this.getMatrix(), other.getMatrix()));
+		return (astrid.areEqual(this.getMatrix(), other.getMatrix()));
 	}
 }
 

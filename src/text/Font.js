@@ -2,7 +2,6 @@ import Equatable from "../Equatable";
 import FontStretch from "./FontStretch";
 import FontStyle from "./FontStyle";
 import FontWeight from "./FontWeight";
-import { ValueOrDefault } from "../Engine";
 import Size from "../Size";
 
 class Font extends Equatable {
@@ -112,7 +111,7 @@ class Font extends Equatable {
 	}
 
 	measureString(str, maxWidth) {
-		maxWidth = ValueOrDefault(maxWidth, 10000);
+		maxWidth = astrid.valueOrDefault(maxWidth, 10000);
 
 		if(!Font.MeasureTextElement)
 		{
@@ -190,10 +189,10 @@ class Font extends Equatable {
 		var f = new Font();
 
 		f.setFontName(name);
-		f.setFontStyle(ValueOrDefault(style, FontStyle.Normal));
-		f.setFontWeight(ValueOrDefault(weight, FontWeight.Normal));
-		f.setFontStretch(ValueOrDefault(stretch, FontStretch.Normal));
-		f.setFontSize(ValueOrDefault(size, 10));
+		f.setFontStyle(astrid.valueOrDefault(style, FontStyle.Normal));
+		f.setFontWeight(astrid.valueOrDefault(weight, FontWeight.Normal));
+		f.setFontStretch(astrid.valueOrDefault(stretch, FontStretch.Normal));
+		f.setFontSize(astrid.valueOrDefault(size, 10));
 
 		return f;
 	}

@@ -3,7 +3,6 @@ import Vector2D from "../Vector2D";
 import CollectionEvent from "../CollectionEvent";
 import Application from "../Application";
 import FrameEvent from "../FrameEvent";
-import EngineMath, { PositiveInfinity } from "../EngineMath";
 import ParallaxCanvasLayer from "./ParallaxCanvasLayer";
 
 class ParallaxCanvas extends Canvas {
@@ -63,11 +62,11 @@ class ParallaxCanvas extends Canvas {
 		this.position.x += x;
 		this.position.y += y;
 
-		if (Math.abs(this.position.x) > lx && !EngineMath.isInfinity(lx)) {
+		if (Math.abs(this.position.x) > lx && !astrid.math.isInfinity(lx)) {
 			this.position.x -= x;
 		}
 
-		if (Math.abs(this.position.y) > ly && !EngineMath.isInfinity(ly)) {
+		if (Math.abs(this.position.y) > ly && !astrid.math.isInfinity(ly)) {
 			this.position.y -= y;
 		}
 	}
@@ -94,24 +93,24 @@ class ParallaxCanvas extends Canvas {
 				continue;
 			}
 
-			if (!EngineMath.isInfinity(child.limits.x)) {
+			if (!astrid.math.isInfinity(child.limits.x)) {
 				dx = child.limits.x;
 			}
 
-			if (EngineMath.isInfinity(child.limits.y)) {
+			if (!astrid.math.isInfinity(child.limits.y)) {
 				dy = child.limits.y;
 			}
 
-			x = Math.max((EngineMath.isInfinity(x) ? 0 : x), dx);
-			y = Math.max((EngineMath.isInfinity(y) ? 0 : y), dy);
+			x = Math.max((astrid.math.isInfinity(x) ? 0 : x), dx);
+			y = Math.max((astrid.math.isInfinity(y) ? 0 : y), dy);
 		}
 
 		if (ignoreX) {
-			x = PositiveInfinity;
+			x = astrid.math.PositiveInfinity;
 		}
 
 		if (ignoreY) {
-			y = PositiveInfinity;
+			y = astrid.math.PositiveInfinity;
 		}
 
 		this.computedLimits = new Vector2D(x, y);
@@ -138,8 +137,8 @@ class ParallaxCanvas extends Canvas {
 		var ly = 0;
 		var len = this.getCount();
 		var child = null;
-		var hasLimitX = !EngineMath.isInfinity(this.limits.x);
-		var hasLimitY = !EngineMath.isInfinity(this.limits.y);
+		var hasLimitX = !astrid.math.isInfinity(this.limits.x);
+		var hasLimitY = !astrid.math.isInfinity(this.limits.y);
 
 		for (var i = 0; i < len; ++i) {
 			child = this.getAt(i);
@@ -156,19 +155,19 @@ class ParallaxCanvas extends Canvas {
 			lx = child.limits.x;
 			ly = child.limits.y;
 
-			if (EngineMath.isInfinity(lx) && hasLimitX) {
+			if (astrid.math.isInfinity(lx) && hasLimitX) {
 				lx = this.limits.x;
 			}
 
-			if (EngineMath.isInfinity(ly) && hasLimitY) {
+			if (astrid.math.isInfinity(ly) && hasLimitY) {
 				ly = this.limits.y;
 			}
 
-			if (Math.abs(tx) > lx && !EngineMath.isInfinity(lx)) {
+			if (Math.abs(tx) > lx && !astrid.math.isInfinity(lx)) {
 				tx = (tx < 0 ? -lx : lx);
 			}
 
-			if (Math.abs(ty) > ly && !EngineMath.isInfinity(ly)) {
+			if (Math.abs(ty) > ly && !astrid.math.isInfinity(ly)) {
 				ty = (ty < 0 ? -ly : ly);
 			}
 

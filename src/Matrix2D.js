@@ -1,16 +1,14 @@
 import Equatable from "./Equatable";
 import Vector2D from "./Vector2D";
-import { ValueOrDefault } from "./Engine";
-import EngineMath, { DegreeToRadian } from "./EngineMath";
 
-var MatrixType = {
+const MatrixType = {
 	"IsIdentity": 0,
 	"IsTranslation": 1,
 	"IsScaling": 2,
 	"IsUnknown": 4
 };
 
-var MatrixDecompositionType = {
+const MatrixDecompositionType = {
 	"Translation": 0,
 	"Rotation": 1,
 	"Scale": 2,
@@ -108,7 +106,7 @@ class Matrix2D extends Equatable {
 						return Vector2D.Zero();
 					}
 					else {
-						var rotation = skewY / DegreeToRadian;
+						var rotation = skewY / astrid.math.DegreeToRadian;
 
 						if (this.m11 < 0 && this.m22 >= 0) {
 							rotation += (rotation <= 0) ? 180 : -180;
@@ -119,8 +117,8 @@ class Matrix2D extends Equatable {
 				}
 
 				return new Vector2D(
-						skewX / DegreeToRadian,
-						skewY / DegreeToRadian);
+						skewX / astrid.math.DegreeToRadian,
+						skewY / astrid.math.DegreeToRadian);
 		}
 
 		return null;
@@ -191,12 +189,12 @@ class Matrix2D extends Equatable {
 	}
 
 	truncateToPrecision(precision) {
-		this.m11 = EngineMath.toPrecision(this.m11, precision);
-		this.m12 = EngineMath.toPrecision(this.m12, precision);
-		this.m21 = EngineMath.toPrecision(this.m21, precision);
-		this.m22 = EngineMath.toPrecision(this.m22, precision);
-		this.offsetX = EngineMath.toPrecision(this.offsetX, precision);
-		this.offsetY = EngineMath.toPrecision(this.offsetY, precision);
+		this.m11 = astrid.math.toPrecision(this.m11, precision);
+		this.m12 = astrid.math.toPrecision(this.m12, precision);
+		this.m21 = astrid.math.toPrecision(this.m21, precision);
+		this.m22 = astrid.math.toPrecision(this.m22, precision);
+		this.offsetX = astrid.math.toPrecision(this.offsetX, precision);
+		this.offsetY = astrid.math.toPrecision(this.offsetY, precision);
 	}
 
 	copyFrom(m) {
@@ -221,7 +219,7 @@ class Matrix2D extends Equatable {
 	}
 
 	rotateAt(angle, cx, cy, prepend) {
-		var m = Matrix2D.createRotation((angle % 360) * DegreeToRadian, cx, cy);
+		var m = Matrix2D.createRotation((angle % 360) * astrid.math.DegreeToRadian, cx, cy);
 
 		if (prepend) {
 			this.prepend(m);
@@ -247,7 +245,7 @@ class Matrix2D extends Equatable {
 	}
 
 	skew(sx, sy, prepend) {
-		var m = Matrix2D.createSkew((sx % 360) * DegreeToRadian, (sy % 360) * DegreeToRadian);
+		var m = Matrix2D.createSkew((sx % 360) * astrid.math.DegreeToRadian, (sy % 360) * astrid.math.DegreeToRadian);
 
 		if (prepend) {
 			this.prepend(m);
@@ -557,8 +555,8 @@ class Matrix2D extends Equatable {
 
 	static createRotation(angle, cx, cy) {
 
-		cx = ValueOrDefault(cx, 0);
-		cy = ValueOrDefault(cy, 0);
+		cx = astrid.valueOrDefault(cx, 0);
+		cy = astrid.valueOrDefault(cy, 0);
 
 		var m = new Matrix2D();
 		var cr = Math.cos(angle);
@@ -588,8 +586,8 @@ class Matrix2D extends Equatable {
 		m.offsetX = 0;
 		m.offsetY = 0;
 
-		cx = ValueOrDefault(cx, 0);
-		cy = ValueOrDefault(cy, 0);
+		cx = astrid.valueOrDefault(cx, 0);
+		cy = astrid.valueOrDefault(cy, 0);
 
 		m.type |= MatrixType.IsTranslation;
 		m.offsetX = (cx - (sx * cx));

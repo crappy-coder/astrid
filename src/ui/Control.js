@@ -1,6 +1,5 @@
 import Drawable from "./Drawable";
 import Pen from "./Pen";
-import { AreNotEqual } from "../Engine";
 
 class Control extends Drawable {
 	constructor(name) {
@@ -18,7 +17,7 @@ class Control extends Drawable {
 	}
 
 	setBackground(value) {
-		if (AreNotEqual(this.background, value)) {
+		if (astrid.areNotEqual(this.background, value)) {
 			this.background = value;
 			this.requestLayout();
 		}
@@ -29,7 +28,7 @@ class Control extends Drawable {
 	}
 
 	setForeground(value) {
-		if (AreNotEqual(this.foreground, value)) {
+		if (astrid.areNotEqual(this.foreground, value)) {
 			this.foreground = value;
 			this.requestLayout();
 		}
@@ -40,7 +39,7 @@ class Control extends Drawable {
 	}
 
 	setBorderBrush(value) {
-		if (AreNotEqual(this.borderBrush, value)) {
+		if (astrid.areNotEqual(this.borderBrush, value)) {
 			this.borderBrush = value;
 
 			this.invalidateProperties();

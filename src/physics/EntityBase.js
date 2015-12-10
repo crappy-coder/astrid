@@ -1,8 +1,6 @@
 import EventDispatcher from "../EventDispatcher";
 import PropertyOptions from "../ui/PropertyOptions";
 import Vector2D from "../Vector2D"
-import { ValueOrDefault } from "../Engine";
-import EngineMath from "../EngineMath";
 import RotateTransform from "../transforms/RotateTransform";
 import Box2D from "box2dweb";
 
@@ -42,7 +40,7 @@ class EntityBase extends EventDispatcher {
 	}
 
 	getLocalCenter(asUnits) {
-		return this.getLocalCenterImpl(ValueOrDefault(asUnits, false));
+		return this.getLocalCenterImpl(astrid.valueOrDefault(asUnits, false));
 	}
 
 	getLocalCenterImpl(asUnits) {
@@ -51,7 +49,7 @@ class EntityBase extends EventDispatcher {
 	}
 
 	getGlobalCenter(asUnits) {
-		return this.getGlobalCenterImpl(ValueOrDefault(asUnits, false));
+		return this.getGlobalCenterImpl(astrid.valueOrDefault(asUnits, false));
 	}
 
 	getGlobalCenterImpl(asUnits) {
@@ -60,7 +58,7 @@ class EntityBase extends EventDispatcher {
 	}
 
 	getPosition(asUnits) {
-		return this.getPositionImpl(ValueOrDefault(asUnits, false));
+		return this.getPositionImpl(astrid.valueOrDefault(asUnits, false));
 	}
 
 	getPositionImpl(asUnits) {
@@ -69,7 +67,7 @@ class EntityBase extends EventDispatcher {
 	}
 
 	setPosition(value, isUnits) {
-		this.setPositionImpl(value, ValueOrDefault(isUnits, false));
+		this.setPositionImpl(value, astrid.valueOrDefault(isUnits, false));
 	}
 
 	setPositionImpl(value, isUnits) {
@@ -77,7 +75,7 @@ class EntityBase extends EventDispatcher {
 	}
 
 	getAngle(asRadians) {
-		return this.getAngleImpl(ValueOrDefault(asRadians, false));
+		return this.getAngleImpl(astrid.valueOrDefault(asRadians, false));
 	}
 
 	getAngleImpl(asRadians) {
@@ -86,7 +84,7 @@ class EntityBase extends EventDispatcher {
 	}
 
 	setAngle(value, isRadians) {
-		this.setAngleImpl(value, ValueOrDefault(isRadians, false));
+		this.setAngleImpl(value, astrid.valueOrDefault(isRadians, false));
 	}
 
 	setAngleImpl(value, isRadians) {
@@ -98,8 +96,8 @@ class EntityBase extends EventDispatcher {
 	}
 
 	getBounds(asUnits, asAABB) {
-		asUnits = ValueOrDefault(asUnits, false);
-		asAABB = ValueOrDefault(asAABB, true);
+		asUnits = astrid.valueOrDefault(asUnits, false);
+		asAABB = astrid.valueOrDefault(asAABB, true);
 
 		return this.getBoundsImpl(asUnits, asAABB);
 	}
@@ -120,13 +118,13 @@ class EntityBase extends EventDispatcher {
 
 	link(drawable, updateOptions, autoRemove) {
 		this.drawable = drawable;
-		this.drawableUpdateOptions = ValueOrDefault(updateOptions, PropertyOptions.None);
-		this.autoRemoveDrawable = ValueOrDefault(autoRemove, true);
+		this.drawableUpdateOptions = astrid.valueOrDefault(updateOptions, PropertyOptions.None);
+		this.autoRemoveDrawable = astrid.valueOrDefault(autoRemove, true);
 	}
 
 	unlink(removeDrawable) {
 		if (this.drawable != null) {
-			if (this.autoRemoveDrawable || ValueOrDefault(removeDrawable, false)) {
+			if (this.autoRemoveDrawable || astrid.valueOrDefault(removeDrawable, false)) {
 				this.drawable.removeFromParent();
 			}
 
@@ -187,7 +185,7 @@ class EntityBase extends EventDispatcher {
 		var oy = (this.drawable.getHeight() * 0.5) - cy;
 		var xform = this.drawable.getRenderTransform();
 
-		angle = EngineMath.normalizeAngle(EngineMath.radiansToDegrees(angle));
+		angle = astrid.math.normalizeAngle(astrid.math.radiansToDegrees(angle));
 
 		// FIXME : need to allow for a user specified transform as well, if a user
 		//         set's their own render transform we will end up overriding it,
@@ -204,8 +202,8 @@ class EntityBase extends EventDispatcher {
 		xform.setCenterY(Math.round(oy));
 		xform.setAngle(Math.round(angle));
 
-		this.drawable.setX(EngineMath.toInt(px) - EngineMath.toInt(ox));
-		this.drawable.setY(EngineMath.toInt(py) - EngineMath.toInt(oy));
+		this.drawable.setX(astrid.math.toInt(px) - astrid.math.toInt(ox));
+		this.drawable.setY(astrid.math.toInt(py) - astrid.math.toInt(oy));
 
 		// no update options specified so we can just finish
 		if (this.drawableUpdateOptions == PropertyOptions.None) {

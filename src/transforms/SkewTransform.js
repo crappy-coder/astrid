@@ -1,5 +1,4 @@
 import Transform from "./Transform";
-import { ValueOrDefault } from "../Engine";
 import PropertyOptions from "../ui/PropertyOptions";
 import Matrix2D from "../Matrix2D";
 
@@ -7,10 +6,10 @@ class SkewTransform extends Transform {
 	constructor(skewX, skewY, centerX, centerY) {
 		super();
 
-		this.setSkewX(ValueOrDefault(skewX, 0));
-		this.setSkewY(ValueOrDefault(skewY, 0));
-		this.setCenterX(ValueOrDefault(centerX, 0));
-		this.setCenterY(ValueOrDefault(centerY, 0));
+		this.setSkewX(astrid.valueOrDefault(skewX, 0));
+		this.setSkewY(astrid.valueOrDefault(skewY, 0));
+		this.setCenterX(astrid.valueOrDefault(centerX, 0));
+		this.setCenterY(astrid.valueOrDefault(centerY, 0));
 	}
 
 	initializeAnimatablePropertiesCore() {

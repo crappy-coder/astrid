@@ -1,7 +1,5 @@
 import GradientBrush from "./GradientBrush";
-import { AreEqual } from "../Engine";
 import Vector2D from "../Vector2D";
-import EngineMath from "../EngineMath";
 import GradientStop from "../graphics/GradientStop";
 
 class LinearGradientBrush extends GradientBrush {
@@ -37,18 +35,18 @@ class LinearGradientBrush extends GradientBrush {
 
 	isEqualTo(other) {
 		return (super.isEqualTo(other) &&
-			AreEqual(this.getStartPoint(), other.getStartPoint()) &&
-			AreEqual(this.getEndPoint(), other.getEndPoint()));
+			astrid.areEqual(this.getStartPoint(), other.getStartPoint()) &&
+			astrid.areEqual(this.getEndPoint(), other.getEndPoint()));
 	}
 
 	static computeStartPointFromAngle(angle) {
-		return EngineMath.pointOfAngle(
-				EngineMath.degreesToRadians(180 - (angle % 360))).normalizeZero();
+		return astrid.math.pointOfAngle(
+				astrid.math.degreesToRadians(180 - (angle % 360))).normalizeZero();
 	}
 
 	static computeEndPointFromAngle(angle) {
-		return EngineMath.pointOfAngle(
-				EngineMath.degreesToRadians(360 - (angle % 360))).normalizeZero();
+		return astrid.math.pointOfAngle(
+				astrid.math.degreesToRadians(360 - (angle % 360))).normalizeZero();
 	}
 
 	static fromGradientStops(stops) {

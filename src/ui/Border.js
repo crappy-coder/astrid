@@ -1,6 +1,5 @@
 import ContentControl from "./ContentControl";
 import CornerRadius from "./CornerRadius";
-import { AreNotEqual } from "../Engine";
 
 class Border extends ContentControl {
 	constructor(name) {
@@ -14,7 +13,7 @@ class Border extends ContentControl {
 	}
 
 	setCornerRadius(value) {
-		if (AreNotEqual(this.cornerRadius, value)) {
+		if (astrid.areNotEqual(this.cornerRadius, value)) {
 			this.cornerRadius = value;
 
 			if (this.cornerRadius == null) {

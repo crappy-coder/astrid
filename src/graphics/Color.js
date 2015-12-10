@@ -1,13 +1,12 @@
 import Equatable from "../Equatable";
-import { ValueOrDefault } from "../Engine";
 
 class Color extends Equatable {
 	constructor(r, g, b, a) {
 		super();
-		this.r = ValueOrDefault(r, 1.0);
-		this.g = ValueOrDefault(g, 1.0);
-		this.b = ValueOrDefault(b, 1.0);
-		this.a = ValueOrDefault(a, 1.0);
+		this.r = astrid.valueOrDefault(r, 1.0);
+		this.g = astrid.valueOrDefault(g, 1.0);
+		this.b = astrid.valueOrDefault(b, 1.0);
+		this.a = astrid.valueOrDefault(a, 1.0);
 	}
 
 	add(color) {

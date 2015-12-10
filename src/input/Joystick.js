@@ -1,9 +1,7 @@
-import { ValueOrDefault } from "../Engine";
 import Vector2D from "../Vector2D";
 import Event from "../Event";
 import Pen from "../ui/Pen";
 import SolidColorBrush from "../brushes/SolidColorBrush";
-import EngineMath from "../EngineMath";
 import MouseEvent from "./MouseEvent";
 import Drawable from "../ui/Drawable";
 
@@ -20,8 +18,8 @@ class Joystick extends Drawable {
 	constructor(name, outerRadius, innerRadius, isPinned) {
 		super(name);
 
-		this.outerRadius = ValueOrDefault(outerRadius, 50);
-		this.innerRadius = ValueOrDefault(innerRadius, 30);
+		this.outerRadius = astrid.valueOrDefault(outerRadius, 50);
+		this.innerRadius = astrid.valueOrDefault(innerRadius, 30);
 		this.range = 0;
 		this.baseX = 0;
 		this.baseY = 0;
@@ -30,7 +28,7 @@ class Joystick extends Drawable {
 		this.lastParent = null;
 		this.value = new Vector2D(0, 0);
 		this.angleValue = 0;
-		this.isPinned = ValueOrDefault(isPinned, false);
+		this.isPinned = astrid.valueOrDefault(isPinned, false);
 		this.isDown = false;
 
 		this.updateRange();
@@ -143,7 +141,7 @@ class Joystick extends Drawable {
 		if (vx != this.value.x || vy != this.value.y) {
 			this.value.x = vx;
 			this.value.y = vy;
-			this.angleValue = EngineMath.radiansToDegrees(Math.atan2(dy, dx));
+			this.angleValue = astrid.math.radiansToDegrees(Math.atan2(dy, dx));
 
 			this.dispatchEvent(new Event(Event.CHANGE));
 		}

@@ -1,5 +1,4 @@
 import Canvas from "./Canvas";
-import { ValueOrDefault } from "../Engine";
 import Sprite from "./Sprite";
 
 class SpriteGroup extends Canvas {
@@ -86,7 +85,7 @@ class SpriteGroup extends Canvas {
 	}
 
 	forEach(funcName, ids) {
-		ids = ValueOrDefault(ids, null);
+		ids = astrid.valueOrDefault(ids, null);
 		var i, len;
 
 		if (ids == null) {

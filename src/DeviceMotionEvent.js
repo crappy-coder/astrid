@@ -1,9 +1,8 @@
 import Event from "./Event";
-import { ValueOrDefault } from "./Engine";
 
 class DeviceMotionEvent extends Event {
 	constructor(type, acceleration, interval, bubbles, cancelable) {
-		super(type, ValueOrDefault(bubbles, false), ValueOrDefault(cancelable, false));
+		super(type, astrid.valueOrDefault(bubbles, false), astrid.valueOrDefault(cancelable, false));
 
 		this.x = acceleration.x;
 		this.y = acceleration.y;

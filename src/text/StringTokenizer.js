@@ -1,10 +1,9 @@
-import { ValueOrDefault } from "../Engine";
 import Char from "./Char";
 
 class StringTokenizer {
 	constructor(str, quote, separator) {
-		this.chQuote = ValueOrDefault(quote, "'");
-		this.chSeparator = ValueOrDefault(separator, ",");
+		this.chQuote = astrid.valueOrDefault(quote, "'");
+		this.chSeparator = astrid.valueOrDefault(separator, ",");
 		this.chIndex = 0;
 		this.str = str;
 		this.strLen = (str == null ? 0 : str.length);
@@ -30,7 +29,7 @@ class StringTokenizer {
 	}
 
 	next(isQuotedTokenAllowed) {
-		this.moveNext(ValueOrDefault(isQuotedTokenAllowed, false));
+		this.moveNext(astrid.valueOrDefault(isQuotedTokenAllowed, false));
 
 		return this.getCurrent();
 	}

@@ -1,5 +1,4 @@
 import Canvas from "./Canvas";
-import { ValueOrDefault } from "../Engine";
 import PropertyOptions from "./PropertyOptions";
 import BasicAnimation from "../animation/BasicAnimation";
 import LinearEase from "../animation/LinearEase";
@@ -36,7 +35,7 @@ class Sprite extends Canvas {
 	}
 
 	setFrame(value, force) {
-		force = ValueOrDefault(force, false);
+		force = astrid.valueOrDefault(force, false);
 
 		if (this.setPropertyValue("frame", Math.round(value)) || force) {
 			this.updateSpritesForFrame(this.getFrame() - 1);
@@ -99,7 +98,7 @@ class Sprite extends Canvas {
 	}
 
 	play(name) {
-		name = ValueOrDefault(name, this.getAnimationName());
+		name = astrid.valueOrDefault(name, this.getAnimationName());
 
 		if (name != this.getAnimationName()) {
 			//this.dispatchEvent(new Event(Event.CHANGE));

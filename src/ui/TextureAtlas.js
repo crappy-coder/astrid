@@ -1,4 +1,3 @@
-import { ValueOrDefault } from "../Engine";
 import System from "../System"
 import Debug from "../Debug";
 import Rectangle from "../Rectangle";
@@ -23,8 +22,8 @@ class TextureAtlasTextureRule {
 class TextureAtlasTexture {
 	constructor(url, sw, sh) {
 		this.url = url;
-		this.sourceWidth = ValueOrDefault(sw, null);
-		this.sourceHeight = ValueOrDefault(sh, null);
+		this.sourceWidth = astrid.valueOrDefault(sw, null);
+		this.sourceHeight = astrid.valueOrDefault(sh, null);
 		this.rules = [];
 	}
 
@@ -256,7 +255,7 @@ class TextureAtlas extends EventDispatcher {
 	}
 
 	getImage(instanceName, spriteName, enableTiling) {
-		enableTiling = ValueOrDefault(enableTiling, false);
+		enableTiling = astrid.valueOrDefault(enableTiling, false);
 
 		return Image.create(instanceName, this.platformTextureSource, this.getSpriteRect(spriteName), enableTiling);
 	}
@@ -585,7 +584,7 @@ class TextureAtlas extends EventDispatcher {
 	}
 
 	getAttributeValue(node, attrName, defaultValue) {
-		defaultValue = ValueOrDefault(defaultValue, null);
+		defaultValue = astrid.valueOrDefault(defaultValue, null);
 
 		if (node.attributes.length > 0) {
 			var attr = node.attributes.getNamedItem(attrName);

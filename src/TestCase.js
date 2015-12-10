@@ -1,7 +1,6 @@
 import Event from "./Event";
-import { ValueOrDefault } from "./Engine";
 
-var TestCaseStatus = {
+const TestCaseStatus = {
 	"INVALID": 0,
 	"SUCCESS": 1,
 	"FAILED": 2
@@ -32,7 +31,7 @@ class TestCase extends EventDispatcher {
 
 		this.tests = [];
 		this.name = name;
-		this.continueOnFailure = ValueOrDefault(continueOnFailure, true);
+		this.continueOnFailure = astrid.valueOrDefault(continueOnFailure, true);
 		this.reportToConsole = true;
 		this.testItemMessage = null;
 		this.status = TestCaseStatus.INVALID;

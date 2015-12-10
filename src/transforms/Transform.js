@@ -1,9 +1,8 @@
 import EventDispatcher from "../EventDispatcher";
 import Matrix2D from "../Matrix2D";
 import Animatable from "../animation/Animatable";
-import { Mixin } from "../Engine";
 
-var Mixed = Mixin(EventDispatcher, Animatable);
+var Mixed = astrid.mixin(EventDispatcher, Animatable);
 
 class Transform extends Mixed {
 	constructor() {

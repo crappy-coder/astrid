@@ -4,7 +4,6 @@ import PropertyChangedEvent from "../ui/PropertyChangedEvent";
 import Drawable from "../ui/Drawable";
 import Tuple from "../Tuple";
 import Pair from "../Pair";
-import { AreNotEqual, ValueOrDefault } from "../Engine";
 
 /**
  * @MIXIN
@@ -21,7 +20,7 @@ import { AreNotEqual, ValueOrDefault } from "../Engine";
  *  Your class must also be a subclass of EventDispatcher, whether directly or indirectly.
  *
  * <code>
- *		var Mixed = Mixin(EventDispatcher, Animatable);
+ *		var Mixed = astrid.mixin(EventDispatcher, Animatable);
  *
  *		class Ball extends Mixed {
  *			constructor() {
@@ -128,7 +127,7 @@ var Animatable = {
 
 		var oldValue = this.getPropertyValue(propertyName);
 
-		if (AreNotEqual(oldValue, value)) {
+		if (astrid.areNotEqual(oldValue, value)) {
 			this[propertyName + "$"] = value;
 			this.raisePropertyChangedEvent(propertyName, oldValue, value);
 
@@ -216,7 +215,7 @@ var Animatable = {
 		 *
 		 */
 
-		options = ValueOrDefault(options, PropertyOptions.None);
+		options = astrid.valueOrDefault(options, PropertyOptions.None);
 
 		if (this.animatableProperties == null) {
 			this.animatableProperties = [];

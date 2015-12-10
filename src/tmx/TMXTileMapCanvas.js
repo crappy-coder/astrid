@@ -1,12 +1,11 @@
 import Canvas from "../ui/Canvas";
-import { ValueOrDefault } from "../Engine";
 import TMXTileMapLayerCanvas from "./TMXTileMapLayerCanvas";
 
 class TMXTileMapCanvas extends Canvas {
 	constructor(name, mapData) {
 		super(name);
 
-		this.tmxData = ValueOrDefault(mapData, null);
+		this.tmxData = astrid.valueOrDefault(mapData, null);
 		this.setIsHitTestVisible(false);
 	}
 

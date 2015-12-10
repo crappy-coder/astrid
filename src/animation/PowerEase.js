@@ -1,11 +1,10 @@
 import EasingFunction from "./EasingFunction";
-import { ValueOrDefault } from "../Engine";
 
 class PowerEase extends EasingFunction {
 	constructor(easingModeOrPercent, pow) {
 		super(easingModeOrPercent);
 		
-		this.pow = ValueOrDefault(pow, 2);
+		this.pow = astrid.valueOrDefault(pow, 2);
 	}
 	
 	getPow() {

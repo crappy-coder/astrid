@@ -1,32 +1,31 @@
 import Event from "../Event";
-import { ValueOrDefault } from "../Engine";
 import Key from "./Key";
 import ModifierKeys from "./ModifierKeys";
 
 class KeyEvent extends Event {
 	constructor(type, key, isDown, isRepeat, modifierKeys, charCode, bubbles, cancelable) {
-		super(type, ValueOrDefault(bubbles, true), ValueOrDefault(cancelable, true));
+		super(type, astrid.valueOrDefault(bubbles, true), astrid.valueOrDefault(cancelable, true));
 
 		/** Boolean **/
-		this.isDown = ValueOrDefault(isDown, false);
+		this.isDown = astrid.valueOrDefault(isDown, false);
 
 		/** Boolean **/
-		this.isUp = ValueOrDefault(!isDown, false);
+		this.isUp = astrid.valueOrDefault(!isDown, false);
 
 		/** Boolean **/
-		this.isRepeat = ValueOrDefault(isRepeat, false);
+		this.isRepeat = astrid.valueOrDefault(isRepeat, false);
 
 		/** Number **/
 		this.keyCode = key;
 
 		/** Number **/
-		this.charCode = ValueOrDefault(charCode, -1);
+		this.charCode = astrid.valueOrDefault(charCode, -1);
 
 		/** Key **/
 		this.key = (this.keyCode != 0 ? Key.fromKeyCode(this.keyCode) : Key.fromCharCode(this.charCode));
 
 		/** ModifierKeys **/
-		this.modifierKeys = ValueOrDefault(modifierKeys, ModifierKeys.None);
+		this.modifierKeys = astrid.valueOrDefault(modifierKeys, ModifierKeys.None);
 	}
 
 	getIsDown() {

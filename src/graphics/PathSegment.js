@@ -1,13 +1,12 @@
 import Equatable from "../Equatable";
-import { ValueOrDefault } from "../Engine";
 import Line from "../Line";
 
 class PathSegment extends Equatable {
 	constructor(x, y) {
 		super();
 
-		this.x = ValueOrDefault(x, 0);
-		this.y = ValueOrDefault(y, 0);
+		this.x = astrid.valueOrDefault(x, 0);
+		this.y = astrid.valueOrDefault(y, 0);
 		this.flatSegments = null;
 		this.isStartSegment = false;
 	}

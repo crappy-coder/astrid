@@ -1,5 +1,4 @@
 import Equatable from "./Equatable";
-import { ValueOrDefault } from "./Engine";
 import { EventPhase } from "./Event";
 
 /**
@@ -25,7 +24,7 @@ class EventDispatcher extends Equatable {
 	}
 
 	addEventHandler(eventType, handler, useCapture) {
-		useCapture = ValueOrDefault(useCapture, false);
+		useCapture = astrid.valueOrDefault(useCapture, false);
 
 		var queueName = this.getQueueName$internal(eventType);
 
@@ -39,7 +38,7 @@ class EventDispatcher extends Equatable {
 	}
 
 	removeEventHandler(eventType, handler, useCapture) {
-		useCapture = ValueOrDefault(useCapture, false);
+		useCapture = astrid.valueOrDefault(useCapture, false);
 
 		var queueName = this.getQueueName$internal(eventType);
 

@@ -1,11 +1,10 @@
-import { ValueOrDefault } from "../Engine";
 import GamepadButtons from "./GamepadButtons";
 
 class GamepadButtonMap {
 	constructor(map, sticks, triggers) {
-		this.map = ValueOrDefault(map, []);
-		this.sticks = ValueOrDefault(sticks, []);
-		this.triggers = ValueOrDefault(triggers, []);
+		this.map = astrid.valueOrDefault(map, []);
+		this.sticks = astrid.valueOrDefault(sticks, []);
+		this.triggers = astrid.valueOrDefault(triggers, []);
 
 		// just default to 32 available slots
 		if (map == null) {
@@ -38,7 +37,7 @@ class GamepadButtonMap {
 	}
 
 	add(button, index) {
-		button = ValueOrDefault(button, GamepadButtons.None);
+		button = astrid.valueOrDefault(button, GamepadButtons.None);
 
 		if (this.isValidIndex(index)) {
 			this.map[index] = button;

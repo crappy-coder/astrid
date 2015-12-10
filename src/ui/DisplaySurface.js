@@ -8,7 +8,6 @@ import Entity from "../physics/Entity";
 import EntityType from "../physics/EntityType";
 import IK from "../animation/IK";
 import AIEntity from "../ai/AIEntity.js";
-import { ValueOrDefault } from "../Engine";
 import EntityQueryEvent from "../physics/EntityQueryEvent";
 import EntityRayCastType from "../physics/EntityRayCastType";
 import EntityRayCastEvent from "../physics/EntityRayCastEvent";
@@ -134,7 +133,7 @@ class DisplaySurface extends ContentControl {
 	}
 
 	createAIEntity(name, objectType) {
-		var entity = AIEntity.create(name, ValueOrDefault(objectType, AIEntity));
+		var entity = AIEntity.create(name, astrid.valueOrDefault(objectType, AIEntity));
 
 		this.addAIEntity(entity);
 
@@ -153,19 +152,19 @@ class DisplaySurface extends ContentControl {
 	createDynamicEntity(name, descriptor, objectType, objectParams) {
 		this.needPhysics("create dynamic entity");
 
-		return Entity.createDynamic(name, ValueOrDefault(objectType, Entity), objectParams, descriptor, this.physicsController);
+		return Entity.createDynamic(name, astrid.valueOrDefault(objectType, Entity), objectParams, descriptor, this.physicsController);
 	}
 
 	createStaticEntity(name, descriptor, objectType, objectParams) {
 		this.needPhysics("create static entity");
 
-		return Entity.createStatic(name, ValueOrDefault(objectType, Entity), objectParams, descriptor, this.physicsController);
+		return Entity.createStatic(name, astrid.valueOrDefault(objectType, Entity), objectParams, descriptor, this.physicsController);
 	}
 
 	createKinematicEntity(name, descriptor, objectType, objectParams) {
 		this.needPhysics("create kinematic entity");
 
-		return Entity.createKinematic(name, ValueOrDefault(objectType, Entity), objectParams, descriptor, this.physicsController);
+		return Entity.createKinematic(name, astrid.valueOrDefault(objectType, Entity), objectParams, descriptor, this.physicsController);
 	}
 
 	queryEntities(rect) {
@@ -193,7 +192,7 @@ class DisplaySurface extends ContentControl {
 	rayCastEntities(startPoint, endPoint, type) {
 		this.needPhysics("raycast entities");
 
-		type = ValueOrDefault(type, EntityRayCastType.Any);
+		type = astrid.valueOrDefault(type, EntityRayCastType.Any);
 
 		var p1 = this.physicsController.convertPoint(startPoint, false, true, false);
 		var p2 = this.physicsController.convertPoint(endPoint, false, true, false);
@@ -243,7 +242,7 @@ class DisplaySurface extends ContentControl {
 
 	needPhysics(msg) {
 		if (!this.getIsPhysicsEnabled()) {
-			throw new Error("Unable to " + ValueOrDefault(msg, "perform action") +
+			throw new Error("Unable to " + astrid.valueOrDefault(msg, "perform action") +
 				", this surface does not have physics enabled.");
 		}
 	}

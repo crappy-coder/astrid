@@ -1,13 +1,12 @@
 import Equatable from "../Equatable";
-import { ValueOrDefault } from "../Engine";
 
 class BorderMetrics extends Equatable {
 	constructor(left, top, right, bottom) {
 		super();
-		this.left = ValueOrDefault(left, 0);
-		this.top = ValueOrDefault(top, 0);
-		this.right = ValueOrDefault(right, 0);
-		this.bottom = ValueOrDefault(bottom, 0);
+		this.left = astrid.valueOrDefault(left, 0);
+		this.top = astrid.valueOrDefault(top, 0);
+		this.right = astrid.valueOrDefault(right, 0);
+		this.bottom = astrid.valueOrDefault(bottom, 0);
 	}
 
 	getLeft() {

@@ -1,13 +1,11 @@
 import Equatable from "./Equatable";
-import { ValueOrDefault } from "./Engine";
-import EngineMath from "./EngineMath";
 
 class Vector2D extends Equatable {
 	constructor(x, y) {
 		super();
 		
-		this.x = ValueOrDefault(x, 0);
-		this.y = ValueOrDefault(y, 0);
+		this.x = astrid.valueOrDefault(x, 0);
+		this.y = astrid.valueOrDefault(y, 0);
 	}
 
 	add(vector) {
@@ -69,7 +67,7 @@ class Vector2D extends Equatable {
 	}
 
 	normalize(thickness) {
-		thickness = ValueOrDefault(thickness, 1);
+		thickness = astrid.valueOrDefault(thickness, 1);
 
 		var len = this.length();
 
@@ -85,8 +83,8 @@ class Vector2D extends Equatable {
 	}
 
 	normalizeZero() {
-		this.x = EngineMath.normalizeZero(this.x);
-		this.y = EngineMath.normalizeZero(this.y);
+		this.x = astrid.math.normalizeZero(this.x);
+		this.y = astrid.math.normalizeZero(this.y);
 
 		return this;
 	}
@@ -94,11 +92,11 @@ class Vector2D extends Equatable {
 	angle(point) {
 		var delta = point.subtract(this);
 
-		return EngineMath.radiansToDegrees(Math.atan2(delta.y, delta.x));
+		return astrid.math.radiansToDegrees(Math.atan2(delta.y, delta.x));
 	}
 
 	pointTo(distance, angle) {
-		var rads = EngineMath.degreesToRadians(angle);
+		var rads = astrid.math.degreesToRadians(angle);
 
 		return new Vector2D(
 				this.x + distance * Math.cos(rads),
@@ -113,7 +111,7 @@ class Vector2D extends Equatable {
 	}
 
 	rotate(angle) {
-		var r = EngineMath.degreesToRadians(angle);
+		var r = astrid.math.degreesToRadians(angle);
 		var x = this.x * Math.cos(-r) + this.y * Math.sin(-r);
 		var y = -this.x * Math.sin(-r) + this.y * Math.cos(-r);
 

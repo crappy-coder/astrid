@@ -1,7 +1,6 @@
 import MediaState from "./MediaState";
 import Timer from "../Timer";
 import TimerEvent from "../TimerEvent";
-import { ValueOrDefault } from "../Engine";
 import Debug from "../Debug";
 import Event from "../Event";
 import ErrorEvent from "../ErrorEvent";
@@ -181,7 +180,7 @@ var MediaBase = {
 	},
 
 	play : function(loadMedia) {
-		loadMedia = ValueOrDefault(loadMedia, false);
+		loadMedia = astrid.valueOrDefault(loadMedia, false);
 
 		if(loadMedia)
 			this.load();

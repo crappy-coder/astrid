@@ -1,16 +1,15 @@
 import Transform from "./Transform";
 import PropertyOptions from "../ui/PropertyOptions";
-import { ValueOrDefault } from "../Engine";
 import Matrix2D from "../Matrix2D";
 
 class ScaleTransform extends Transform {
 	constructor(scaleX, scaleY, centerX, centerY) {
 		super();
 
-		this.setScaleX(ValueOrDefault(scaleX, 1));
-		this.setScaleY(ValueOrDefault(scaleY, 1));
-		this.setCenterX(ValueOrDefault(centerX, 0));
-		this.setCenterY(ValueOrDefault(centerY, 0));
+		this.setScaleX(astrid.valueOrDefault(scaleX, 1));
+		this.setScaleY(astrid.valueOrDefault(scaleY, 1));
+		this.setCenterX(astrid.valueOrDefault(centerX, 0));
+		this.setCenterY(astrid.valueOrDefault(centerY, 0));
 	}
 
 	initializeAnimatablePropertiesCore() {

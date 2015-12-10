@@ -1,7 +1,6 @@
 import Equatable from "./Equatable";
-import { ValueOrDefault } from "./Engine";
 
-var EventPhase = {
+const EventPhase = {
 	"CAPTURING"	: 1,
 	"BUBBLING"	: 2,
 	"TARGET"	: 3
@@ -12,8 +11,8 @@ class Event extends Equatable {
 		super();
 		this.type = type;
 		this.phase = EventPhase.TARGET;
-		this.canBubble = ValueOrDefault(bubbles, false);
-		this.canCancel = ValueOrDefault(cancelable, false);
+		this.canBubble = astrid.valueOrDefault(bubbles, false);
+		this.canCancel = astrid.valueOrDefault(cancelable, false);
 		this.target = null;
 		this.currentTarget = null;
 		this.isPropagationStopped = false;

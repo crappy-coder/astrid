@@ -9,7 +9,6 @@ import LayoutManager from "./LayoutManager";
 import DirtyRegion from "./DirtyRegion";
 import DirtyRegionTracker from "./DirtyRegionTracker";
 import Vector2D from "../Vector2D";
-import { ValueOrDefault, Mixin } from "../Engine";
 import NavigationMode from "../input/NavigationMode";
 import Event from "../Event";
 import BorderMetrics from "./BorderMetrics";
@@ -32,7 +31,7 @@ var DrawableFlags = {
 	"UseBitmapCaching": 256
 };
 
-var Mixed = Mixin(NamedObjectCollection, Animatable);
+var Mixed = astrid.mixin(NamedObjectCollection, Animatable);
 
 class Drawable extends Mixed {
 	constructor(name) {
@@ -325,7 +324,7 @@ class Drawable extends Mixed {
 	}
 
 	getNavigationMode(selfOnly) {
-		selfOnly = ValueOrDefault(selfOnly, false);
+		selfOnly = astrid.valueOrDefault(selfOnly, false);
 
 		// we already have one
 		if (this.navigationMode != null) {
@@ -402,7 +401,7 @@ class Drawable extends Mixed {
 	}
 
 	setVisible(value, disableRaiseEvent) {
-		disableRaiseEvent = ValueOrDefault(disableRaiseEvent, false);
+		disableRaiseEvent = astrid.valueOrDefault(disableRaiseEvent, false);
 
 		// value is the same, nothing to do 
 		if (this.visible == value) {
@@ -1001,7 +1000,7 @@ class Drawable extends Mixed {
 	}
 
 	getNavigationZone(allowSelf) {
-		allowSelf = ValueOrDefault(allowSelf, true);
+		allowSelf = astrid.valueOrDefault(allowSelf, true);
 
 		var next = this;
 
@@ -1260,7 +1259,7 @@ class Drawable extends Mixed {
 	}
 
 	validateMeasure(recursive) {
-		recursive = ValueOrDefault(recursive, false);
+		recursive = astrid.valueOrDefault(recursive, false);
 
 		if (recursive) {
 			var len = this.getCount();
@@ -1413,7 +1412,7 @@ class Drawable extends Mixed {
 	}
 
 	getCenter(bbox) {
-		bbox = ValueOrDefault(bbox, false);
+		bbox = astrid.valueOrDefault(bbox, false);
 
 		if (bbox) {
 			return this.getBounds().center(true);
@@ -1435,7 +1434,7 @@ class Drawable extends Mixed {
 	}
 
 	hitTest(x, y, precise) {
-		precise = ValueOrDefault(precise, false);
+		precise = astrid.valueOrDefault(precise, false);
 
 		if (!this.getVisible()) {
 			return null;
@@ -1817,7 +1816,7 @@ class Drawable extends Mixed {
 	}
 
 	renderRecursiveImpl(gfx, skipTransform) {
-		skipTransform = ValueOrDefault(skipTransform, false);
+		skipTransform = astrid.valueOrDefault(skipTransform, false);
 
 		// set the user clip region, if specified, so that
 		// it clips the entire content but is not affected

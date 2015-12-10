@@ -2,9 +2,8 @@ import EventDispatcher from "../EventDispatcher";
 import Rectangle from "../Rectangle";
 import GraphicsUtil from "../graphics/GraphicsUtil";
 import Animatable from "../animation/Animatable";
-import { Mixin } from "../Engine";
 
-var Mixed = Mixin(EventDispatcher, Animatable);
+var Mixed = astrid.mixin(EventDispatcher, Animatable);
 
 class Effect extends Mixed {
 	constructor() {

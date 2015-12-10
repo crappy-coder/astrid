@@ -1,15 +1,14 @@
 import Animation from "./Animation";
 import AnimationPath from "./AnimationPath";
 import Keyframe from "./Keyframe.js";
-import { ValueOrDefault } from "../Engine";
 
 class BasicParallelAnimation extends Animation {
 	constructor(target, propertyNames, fromValues, toValues) {
 		super(target);
 
-		this.fromValues = ValueOrDefault(fromValues, []);
-		this.toValues = ValueOrDefault(toValues, []);
-		this.propertyNames = ValueOrDefault(propertyNames, []);
+		this.fromValues = astrid.valueOrDefault(fromValues, []);
+		this.toValues = astrid.valueOrDefault(toValues, []);
+		this.propertyNames = astrid.valueOrDefault(propertyNames, []);
 	}
 
 	getFromValues() {

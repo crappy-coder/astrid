@@ -1,15 +1,14 @@
 import Event from "./Event";
-import { ValueOrDefault } from "./Engine"
 
 class ProgressEvent extends Event {
 	constructor(type, current, total, bubbles, cancelable) {
 		super(type, bubbles, cancelable);
 
 		/** Number **/
-		this.current = ValueOrDefault(current, 0);
+		this.current = astrid.valueOrDefault(current, 0);
 
 		/** Number **/
-		this.total = ValueOrDefault(total, 0);
+		this.total = astrid.valueOrDefault(total, 0);
 	}
 
 	getPercentage() {

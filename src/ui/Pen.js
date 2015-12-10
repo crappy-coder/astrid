@@ -3,10 +3,9 @@ import Animatable from "../animation/Animatable";
 import PenLineCap from "./PenLineCap";
 import PenLineJoin from "./PenLineJoin";
 import DashStyle from "./DashStyle";
-import { ValueOrDefault, AreEqual, Mixin } from "../Engine";
 import PropertyOptions from "./PropertyOptions";
 
-var Mixed = Mixin(EventDispatcher, Animatable);
+var Mixed = astrid.mixin(EventDispatcher, Animatable);
 
 class Pen extends Mixed {
 	constructor(brush, thickness) {
@@ -18,7 +17,7 @@ class Pen extends Mixed {
 		this.setMiterLimit(10);
 		this.setDashCap(PenLineCap.Square);
 		this.setDashStyle(DashStyle.Solid);
-		this.setThickness(ValueOrDefault(thickness, 1));
+		this.setThickness(astrid.valueOrDefault(thickness, 1));
 
 		this.initializeAnimatableProperties();
 	}
@@ -97,7 +96,7 @@ class Pen extends Mixed {
 		this.getDashStyle() == other.getDashStyle() &&
 		this.getLineJoin() == other.getLineJoin() &&
 		this.getLineCap() == other.getLineCap() &&
-		AreEqual(this.getBrush(), other.getBrush()));
+		astrid.areEqual(this.getBrush(), other.getBrush()));
 	}
 }
 

@@ -1,4 +1,3 @@
-import { ValueOrDefault } from "../Engine";
 import MatrixTransform from "../transforms/MatrixTransform";
 import Matrix2D from "../Matrix2D";
 import Rectangle from "../Rectangle";
@@ -11,7 +10,7 @@ class Camera2D {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.zoom = ValueOrDefault(zoom, Camera2D.DefaultZoom);
+		this.zoom = astrid.valueOrDefault(zoom, Camera2D.DefaultZoom);
 		this.angle = 0;
 		this.limits = Rectangle.Empty();
 		this.origin = new Vector2D(width * 0.5, height * 0.5);

@@ -107,4 +107,8 @@ import Utils from "./Utils"
         },
         offset: Date.now()
     };
+
+    // assign the utils to astrid global for easier access and so we don't
+    // have to import the utils everywhere they are needed
+    window.astrid = window.astrid || Utils;
 })();

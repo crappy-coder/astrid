@@ -1,6 +1,5 @@
 import Vector2D from "../Vector2D";
 import DebugFlags from "../DebugFlags";
-import { ValueOrDefault } from "../Engine";
 import System from "../System"
 import Gamepad from "./Gamepad";
 import GamepadButtonEvent from "./GamepadButtonEvent";
@@ -361,7 +360,7 @@ class InputManager extends EventDispatcher {
 	}
 
 	focus(target, isMouse) {
-		isMouse = ValueOrDefault(isMouse, false);
+		isMouse = astrid.valueOrDefault(isMouse, false);
 
 
 		var id = ++this.n;

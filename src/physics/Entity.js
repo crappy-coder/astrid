@@ -2,8 +2,6 @@ import EntityBase from "./EntityBase";
 import Vector2D from "../Vector2D";
 import Direction from "./Direction";
 import EntityType from "./EntityType";
-import EngineMath from "../EngineMath";
-import { ValueOrDefault } from "../Engine";
 import Rectangle from "../Rectangle";
 import EntityFixture from "./EntityFixture";
 import EntityJoinType from "./EntityJoinType";
@@ -151,12 +149,12 @@ class Entity extends EntityBase {
 			return angle;
 		}
 
-		return EngineMath.radiansToDegrees(angle);
+		return astrid.math.radiansToDegrees(angle);
 	}
 
 	setAngleImpl(value, isRadians) {
 		if (!isRadians) {
-			value = EngineMath.degreesToRadians(value);
+			value = astrid.math.degreesToRadians(value);
 		}
 
 		this.body.SetAngle(value);
@@ -296,7 +294,7 @@ class Entity extends EntityBase {
 	}
 
 	applyForceAt(fx, fy, x, y, isUnits) {
-		var units = (ValueOrDefault(isUnits, false) ? [x, y] : this.toUnits([x, y]));
+		var units = (astrid.valueOrDefault(isUnits, false) ? [x, y] : this.toUnits([x, y]));
 
 		this.applyForceAtImpl(fx, fy, new PXVector2D(units[0], units[1]));
 	}
@@ -310,7 +308,7 @@ class Entity extends EntityBase {
 	}
 
 	applyImpulseAt(ix, iy, x, y, isUnits) {
-		var units = (ValueOrDefault(isUnits, false) ? [x, y] : this.toUnits([x, y]));
+		var units = (astrid.valueOrDefault(isUnits, false) ? [x, y] : this.toUnits([x, y]));
 
 		this.applyImpulseAtImpl(ix, iy, new PXVector2D(units[0], units[1]));
 	}
@@ -580,10 +578,10 @@ class Entity extends EntityBase {
 	createFixtureDef(density, friction, restitution, isSensor) {
 		var fixtureDef = new PXFixtureDef();
 
-		fixtureDef.density = ValueOrDefault(density, fixtureDef.density);
-		fixtureDef.friction = ValueOrDefault(friction, fixtureDef.friction);
-		fixtureDef.isSensor = ValueOrDefault(isSensor, fixtureDef.isSensor);
-		fixtureDef.restitution = ValueOrDefault(restitution, fixtureDef.restitution);
+		fixtureDef.density = astrid.valueOrDefault(density, fixtureDef.density);
+		fixtureDef.friction = astrid.valueOrDefault(friction, fixtureDef.friction);
+		fixtureDef.isSensor = astrid.valueOrDefault(isSensor, fixtureDef.isSensor);
+		fixtureDef.restitution = astrid.valueOrDefault(restitution, fixtureDef.restitution);
 
 		return fixtureDef;
 	}
@@ -611,7 +609,7 @@ class Entity extends EntityBase {
 		this.tryCopyValue(descriptor, def, "linearDamping");
 
 		if (descriptor.angle != null) {
-			def.angle = EngineMath.degreesToRadians(descriptor.angle);
+			def.angle = astrid.math.degreesToRadians(descriptor.angle);
 		}
 
 		if (descriptor.linearVelocity != null) {
@@ -699,16 +697,16 @@ class Entity extends EntityBase {
 		var b2 = other.body;
 		var def = new PXDistanceJointDef();
 
-		options.anchorA = ValueOrDefault(options.anchorA, b1.GetWorldCenter());
-		options.anchorB = ValueOrDefault(options.anchorB, b2.GetWorldCenter());
+		options.anchorA = astrid.valueOrDefault(options.anchorA, b1.GetWorldCenter());
+		options.anchorB = astrid.valueOrDefault(options.anchorB, b2.GetWorldCenter());
 
 		def.bodyA = b1;
 		def.bodyB = b2;
-		def.collideConnected = ValueOrDefault(options.collideConnected, false);
-		def.localAnchorA = ValueOrDefault(options.localAnchorA, b1.GetLocalPoint(options.anchorA));
-		def.localAnchorB = ValueOrDefault(options.localAnchorB, b2.GetLocalPoint(options.anchorB));
-		def.dampingRatio = ValueOrDefault(options.dampingRatio, 0.0);
-		def.frequencyHz = ValueOrDefault(options.frequencyHz, 0.0);
+		def.collideConnected = astrid.valueOrDefault(options.collideConnected, false);
+		def.localAnchorA = astrid.valueOrDefault(options.localAnchorA, b1.GetLocalPoint(options.anchorA));
+		def.localAnchorB = astrid.valueOrDefault(options.localAnchorB, b2.GetLocalPoint(options.anchorB));
+		def.dampingRatio = astrid.valueOrDefault(options.dampingRatio, 0.0);
+		def.frequencyHz = astrid.valueOrDefault(options.frequencyHz, 0.0);
 
 		if (options.length == null) {
 			var globalA = b1.GetWorldPoint(def.localAnchorA);
@@ -747,23 +745,23 @@ class Entity extends EntityBase {
 
 		if (other == null) {
 			other = {body: this.controller.getWorld().GetGroundBody()};
-			options.collideConnected = ValueOrDefault(options.collideConnected, true);
+			options.collideConnected = astrid.valueOrDefault(options.collideConnected, true);
 		}
 
 		var b1 = this.body;
 		var b2 = other.body;
 		var def = new PXFrictionJointDef();
 
-		options.anchorA = ValueOrDefault(options.anchorA, b1.GetWorldCenter());
-		options.anchorB = ValueOrDefault(options.anchorB, b2.GetWorldCenter());
+		options.anchorA = astrid.valueOrDefault(options.anchorA, b1.GetWorldCenter());
+		options.anchorB = astrid.valueOrDefault(options.anchorB, b2.GetWorldCenter());
 
 		def.bodyA = b1;
 		def.bodyB = b2;
-		def.collideConnected = ValueOrDefault(options.collideConnected, false);
-		def.localAnchorA = ValueOrDefault(options.localAnchorA, b1.GetLocalPoint(options.anchorA));
-		def.localAnchorB = ValueOrDefault(options.localAnchorB, b2.GetLocalPoint(options.anchorB));
-		def.maxForce = ValueOrDefault(options.maxForce, 0.0);
-		def.maxTorque = ValueOrDefault(options.maxTorque, 0.0);
+		def.collideConnected = astrid.valueOrDefault(options.collideConnected, false);
+		def.localAnchorA = astrid.valueOrDefault(options.localAnchorA, b1.GetLocalPoint(options.anchorA));
+		def.localAnchorB = astrid.valueOrDefault(options.localAnchorB, b2.GetLocalPoint(options.anchorB));
+		def.maxForce = astrid.valueOrDefault(options.maxForce, 0.0);
+		def.maxTorque = astrid.valueOrDefault(options.maxTorque, 0.0);
 
 		return def;
 	}
@@ -813,10 +811,10 @@ class Entity extends EntityBase {
 
 		def.bodyA = b1;
 		def.bodyB = b2;
-		def.collideConnected = ValueOrDefault(options.collideConnected, false);
+		def.collideConnected = astrid.valueOrDefault(options.collideConnected, false);
 		def.joint1 = joint1;
 		def.joint2 = joint2;
-		def.ratio = ValueOrDefault(options.ratio, def.ratio);
+		def.ratio = astrid.valueOrDefault(options.ratio, def.ratio);
 
 		return def;
 	}
@@ -843,28 +841,28 @@ class Entity extends EntityBase {
 
 		if (other == null) {
 			other = {body: this.controller.getWorld().GetGroundBody()};
-			options.collideConnected = ValueOrDefault(options.collideConnected, true);
+			options.collideConnected = astrid.valueOrDefault(options.collideConnected, true);
 		}
 
 		var b1 = this.body;
 		var b2 = other.body;
 		var def = new PXLineJointDef();
 
-		options.anchorA = ValueOrDefault(options.anchorA, b1.GetWorldCenter());
-		options.anchorB = ValueOrDefault(options.anchorB, b2.GetWorldCenter());
+		options.anchorA = astrid.valueOrDefault(options.anchorA, b1.GetWorldCenter());
+		options.anchorB = astrid.valueOrDefault(options.anchorB, b2.GetWorldCenter());
 
 		def.bodyA = b1;
 		def.bodyB = b2;
-		def.collideConnected = ValueOrDefault(options.collideConnected, false);
-		def.localAnchorA = ValueOrDefault(options.localAnchorA, b1.GetLocalPoint(options.anchorA));
-		def.localAnchorB = ValueOrDefault(options.localAnchorB, b2.GetLocalPoint(options.anchorB));
-		def.localAxisA = ValueOrDefault(options.localAxisA, (options.axis == null
+		def.collideConnected = astrid.valueOrDefault(options.collideConnected, false);
+		def.localAnchorA = astrid.valueOrDefault(options.localAnchorA, b1.GetLocalPoint(options.anchorA));
+		def.localAnchorB = astrid.valueOrDefault(options.localAnchorB, b2.GetLocalPoint(options.anchorB));
+		def.localAxisA = astrid.valueOrDefault(options.localAxisA, (options.axis == null
 			? new PXVector2D(1, 0)
 			: b1.GetLocalVector(options.axis)));
-		def.motorSpeed = ValueOrDefault(options.motorSpeed, 0.0);
-		def.maxMotorForce = ValueOrDefault(options.maxMotorForce, 0.0);
-		def.lowerTranslation = ValueOrDefault(options.lowerTranslation, 0.0);
-		def.upperTranslation = ValueOrDefault(options.upperTranslation, 0.0);
+		def.motorSpeed = astrid.valueOrDefault(options.motorSpeed, 0.0);
+		def.maxMotorForce = astrid.valueOrDefault(options.maxMotorForce, 0.0);
+		def.lowerTranslation = astrid.valueOrDefault(options.lowerTranslation, 0.0);
+		def.upperTranslation = astrid.valueOrDefault(options.upperTranslation, 0.0);
 		def.enableMotor = (def.motorSpeed != 0 || def.maxMotorForce != 0);
 		def.enableLimit = (def.lowerTranslation != 0 || def.upperTranslation != 0);
 
@@ -893,29 +891,29 @@ class Entity extends EntityBase {
 
 		if (other == null) {
 			other = {body: this.controller.getWorld().GetGroundBody()};
-			options.collideConnected = ValueOrDefault(options.collideConnected, true);
+			options.collideConnected = astrid.valueOrDefault(options.collideConnected, true);
 		}
 
 		var b1 = this.body;
 		var b2 = other.body;
 		var def = new PXPrismaticJointDef();
 
-		options.anchorA = ValueOrDefault(options.anchorA, b1.GetWorldCenter());
-		options.anchorB = ValueOrDefault(options.anchorB, b2.GetWorldCenter());
+		options.anchorA = astrid.valueOrDefault(options.anchorA, b1.GetWorldCenter());
+		options.anchorB = astrid.valueOrDefault(options.anchorB, b2.GetWorldCenter());
 
 		def.bodyA = b1;
 		def.bodyB = b2;
-		def.collideConnected = ValueOrDefault(options.collideConnected, false);
-		def.localAnchorA = ValueOrDefault(options.localAnchorA, b1.GetLocalPoint(options.anchorA));
-		def.localAnchorB = ValueOrDefault(options.localAnchorB, b2.GetLocalPoint(options.anchorB));
-		def.localAxisA = ValueOrDefault(options.localAxis, (options.axis == null
+		def.collideConnected = astrid.valueOrDefault(options.collideConnected, false);
+		def.localAnchorA = astrid.valueOrDefault(options.localAnchorA, b1.GetLocalPoint(options.anchorA));
+		def.localAnchorB = astrid.valueOrDefault(options.localAnchorB, b2.GetLocalPoint(options.anchorB));
+		def.localAxisA = astrid.valueOrDefault(options.localAxis, (options.axis == null
 			? new PXVector2D(1, 0)
 			: b1.GetLocalVector(options.axis)));
-		def.motorSpeed = ValueOrDefault(options.motorSpeed, 0.0);
-		def.maxMotorForce = ValueOrDefault(options.maxMotorForce, 0.0);
-		def.lowerTranslation = ValueOrDefault(options.lowerTranslation, 0.0);
-		def.upperTranslation = ValueOrDefault(options.upperTranslation, 0.0);
-		def.referenceAngle = ValueOrDefault(options.referenceAngle, b2.GetAngle() - b1.GetAngle());
+		def.motorSpeed = astrid.valueOrDefault(options.motorSpeed, 0.0);
+		def.maxMotorForce = astrid.valueOrDefault(options.maxMotorForce, 0.0);
+		def.lowerTranslation = astrid.valueOrDefault(options.lowerTranslation, 0.0);
+		def.upperTranslation = astrid.valueOrDefault(options.upperTranslation, 0.0);
+		def.referenceAngle = astrid.valueOrDefault(options.referenceAngle, b2.GetAngle() - b1.GetAngle());
 		def.enableMotor = (def.motorSpeed != 0 || def.maxMotorForce != 0);
 		def.enableLimit = (def.lowerTranslation != 0 || def.upperTranslation != 0);
 
@@ -950,20 +948,20 @@ class Entity extends EntityBase {
 
 		def.Initialize(
 			b1, b2,
-			ValueOrDefault(options.groundAnchorA, new PXVector2D(-1.0, 1.0)),
-			ValueOrDefault(options.groundAnchorB, new PXVector2D(1.0, 1.0)),
-			ValueOrDefault(options.anchorA, b1.GetWorldCenter()),
-			ValueOrDefault(options.anchorB, b2.GetWorldCenter()),
-			ValueOrDefault(options.ratio, 1));
+			astrid.valueOrDefault(options.groundAnchorA, new PXVector2D(-1.0, 1.0)),
+			astrid.valueOrDefault(options.groundAnchorB, new PXVector2D(1.0, 1.0)),
+			astrid.valueOrDefault(options.anchorA, b1.GetWorldCenter()),
+			astrid.valueOrDefault(options.anchorB, b2.GetWorldCenter()),
+			astrid.valueOrDefault(options.ratio, 1));
 
-		def.collideConnected = ValueOrDefault(options.collideConnected, false);
-		def.localAnchorA = ValueOrDefault(options.localAnchorA, def.localAnchorA);
-		def.localAnchorB = ValueOrDefault(options.localAnchorB, def.localAnchorB);
-		def.lengthA = ValueOrDefault(options.lengthA, def.lengthA);
-		def.lengthB = ValueOrDefault(options.lengthB, def.lengthB);
-		def.maxLengthA = ValueOrDefault(options.maxLengthA, def.maxLengthA);
-		def.maxLengthB = ValueOrDefault(options.maxLengthB, def.maxLengthB);
-		def.ratio = ValueOrDefault(options.ratio, def.ratio);
+		def.collideConnected = astrid.valueOrDefault(options.collideConnected, false);
+		def.localAnchorA = astrid.valueOrDefault(options.localAnchorA, def.localAnchorA);
+		def.localAnchorB = astrid.valueOrDefault(options.localAnchorB, def.localAnchorB);
+		def.lengthA = astrid.valueOrDefault(options.lengthA, def.lengthA);
+		def.lengthB = astrid.valueOrDefault(options.lengthB, def.lengthB);
+		def.maxLengthA = astrid.valueOrDefault(options.maxLengthA, def.maxLengthA);
+		def.maxLengthB = astrid.valueOrDefault(options.maxLengthB, def.maxLengthB);
+		def.ratio = astrid.valueOrDefault(options.ratio, def.ratio);
 
 		return def;
 	}
@@ -992,25 +990,25 @@ class Entity extends EntityBase {
 			other = {
 				body: this.controller.getWorld().GetGroundBody()
 			};
-			options.collideConnected = ValueOrDefault(options.collideConnected, true);
+			options.collideConnected = astrid.valueOrDefault(options.collideConnected, true);
 		}
 
 		var b1 = this.body;
 		var b2 = other.body;
 		var def = new PXRevoluteJointDef();
 
-		options.anchor = ValueOrDefault(options.anchor, b1.GetWorldCenter());
+		options.anchor = astrid.valueOrDefault(options.anchor, b1.GetWorldCenter());
 
 		def.bodyA = b1;
 		def.bodyB = b2;
-		def.collideConnected = ValueOrDefault(options.collideConnected, false);
-		def.localAnchorA = ValueOrDefault(options.localAnchorA, b1.GetLocalPoint(options.anchor));
-		def.localAnchorB = ValueOrDefault(options.localAnchorB, b2.GetLocalPoint(options.anchor));
-		def.motorSpeed = ValueOrDefault(options.motorSpeed, 0.0);
-		def.maxMotorTorque = ValueOrDefault(options.maxMotorTorque, 0.0);
-		def.lowerAngle = ValueOrDefault(options.lowerAngle, 0.0);
-		def.upperAngle = ValueOrDefault(options.upperAngle, 0.0);
-		def.referenceAngle = ValueOrDefault(options.referenceAngle, b2.GetAngle() - b1.GetAngle());
+		def.collideConnected = astrid.valueOrDefault(options.collideConnected, false);
+		def.localAnchorA = astrid.valueOrDefault(options.localAnchorA, b1.GetLocalPoint(options.anchor));
+		def.localAnchorB = astrid.valueOrDefault(options.localAnchorB, b2.GetLocalPoint(options.anchor));
+		def.motorSpeed = astrid.valueOrDefault(options.motorSpeed, 0.0);
+		def.maxMotorTorque = astrid.valueOrDefault(options.maxMotorTorque, 0.0);
+		def.lowerAngle = astrid.valueOrDefault(options.lowerAngle, 0.0);
+		def.upperAngle = astrid.valueOrDefault(options.upperAngle, 0.0);
+		def.referenceAngle = astrid.valueOrDefault(options.referenceAngle, b2.GetAngle() - b1.GetAngle());
 		def.enableMotor = (def.motorSpeed != 0 || def.maxMotorTorque != 0);
 		def.enableLimit = (def.lowerAngle != 0 || def.upperAngle != 0);
 
@@ -1043,21 +1041,21 @@ class Entity extends EntityBase {
 		var b2 = other.body;
 		var def = new PXWeldJointDef();
 
-		options.anchor = ValueOrDefault(options.anchor, b1.GetWorldCenter());
+		options.anchor = astrid.valueOrDefault(options.anchor, b1.GetWorldCenter());
 
 		def.bodyA = b1;
 		def.bodyB = b2;
-		def.collideConnected = ValueOrDefault(options.collideConnected, false);
-		def.localAnchorA = ValueOrDefault(options.localAnchorA, b1.GetLocalPoint(options.anchor));
-		def.localAnchorB = ValueOrDefault(options.localAnchorB, b2.GetLocalPoint(options.anchor));
-		def.referenceAngle = ValueOrDefault(options.referenceAngle, b2.GetAngle() - b1.GetAngle());
+		def.collideConnected = astrid.valueOrDefault(options.collideConnected, false);
+		def.localAnchorA = astrid.valueOrDefault(options.localAnchorA, b1.GetLocalPoint(options.anchor));
+		def.localAnchorB = astrid.valueOrDefault(options.localAnchorB, b2.GetLocalPoint(options.anchor));
+		def.referenceAngle = astrid.valueOrDefault(options.referenceAngle, b2.GetAngle() - b1.GetAngle());
 
 		return def;
 	}
 
 	toGlobalPoint(localPoint, isUnits, asUnits) {
-		isUnits = ValueOrDefault(isUnits, false);
-		asUnits = ValueOrDefault(asUnits, false);
+		isUnits = astrid.valueOrDefault(isUnits, false);
+		asUnits = astrid.valueOrDefault(asUnits, false);
 
 		return this.convertPoint(
 			this.body.GetWorldPoint(this.convertPoint(localPoint, isUnits, true, false)), true, asUnits);
@@ -1068,8 +1066,8 @@ class Entity extends EntityBase {
 	}
 
 	toLocalPoint(globalPoint, isUnits, asUnits) {
-		isUnits = ValueOrDefault(isUnits, false);
-		asUnits = ValueOrDefault(asUnits, false);
+		isUnits = astrid.valueOrDefault(isUnits, false);
+		asUnits = astrid.valueOrDefault(asUnits, false);
 
 		return this.convertPoint(
 			this.body.GetLocalPoint(this.convertPoint(globalPoint, isUnits, true, false)), true, asUnits);
@@ -1080,14 +1078,14 @@ class Entity extends EntityBase {
 	}
 
 	getLinearVelocityFromGlobalPoint(globalPoint, isUnits) {
-		isUnits = ValueOrDefault(isUnits, false);
+		isUnits = astrid.valueOrDefault(isUnits, false);
 
 		return this.convertPoint(
 			this.body.GetLinearVelocityFromWorldPoint(this.convertPoint(globalPoint, isUnits, true, false)), true, true);
 	}
 
 	getLinearVelocityFromLocalPoint(localPoint, isUnits) {
-		isUnits = ValueOrDefault(isUnits, false);
+		isUnits = astrid.valueOrDefault(isUnits, false);
 
 		return this.convertPoint(
 			this.body.GetLinearVelocityFromLocalPoint(this.convertPoint(localPoint, isUnits, true, false)), true, true);

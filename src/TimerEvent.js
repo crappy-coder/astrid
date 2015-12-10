@@ -1,12 +1,11 @@
 import Event from "./Event";
-import { ValueOrDefault } from "./Engine";
 
 class TimerEvent extends Event {
 	constructor(type, currentTickTime, lastTickTime, bubbles, cancelable) {
 		super(type, bubbles, cancelable);
 
-		this.currentTickTime = ValueOrDefault(currentTickTime, 0);
-		this.lastTickTime = ValueOrDefault(lastTickTime, 0);
+		this.currentTickTime = astrid.valueOrDefault(currentTickTime, 0);
+		this.lastTickTime = astrid.valueOrDefault(lastTickTime, 0);
 	}
 
 	getTickTime() {

@@ -1,12 +1,11 @@
 import MediaBase from "./MediaBase";
 import Event from "../Event";
-import { ValueOrDefault, Mixin } from "../Engine";
 import VideoSource from "./VideoSource";
 import Size from "../Size";
 import VideoEvent from "./VideoEvent";
 import Drawable from "../ui/Drawable";
 
-var Mixed = Mixin(Drawable, MediaBase);
+var Mixed = astrid.mixin(Drawable, MediaBase);
 
 class Video extends Mixed {
 	constructor(name, sourceElement) {
@@ -15,7 +14,7 @@ class Video extends Mixed {
 		this.alwaysDirty = true;
 		this.addEventHandler(Event.ADDED_TO_SCENE, this.handleAddedToSceneEvent.asDelegate(this));
 
-		this.initializeMedia(ValueOrDefault(sourceElement, document.createElement("video")));
+		this.initializeMedia(astrid.valueOrDefault(sourceElement, document.createElement("video")));
 		this.videoSourceCache = new VideoSource(this.getSourceElement());
 	}
 

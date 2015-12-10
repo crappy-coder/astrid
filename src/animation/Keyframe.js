@@ -1,13 +1,12 @@
 import Equatable from "../Equatable";
 import LinearEase from "./LinearEase";
-import { ValueOrDefault } from "../Engine";
 
 class Keyframe extends Equatable {
 	constructor(keyTime, value) {
 		super();
 	
 		/** Number **/
-		this.keyTime = ValueOrDefault(keyTime, -1);
+		this.keyTime = astrid.valueOrDefault(keyTime, -1);
 		
 		/** Object **/
 		this.value = value;
@@ -40,7 +39,7 @@ class Keyframe extends Equatable {
 	}
 
 	setEaser(value) {
-		this.easer = ValueOrDefault(value, Keyframe.DefaultEaser);
+		this.easer = astrid.valueOrDefault(value, Keyframe.DefaultEaser);
 	}
 
 	getTimeFraction() {

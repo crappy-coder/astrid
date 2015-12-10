@@ -1,9 +1,8 @@
 import Event from "../Event";
-import { ValueOrDefault } from "../Engine";
 
 class GestureEvent extends Event {
 	constructor(type, rotation, scale, bubbles, cancelable) {
-		super(type, ValueOrDefault(bubbles, true), ValueOrDefault(cancelable, true));
+		super(type, astrid.valueOrDefault(bubbles, true), astrid.valueOrDefault(cancelable, true));
 
 		this.rotation = rotation;
 		this.scale = scale;

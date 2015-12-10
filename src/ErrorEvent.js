@@ -1,4 +1,3 @@
-import { ValueOrDefault } from "./Engine"
 import Event from "./Event"
 
 class ErrorEvent extends Event {
@@ -6,10 +5,10 @@ class ErrorEvent extends Event {
 		super(type, bubbles, cancelable);
 
 		/** Number **/
-		this.errorCode = ValueOrDefault(code, 0);
+		this.errorCode = astrid.valueOrDefault(code, 0);
 
 		/** String **/
-		this.errorMessage = ValueOrDefault(message, null);
+		this.errorMessage = astrid.valueOrDefault(message, null);
 	}
 
 	getErrorCode() {

@@ -1,5 +1,4 @@
 import Effect from "./Effect";
-import { ValueOrDefault } from "../Engine";
 import Vector3D from "../Vector3D";
 import Color from "../graphics/Color";
 import PropertyOptions from "../ui/PropertyOptions";
@@ -10,9 +9,9 @@ class NormalMapEffect extends Effect {
 		super();
 
 		this.setNormalSource(normalSource);
-		this.setLightPosition(ValueOrDefault(lightPosition, new Vector3D(0, 0, 150)));
-		this.setLightColor(ValueOrDefault(new Color(0.5, 0.5, 0.5, 0.5)));
-		this.setSpecularSharpness(ValueOrDefault(specularSharpness, 1.2));
+		this.setLightPosition(astrid.valueOrDefault(lightPosition, new Vector3D(0, 0, 150)));
+		this.setLightColor(astrid.valueOrDefault(new Color(0.5, 0.5, 0.5, 0.5)));
+		this.setSpecularSharpness(astrid.valueOrDefault(specularSharpness, 1.2));
 
 		this.normalCanvas = document.createElement("canvas");
 		this.normalContext = this.normalCanvas.getContext("2d");

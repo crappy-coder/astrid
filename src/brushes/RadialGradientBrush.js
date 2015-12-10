@@ -1,7 +1,6 @@
 import GradientBrush from "./GradientBrush";
 import Vector2D from "../Vector2D";
 import PropertyOptions from "../ui/PropertyOptions";
-import { AreEqual } from "../Engine";
 import GradientStop from "../graphics/GradientStop";
 
 class RadialGradientBrush extends GradientBrush {
@@ -57,8 +56,8 @@ class RadialGradientBrush extends GradientBrush {
 
 	isEqualTo(other) {
 		return (super.isEqualTo(other) &&
-			AreEqual(this.getStartPoint(), other.getStartPoint()) &&
-			AreEqual(this.getEndPoint(), other.getEndPoint()) &&
+			astrid.areEqual(this.getStartPoint(), other.getStartPoint()) &&
+			astrid.areEqual(this.getEndPoint(), other.getEndPoint()) &&
 			this.getStartRadius() == other.getStartRadius() &&
 			this.getEndRadius() == other.getEndRadius());
 	}

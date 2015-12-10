@@ -1,5 +1,4 @@
 import EventDispatcher from "./EventDispatcher";
-import { ValueOrDefault } from "./Engine";
 import System from "./System";
 import TimerEvent from "./TimerEvent";
 
@@ -8,10 +7,10 @@ class Timer extends EventDispatcher {
 		super();
 
 		/** Integer **/
-		this.repeatCount = ValueOrDefault(repeatCount, 0);
+		this.repeatCount = astrid.valueOrDefault(repeatCount, 0);
 
 		/** Number **/
-		this.interval = ValueOrDefault(interval, 1000 / 60);
+		this.interval = astrid.valueOrDefault(interval, 1000 / 60);
 
 		/** Integer **/
 		this.iterations = 0;

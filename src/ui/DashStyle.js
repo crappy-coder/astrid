@@ -1,13 +1,12 @@
-import { ValueOrDefault } from "../Engine";
 
 class DashStyle {
 	constructor(dashes, offset) {
 
 		/** Number[] **/
-		this.dashes = ValueOrDefault(dashes, []);
+		this.dashes = astrid.valueOrDefault(dashes, []);
 
 		/** Number **/
-		this.offset = ValueOrDefault(offset, 0);
+		this.offset = astrid.valueOrDefault(offset, 0);
 	}
 
 	getDashes() {

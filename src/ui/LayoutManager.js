@@ -2,8 +2,6 @@ import Dictionary from "../Dictionary";
 import EventDispatcher from "../EventDispatcher";
 import Event from "../Event";
 import FrameEvent from "../FrameEvent";
-import { ValueOrDefault } from "../Engine";
-import { MaxInt } from "../EngineMath";
 import Application from "../Application";
 
 class LayoutBin {
@@ -220,7 +218,7 @@ class LayoutPriorityQueue {
 	}
 
 	removeChild(client, level) {
-		level = ValueOrDefault(level, -1);
+		level = astrid.valueOrDefault(level, -1);
 
 		var priority = (level >= 0) ? level : client.getDepth();
 		var bin = this.priorityBins[priority];
@@ -261,7 +259,7 @@ class LayoutManager extends EventDispatcher {
 		 is used for nested validation calls. during an immediate
 		 validation we only want drawables at this level or deeper
 		 to be re-queued **/
-		this.currentDepth = MaxInt;
+		this.currentDepth = astrid.math.MaxInt;
 
 		/** holds the drawables that have had their properties
 		 invalidated and are awaiting validation **/
@@ -462,13 +460,13 @@ class LayoutManager extends EventDispatcher {
 	}
 
 	validateDrawableNow(targetDrawable, dontValidateVisualStack) {
-		dontValidateVisualStack = ValueOrDefault(dontValidateVisualStack, false);
+		dontValidateVisualStack = astrid.valueOrDefault(dontValidateVisualStack, false);
 
 		var isRunning = false;
 		var previousDepth = this.currentDepth;
 		var drawable = null;
 
-		if (this.currentDepth == MaxInt) {
+		if (this.currentDepth === astrid.math.MaxInt) {
 			this.currentDepth = targetDrawable.getDepth();
 		}
 
@@ -567,8 +565,8 @@ class LayoutManager extends EventDispatcher {
 			}
 		}
 
-		if (previousDepth == MaxInt) {
-			this.currentDepth = MaxInt;
+		if (previousDepth === astrid.math.MaxInt) {
+			this.currentDepth = astrid.math.MaxInt;
 
 			if (!dontValidateVisualStack) {
 				drawable = this.pendingUpdateQueue.removeLargestChild(targetDrawable);

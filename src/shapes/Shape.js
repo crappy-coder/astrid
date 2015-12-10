@@ -3,7 +3,6 @@ import PenLineCap from "../ui/PenLineCap";
 import PenLineJoin from "../ui/PenLineJoin";
 import DashStyle from "../ui/DashStyle";
 import Rectangle from "../Rectangle";
-import { AreNotEqual } from "../Engine";
 import Pen from "../ui/Pen";
 
 class Shape extends Drawable {
@@ -43,7 +42,7 @@ class Shape extends Drawable {
 	}
 
 	setFill(value) {
-		if (AreNotEqual(this.fill, value)) {
+		if (astrid.areNotEqual(this.fill, value)) {
 			this.fill = value;
 			this.requestLayout();
 		}
@@ -54,7 +53,7 @@ class Shape extends Drawable {
 	}
 
 	setStroke(value) {
-		if (AreNotEqual(this.stroke, value)) {
+		if (astrid.areNotEqual(this.stroke, value)) {
 			this.stroke = value;
 			this.invalidatePen();
 		}

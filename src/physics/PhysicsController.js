@@ -1,5 +1,4 @@
 import PhysicsContactListener from "./PhysicsContactListener";
-import { ValueOrDefault } from "../Engine";
 import EntityFixture from "./EntityFixture";
 import MouseEvent from "../input/MouseEvent";
 import ContactPointState from "./ContactPointState";
@@ -94,7 +93,7 @@ class PhysicsController {
 	}
 
 	removeEntity(entity, autoDestroy) {
-		autoDestroy = ValueOrDefault(autoDestroy, false);
+		autoDestroy = astrid.valueOrDefault(autoDestroy, false);
 
 		if (entity == null) {
 			return;
@@ -331,7 +330,7 @@ class PhysicsController {
 	}
 
 	convertPoint(pt, isUnits, asUnits, asVector) {
-		var vectorType = (ValueOrDefault(asVector, true) ? Vector2D : PXVector2D);
+		var vectorType = (astrid.valueOrDefault(asVector, true) ? Vector2D : PXVector2D);
 		var arr;
 
 		if (isUnits && !asUnits) {

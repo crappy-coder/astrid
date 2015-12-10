@@ -3,8 +3,6 @@ import GamepadButtons from "./GamepadButtons";
 import Gamepad from "./Gamepad";
 import GamepadDeadZoneMode from "./GamepadDeadZoneMode";
 import Vector2D from "../Vector2D";
-import EngineMath from "../EngineMath";
-import { ValueOrDefault } from "../Engine";
 
 class GamepadState extends Equatable {
 	constructor() {
@@ -238,8 +236,8 @@ class GamepadState extends Equatable {
 			var normalized = (value > 0 ? value / magnitude : 0);
 
 			return new Vector2D(
-				EngineMath.clamp(x * normalized, -1.0, 1.0),
-				EngineMath.clamp(y * normalized, -1.0, 1.0));
+				astrid.math.clamp(x * normalized, -1.0, 1.0),
+				astrid.math.clamp(y * normalized, -1.0, 1.0));
 		}
 
 		if (deadZoneMode == GamepadDeadZoneMode.None) {
@@ -270,30 +268,30 @@ class GamepadState extends Equatable {
 			value -= size;
 		}
 
-		return EngineMath.clamp(value / (1.0 - size), -1.0, 1.0);
+		return astrid.math.clamp(value / (1.0 - size), -1.0, 1.0);
 	}
 
 	update(name, index, timestamp, isConnected, buttons, leftStickValue, rightStickValue, leftTrigger, rightTrigger) {
-		this.name = ValueOrDefault(name, "");
+		this.name = astrid.valueOrDefault(name, "");
 		this.index = index;
 		this.timestamp = timestamp;
 		this.isConnected = isConnected;
 		this.buttons = buttons;
 
-		this.leftTrigger = EngineMath.clamp(this.filterTriggerValue(leftTrigger), 0, 1);
-		this.leftTriggerRaw = EngineMath.clamp(leftTrigger, 0, 1);
-		this.rightTrigger = EngineMath.clamp(this.filterTriggerValue(rightTrigger), 0, 1);
-		this.rightTriggerRaw = EngineMath.clamp(rightTrigger, 0, 1);
+		this.leftTrigger = astrid.math.clamp(this.filterTriggerValue(leftTrigger), 0, 1);
+		this.leftTriggerRaw = astrid.math.clamp(leftTrigger, 0, 1);
+		this.rightTrigger = astrid.math.clamp(this.filterTriggerValue(rightTrigger), 0, 1);
+		this.rightTriggerRaw = astrid.math.clamp(rightTrigger, 0, 1);
 
 		this.leftStickValue = this.filterLeftStickValue(leftStickValue.x, leftStickValue.y);
 		this.leftStickValueRaw = Vector2D.Zero();
-		this.leftStickValueRaw.x = EngineMath.clamp(leftStickValue.x, -1, 1);
-		this.leftStickValueRaw.y = EngineMath.clamp(leftStickValue.y, -1, 1);
+		this.leftStickValueRaw.x = astrid.math.clamp(leftStickValue.x, -1, 1);
+		this.leftStickValueRaw.y = astrid.math.clamp(leftStickValue.y, -1, 1);
 
 		this.rightStickValue = this.filterRightStickValue(rightStickValue.x, rightStickValue.y);
 		this.rightStickValueRaw = Vector2D.Zero();
-		this.rightStickValueRaw.x = EngineMath.clamp(rightStickValue.x, -1, 1);
-		this.rightStickValueRaw.y = EngineMath.clamp(rightStickValue.y, -1, 1);
+		this.rightStickValueRaw.x = astrid.math.clamp(rightStickValue.x, -1, 1);
+		this.rightStickValueRaw.y = astrid.math.clamp(rightStickValue.y, -1, 1);
 	}
 
 	copy() {

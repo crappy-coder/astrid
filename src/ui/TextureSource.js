@@ -1,19 +1,18 @@
-import ImageSource from "./ImageSource";
-import { ValueOrDefault, TextureCacheGet, TextureCacheAdd } from "../Engine";
-import TextureCachePolicy from "./TextureCachePolicy";
-import LoadEvent from "../LoadEvent";
-import ProgressEvent from "../ProgressEvent";
-import Size from "../Size";
-import EngineMath from "../EngineMath";
-import TextureData from "./TextureData";
+import ImageSource from "./ImageSource"
+import TextureCache from "./TextureCache"
+import TextureCachePolicy from "./TextureCachePolicy"
+import LoadEvent from "../LoadEvent"
+import ProgressEvent from "../ProgressEvent"
+import Size from "../Size"
+import TextureData from "./TextureData"
 
 class TextureSource extends ImageSource {
 	constructor(path, autoload, cachePolicy) {
 		super();
 
 		this.url = null;
-		this.autoload = ValueOrDefault(autoload, true);
-		this.cachePolicy = ValueOrDefault(cachePolicy, TextureCachePolicy.Cache);
+		this.autoload = astrid.valueOrDefault(autoload, true);
+		this.cachePolicy = astrid.valueOrDefault(cachePolicy, TextureCachePolicy.Cache);
 		this.hasError = false;
 		this.error = null;
 		this.setUrl(path);
@@ -81,13 +80,13 @@ class TextureSource extends ImageSource {
 
 		var url = this.url;
 		var cacheKey = this.url.toLowerCase();
-		var textureData = TextureCacheGet(cacheKey);
+		var textureData = TextureCache.get(cacheKey);
 
 		// no cached texture, load from the server
 		if (textureData == null) {
 			// add a random number to the url so we can bypass the browser cache
 			if (this.shouldAlwaysLoadFromServer()) {
-				var str = "s2=" + EngineMath.randomIntTo(1000);
+				var str = "s2=" + astrid.math.randomIntTo(1000);
 
 				if (url.indexOf("?") == -1) {
 					url += "?" + str;
@@ -104,7 +103,7 @@ class TextureSource extends ImageSource {
 
 			// cache this texture now so that it can be re-used right away, even before it's fully loaded
 			if (this.shouldCacheTexture()) {
-				TextureCacheAdd(cacheKey, textureData);
+				TextureCache.add(cacheKey, textureData);
 			}
 
 			textureData.load(url);

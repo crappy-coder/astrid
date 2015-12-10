@@ -1,5 +1,4 @@
 import Transform from "./Transform";
-import { ValueOrDefault } from "../Engine";
 import PropertyOptions from "../ui/PropertyOptions";
 import Matrix2D from "../Matrix2D";
 
@@ -7,9 +6,9 @@ class RotateTransform extends Transform {
 	constructor(angle, centerX, centerY) {
 		super();
 
-		this.setAngle(ValueOrDefault(angle, 0));
-		this.setCenterX(ValueOrDefault(centerX, 0));
-		this.setCenterY(ValueOrDefault(centerY, 0));
+		this.setAngle(astrid.valueOrDefault(angle, 0));
+		this.setCenterX(astrid.valueOrDefault(centerX, 0));
+		this.setCenterY(astrid.valueOrDefault(centerY, 0));
 	}
 
 	initializeAnimatablePropertiesCore() {

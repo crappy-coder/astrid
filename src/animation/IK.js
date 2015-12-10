@@ -1,7 +1,5 @@
 import Animatable from "./Animatable";
 import EventDispatcher from "../EventDispatcher";
-import { ValueOrDefault, Mixin } from "../Engine";
-import EngineMath from "../EngineMath";
 import RotateTransform from "../transforms/RotateTransform";
 import Vector2D from "../Vector2D";
 import Application from "../Application";
@@ -119,7 +117,7 @@ class IK {
 
 		for (var i = 0; i < len; ++i) {
 			drawable = this.bones[i].drawable;
-			angle += EngineMath.degreesToRadians(this.bones[i].getAngle());
+			angle += astrid.math.degreesToRadians(this.bones[i].getAngle());
 
 			if (drawable != null) {
 				var xform = drawable.getRenderTransform();
@@ -133,7 +131,7 @@ class IK {
 				drawable.setX(px - offset.x);
 				drawable.setY(py - offset.y);
 
-				xform.setAngle(EngineMath.radiansToDegrees(angle));
+				xform.setAngle(astrid.math.radiansToDegrees(angle));
 				xform.setCenterX(offset.x);
 				xform.setCenterY(offset.y);
 			}
@@ -159,7 +157,7 @@ class IK {
 		for (i = 0; i <= len; ++i) {
 			bones.push(new IKBoneImpl(
 					(i > 0 ? this.bones[i - 1].getLength() : 0), 0,
-					(i < len ? EngineMath.degreesToRadians(this.bones[i].getAngle()) : 0)
+					(i < len ? astrid.math.degreesToRadians(this.bones[i].getAngle()) : 0)
 			));
 		}
 
@@ -232,7 +230,7 @@ class IK {
 		}
 
 		for (i = 0; i < this.bones.length; ++i) {
-			this.bones[i].setAngle(EngineMath.radiansToDegrees(bones[i].angle));
+			this.bones[i].setAngle(astrid.math.radiansToDegrees(bones[i].angle));
 		}
 	}
 
@@ -250,7 +248,7 @@ class IK {
 	}
 }
 
-var Mixed = Mixin(EventDispatcher, Animatable);
+var Mixed = astrid.mixin(EventDispatcher, Animatable);
 
 class IKBone extends Mixed {
 	constructor(name, length, angle, drawable) {
@@ -264,7 +262,7 @@ class IKBone extends Mixed {
 
 		this.prevBone = null;
 		this.nextBone = null;
-		this.drawable = ValueOrDefault(drawable, null);
+		this.drawable = astrid.valueOrDefault(drawable, null);
 		this.drawablePosition = null;
 	}
 
@@ -336,7 +334,7 @@ class IKContainer extends Canvas {
 	constructor(name, surface) {
 		super(name);
 
-		surface = ValueOrDefault(surface, Application.getInstance().getDisplaySurface());
+		surface = astrid.valueOrDefault(surface, Application.getInstance().getDisplaySurface());
 
 		this.ik = surface.createArmature(name, 0, 0);
 	}
@@ -362,7 +360,7 @@ class IKContainer extends Canvas {
 	}
 
 	addBone(length, angle, drawable, anchorPoint) {
-		anchorPoint = ValueOrDefault(anchorPoint, new Vector2D(0, drawable.getHeight() * 0.5));
+		anchorPoint = astrid.valueOrDefault(anchorPoint, new Vector2D(0, drawable.getHeight() * 0.5));
 
 		var bone = new IKBone(drawable.getName(), length, angle, drawable);
 		bone.setDrawablePosition(anchorPoint);
@@ -396,7 +394,7 @@ class IKDraw extends Canvas {
 		gfx.moveTo(0, 0);
 
 		for (var i = 0; i < len; ++i) {
-			angle += EngineMath.degreesToRadians(bones[i].getAngle());
+			angle += astrid.math.degreesToRadians(bones[i].getAngle());
 
 			px += Math.cos(angle) * bones[i].getLength();
 			py += Math.sin(angle) * bones[i].getLength();

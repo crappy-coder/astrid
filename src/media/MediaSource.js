@@ -1,18 +1,17 @@
-import { ValueOrDefault } from "../Engine";
 
 class MediaSource {
 	constructor(url, type, audioCodec, videoCodec) {
 		/** String **/
-		this.url = ValueOrDefault(url, null);
+		this.url = astrid.valueOrDefault(url, null);
 
 		/** String **/
-		this.type = ValueOrDefault(type, null);
+		this.type = astrid.valueOrDefault(type, null);
 
 		/** String **/
-		this.audioCodec = ValueOrDefault(audioCodec, null);
+		this.audioCodec = astrid.valueOrDefault(audioCodec, null);
 
 		/** String **/
-		this.videoCodec = ValueOrDefault(videoCodec, null);
+		this.videoCodec = astrid.valueOrDefault(videoCodec, null);
 	}
 
 	getUrl() {

@@ -1,7 +1,6 @@
 import Transform from "./Transform";
 import PropertyOptions from "../ui/PropertyOptions";
 import Matrix2D from "../Matrix2D";
-import { AreNotEqual } from "../Engine";
 
 class TransformSet extends Transform {
 	constructor() {
@@ -102,7 +101,7 @@ class TransformSet extends Transform {
 				c1 = this.getChildren()[i];
 				c2 = other.getChildren()[i];
 
-				if (AreNotEqual(c1, c2)) {
+				if (astrid.areNotEqual(c1, c2)) {
 					return false;
 				}
 			}

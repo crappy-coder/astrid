@@ -1,9 +1,8 @@
-import { ValueOrDefault } from "./Engine";
 
 class RTree {
 	constructor(size) {
 		this.minWidth = size == null ? 3 : Math.floor(size * 0.5);
-		this.maxWidth = ValueOrDefault(size, 6);
+		this.maxWidth = astrid.valueOrDefault(size, 6);
 
 		this._T = {x: 0, y: 0, w: 0, h: 0, id: "root", nodes: []};
 	}

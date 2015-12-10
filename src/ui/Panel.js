@@ -1,5 +1,4 @@
 import Drawable from "./Drawable";
-import { AreNotEqual } from "../Engine";
 
 class Panel extends Drawable {
 	constructor(name) {
@@ -13,7 +12,7 @@ class Panel extends Drawable {
 	}
 
 	setBackground(value) {
-		if (AreNotEqual(this.background, value)) {
+		if (astrid.areNotEqual(this.background, value)) {
 			this.background = value;
 			this.requestLayout();
 		}

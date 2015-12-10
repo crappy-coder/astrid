@@ -1,4 +1,3 @@
-import EngineMath from "./EngineMath";
 import System from "./System";
 import Application from "./Application";
 
@@ -180,7 +179,7 @@ class FPSGraph {
 		{
 			var avg = this.averages[i];
 			x = (i * (graphWidth / 100)) + 1.5;
-			y = EngineMath.round(Math.min(1.0, avg / 60.0) * maxBarHeight) + 0.5;
+			y = astrid.math.round(Math.min(1.0, avg / 60.0) * maxBarHeight) + 0.5;
 
 			gfx.lineTo(x, (maxBarHeight - y) + 10);
 		}
@@ -203,11 +202,11 @@ class FPSGraph {
 		// draw the fps labels
 		gfx.font = "10px courier";
 		
-		var avgStr = "FPS: " + EngineMath.toPrecision(clock.getAverageFPS(), 0) + ",";
+		var avgStr = "FPS: " + astrid.math.toPrecision(clock.getAverageFPS(), 0) + ",";
 		var avgWidth = gfx.measureText(avgStr).width;
-		var bestStr = "Max: " + EngineMath.toPrecision(clock.getBestFPS(), 0) + ",";
+		var bestStr = "Max: " + astrid.math.toPrecision(clock.getBestFPS(), 0) + ",";
 		var bestWidth = gfx.measureText(bestStr).width;
-		var worstStr = "Min: " + EngineMath.toPrecision(clock.getWorstFPS(), 0);
+		var worstStr = "Min: " + astrid.math.toPrecision(clock.getWorstFPS(), 0);
 		var textX = 0;
 		var textY = graphHeight + 12;
 		
@@ -221,11 +220,11 @@ class FPSGraph {
 		gfx.fillText(worstStr, textX, textY);
 		
 		// draw the time labels
-		var timeElapsedStr = "Time: " + EngineMath.toPrecision(clock.getElapsedTime(), 0) + ",";
+		var timeElapsedStr = "Time: " + astrid.math.toPrecision(clock.getElapsedTime(), 0) + ",";
 		var timeElapsedWidth = gfx.measureText(timeElapsedStr).width;
-		var timeWorstStr = "Max: " + EngineMath.toPrecision(clock.getWorstTime(), 0) + ",";
+		var timeWorstStr = "Max: " + astrid.math.toPrecision(clock.getWorstTime(), 0) + ",";
 		var timeWorstWidth = gfx.measureText(timeWorstStr).width;
-		var timeBestStr = "Min: " + EngineMath.toPrecision(clock.getBestTime(), 0);
+		var timeBestStr = "Min: " + astrid.math.toPrecision(clock.getBestTime(), 0);
 
 		textX = 0;
 		textY += 12;

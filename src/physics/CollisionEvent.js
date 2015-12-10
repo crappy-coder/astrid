@@ -1,5 +1,4 @@
 import Event from "../Event";
-import { ValueOrDefault } from "../Engine";
 
 class CollisionEvent extends Event {
 	constructor(type, controller, contactSource, contactTarget, contactNormal, contactPoints, linearVelocityA, linearVelocityB, touching, continuous, sensor, enabled, bubbles, cancelable) {
@@ -27,7 +26,7 @@ class CollisionEvent extends Event {
 	}
 
 	getContactPoints(asUnits) {
-		asUnits = ValueOrDefault(asUnits, false);
+		asUnits = astrid.valueOrDefault(asUnits, false);
 
 		if (asUnits) {
 			return this.contactPoints;

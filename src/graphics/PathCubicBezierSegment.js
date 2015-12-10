@@ -1,6 +1,5 @@
 import Equatable from "../Equatable";
 import PathSegment from "./PathSegment";
-import { AreEqual } from "../Engine";
 import Vector2D from "../Vector2D";
 
 class CurvePoints extends Equatable {
@@ -18,14 +17,14 @@ class CurvePoints extends Equatable {
 	}
 
 	isEqualTo(other) {
-		return (AreEqual(this.c1, other.c1) &&
-		AreEqual(this.c2, other.c2) &&
-		AreEqual(this.c3, other.c3) &&
-		AreEqual(this.c4, other.c4) &&
-		AreEqual(this.a1, other.a1) &&
-		AreEqual(this.a2, other.a2) &&
-		AreEqual(this.a3, other.a3) &&
-		AreEqual(this.a4, other.a4));
+		return (astrid.areEqual(this.c1, other.c1) &&
+		astrid.areEqual(this.c2, other.c2) &&
+		astrid.areEqual(this.c3, other.c3) &&
+		astrid.areEqual(this.c4, other.c4) &&
+		astrid.areEqual(this.a1, other.a1) &&
+		astrid.areEqual(this.a2, other.a2) &&
+		astrid.areEqual(this.a3, other.a3) &&
+		astrid.areEqual(this.a4, other.a4));
 	}
 }
 

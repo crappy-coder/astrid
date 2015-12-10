@@ -1,6 +1,5 @@
 import Equatable from "../Equatable";
 import NumberInterpolator from "./NumberInterpolator";
-import { ValueOrDefault } from "../Engine";
 
 /**
  * SUMMARY:
@@ -24,7 +23,7 @@ class AnimationPath extends Equatable {
 		 */
 		super();
 
-		this.property = ValueOrDefault(property, null);
+		this.property = astrid.valueOrDefault(property, null);
 		this.keyframes = [];
 		this.interpolator = NumberInterpolator.getInstance();
 	}

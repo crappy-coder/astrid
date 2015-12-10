@@ -1,9 +1,8 @@
-import { ValueOrDefault } from "../Engine";
 import GamepadButtons from "./GamepadButtons";
 
 class GamepadAxesMap {
 	constructor(map) {
-		this.map = ValueOrDefault(map, []);
+		this.map = astrid.valueOrDefault(map, []);
 	}
 
 	indexOf(button) {

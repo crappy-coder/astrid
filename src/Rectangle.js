@@ -1,9 +1,7 @@
 import Equatable from "./Equatable";
 import StringTokenizer from "./text/StringTokenizer";
-import { ValueOrDefault } from "./Engine";
 import Vector2D from "./Vector2D";
 import Size from "./Size";
-import { PositiveInfinity, NegativeInfinity } from "./EngineMath";
 
 class Rectangle extends Equatable {
 	constructor(x, y, width, height) {
@@ -13,10 +11,10 @@ class Rectangle extends Equatable {
 	}
 
 	initialize(x, y, width, height) {
-		this.x = ValueOrDefault(x, 0);
-		this.y = ValueOrDefault(y, 0);
-		this.width = ValueOrDefault(width, 0);
-		this.height = ValueOrDefault(height, 0);
+		this.x = astrid.valueOrDefault(x, 0);
+		this.y = astrid.valueOrDefault(y, 0);
+		this.width = astrid.valueOrDefault(width, 0);
+		this.height = astrid.valueOrDefault(height, 0);
 	}
 
 	top() {
@@ -105,10 +103,10 @@ class Rectangle extends Equatable {
 		this.height += byY;
 
 		if (this.width < 0 || this.height < 0) {
-			this.x = PositiveInfinity;
-			this.y = PositiveInfinity;
-			this.width = NegativeInfinity;
-			this.height = NegativeInfinity;
+			this.x = astrid.math.PositiveInfinity;
+			this.y = astrid.math.PositiveInfinity;
+			this.width = astrid.math.NegativeInfinity;
+			this.height = astrid.math.NegativeInfinity;
 		}
 
 		return this;
@@ -245,7 +243,7 @@ class Rectangle extends Equatable {
 	}
 
 	static Empty() {
-		return new Rectangle(PositiveInfinity, PositiveInfinity, NegativeInfinity, NegativeInfinity);
+		return new Rectangle(astrid.math.PositiveInfinity, astrid.math.PositiveInfinity, astrid.math.NegativeInfinity, astrid.math.NegativeInfinity);
 	}
 
 	static Zero() {

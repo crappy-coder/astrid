@@ -1,6 +1,5 @@
 import EventDispatcher from "../EventDispatcher";
 import RepeatBehavior from "./RepeatBehavior";
-import { ValueOrDefault } from "../Engine";
 import System from "../System";
 import LinearEase from "./LinearEase";
 import Keyframe from "./Keyframe";
@@ -11,7 +10,7 @@ import TimerEvent from "../TimerEvent";
 class DelayedAnimator {
 	constructor(animator, delay) {
 		this.animator = animator;
-		this.delay = ValueOrDefault(delay, 0);
+		this.delay = astrid.valueOrDefault(delay, 0);
 	}
 
 	getAnimator() {
@@ -35,7 +34,7 @@ class Animator extends EventDispatcher {
 	constructor(duration) {
 		super();
 
-		this.duration = ValueOrDefault(duration, 0);
+		this.duration = astrid.valueOrDefault(duration, 0);
 		this.startTime = -1;
 		this.currentTime = -1;
 		this.currentStartTime = -1;
@@ -360,7 +359,7 @@ class Animator extends EventDispatcher {
 	}
 
 	seek(time, includeDelay) {
-		includeDelay = ValueOrDefault(includeDelay, false);
+		includeDelay = astrid.valueOrDefault(includeDelay, false);
 
 		this.startTime = this.currentStartTime = (Animator.CurrentTimeTick - time);
 		this.doSeek = true;

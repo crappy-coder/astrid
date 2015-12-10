@@ -1,22 +1,21 @@
 import Effect from "./Effect";
-import { ValueOrDefault } from "../Engine";
 import PropertyOptions from "../ui/PropertyOptions";
 
 class ColorEffect extends Effect {
 	constructor(redScale, redOffset, greenScale, greenOffset, blueScale, blueOffset, alphaScale, alphaOffset) {
 		super();
 
-		this.setRedScale(ValueOrDefault(redScale, 1));
-		this.setRedOffset(ValueOrDefault(redOffset, 0));
+		this.setRedScale(astrid.valueOrDefault(redScale, 1));
+		this.setRedOffset(astrid.valueOrDefault(redOffset, 0));
 
-		this.setGreenScale(ValueOrDefault(greenScale, 1));
-		this.setGreenOffset(ValueOrDefault(greenOffset, 0));
+		this.setGreenScale(astrid.valueOrDefault(greenScale, 1));
+		this.setGreenOffset(astrid.valueOrDefault(greenOffset, 0));
 
-		this.setBlueScale(ValueOrDefault(blueScale, 1));
-		this.setBlueOffset(ValueOrDefault(blueOffset, 0));
+		this.setBlueScale(astrid.valueOrDefault(blueScale, 1));
+		this.setBlueOffset(astrid.valueOrDefault(blueOffset, 0));
 
-		this.setAlphaScale(ValueOrDefault(alphaScale, 1));
-		this.setAlphaOffset(ValueOrDefault(alphaOffset, 0));
+		this.setAlphaScale(astrid.valueOrDefault(alphaScale, 1));
+		this.setAlphaOffset(astrid.valueOrDefault(alphaOffset, 0));
 	}
 
 	initializeAnimatablePropertiesCore() {

@@ -1,5 +1,4 @@
 import Effect from "./Effect";
-import { ValueOrDefault } from "../Engine";
 import PropertyOptions from "../ui/PropertyOptions";
 import Vector2D from "../Vector2D";
 import Rectangle from "../Rectangle";
@@ -8,9 +7,9 @@ class BoxBlurEffect extends Effect {
 	constructor(radiusX, radiusY, quality) {
 		super();
 
-		this.setRadiusX(ValueOrDefault(radiusX, 4));
-		this.setRadiusY(ValueOrDefault(radiusY, 4));
-		this.setQuality(ValueOrDefault(quality, 1));
+		this.setRadiusX(astrid.valueOrDefault(radiusX, 4));
+		this.setRadiusY(astrid.valueOrDefault(radiusY, 4));
+		this.setQuality(astrid.valueOrDefault(quality, 1));
 	}
 
 	initializeAnimatablePropertiesCore() {

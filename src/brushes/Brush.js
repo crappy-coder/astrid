@@ -2,9 +2,8 @@ import EventDispatcher from "../EventDispatcher";
 import Animatable from "../animation/Animatable";
 import SourceEvent from "../SourceEvent";
 import PropertyOptions from "../ui/PropertyOptions";
-import { AreEqual, Mixin } from "../Engine";
 
-var Mixed = Mixin(EventDispatcher, Animatable);
+var Mixed = astrid.mixin(EventDispatcher, Animatable);
 
 class Brush extends Mixed {
 	constructor() {
@@ -53,7 +52,7 @@ class Brush extends Mixed {
 
 	isEqualTo(other) {
 		if (this.getOpacity() == other.getOpacity()) {
-			return AreEqual(this.getTransform(), other.getTransform());
+			return astrid.areEqual(this.getTransform(), other.getTransform());
 		}
 
 		return false;

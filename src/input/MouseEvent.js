@@ -1,12 +1,11 @@
 import Event from "../Event";
-import { ValueOrDefault } from "../Engine";
 import MouseButton from "./MouseButton";
 import Vector2D from "../Vector2D";
 import ModifierKeys from "./ModifierKeys";
 
 class MouseEvent extends Event {
 	constructor(type, x, y, button, modifiers, bubbles, cancelable) {
-		super(type, ValueOrDefault(bubbles, true), ValueOrDefault(cancelable, false));
+		super(type, astrid.valueOrDefault(bubbles, true), astrid.valueOrDefault(cancelable, false));
 
 		this.modifiers = modifiers;
 		this.isLeftButtonDown = (button == MouseButton.Left);

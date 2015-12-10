@@ -1,8 +1,6 @@
 import Effect from "./Effect";
 import PropertyOptions from "../ui/PropertyOptions";
 import Color from "../graphics/Color";
-import { ValueOrDefault } from "../Engine";
-import EngineMath from "../EngineMath";
 import Vector2D from "../Vector2D";
 import Rectangle from "../Rectangle";
 import GraphicsUtil from "../graphics/GraphicsUtil";
@@ -11,10 +9,10 @@ class DropShadowEffect extends Effect {
 	constructor(direction, depth, blurRadius, color) {
 		super();
 
-		this.setDirection(ValueOrDefault(direction, 315));
-		this.setBlurRadius(ValueOrDefault(blurRadius, 5));
-		this.setDepth(ValueOrDefault(depth, 5));
-		this.setColor(ValueOrDefault(color, Color.Black));
+		this.setDirection(astrid.valueOrDefault(direction, 315));
+		this.setBlurRadius(astrid.valueOrDefault(blurRadius, 5));
+		this.setDepth(astrid.valueOrDefault(depth, 5));
+		this.setColor(astrid.valueOrDefault(color, Color.Black));
 
 		this.shadowCanvas = document.createElement("canvas");
 		this.shadowContext = this.shadowCanvas.getContext("2d");
@@ -64,7 +62,7 @@ class DropShadowEffect extends Effect {
 	getRenderBounds(contentRect) {
 		var r = this.getBlurRadius();
 		var d = this.getDepth();
-		var dir = EngineMath.degreesToRadians(this.getDirection());
+		var dir = astrid.math.degreesToRadians(this.getDirection());
 		var p1 = new Vector2D(contentRect.x - r, contentRect.y - r);
 		var p2 = new Vector2D(contentRect.bottomRight().x + r, contentRect.bottomRight().y + r);
 		var x = d * Math.cos(dir);
@@ -88,7 +86,7 @@ class DropShadowEffect extends Effect {
 	processCore(target, pixelData) {
 		var canvas = this.shadowCanvas;
 		var ctx = this.shadowContext;
-		var dir = EngineMath.degreesToRadians(-this.getDirection());
+		var dir = astrid.math.degreesToRadians(-this.getDirection());
 		var depth = this.getDepth();
 		var x = depth * Math.cos(dir);
 		var y = depth * Math.sin(dir);

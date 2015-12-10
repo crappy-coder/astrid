@@ -1,14 +1,12 @@
 import Equatable from "./Equatable";
-import { ValueOrDefault } from "./Engine";
-import EngineMath from "./EngineMath";
 
 class Vector3D extends Equatable {
 	constructor(x, y, z) {
 		super();
 
-		this.x = ValueOrDefault(x, 0);
-		this.y = ValueOrDefault(y, 0);
-		this.z = ValueOrDefault(z, 0);
+		this.x = astrid.valueOrDefault(x, 0);
+		this.y = astrid.valueOrDefault(y, 0);
+		this.z = astrid.valueOrDefault(z, 0);
 	}
 
 	add(vector) {
@@ -60,9 +58,9 @@ class Vector3D extends Equatable {
 	}
 
 	normalizeZero() {
-		this.x = EngineMath.normalizeZero(this.x);
-		this.y = EngineMath.normalizeZero(this.y);
-		this.z = EngineMath.normalizeZero(this.z);
+		this.x = astrid.math.normalizeZero(this.x);
+		this.y = astrid.math.normalizeZero(this.y);
+		this.z = astrid.math.normalizeZero(this.z);
 
 		return this;
 	}

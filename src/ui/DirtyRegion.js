@@ -1,26 +1,25 @@
 import Equatable from "../Equatable";
-import { MinInt, MaxInt } from "../EngineMath";
 import Rectangle from "../Rectangle";
 import DirtyRegionTracker from "./DirtyRegionTracker";
 
 class DirtyRegion extends Equatable {
 	constructor() {
 		super();
-		this.x1 = MaxInt;
-		this.y1 = MaxInt;
-		this.x2 = MinInt;
-		this.y2 = MinInt;
+		this.x1 = astrid.math.MaxInt;
+		this.y1 = astrid.math.MaxInt;
+		this.x2 = astrid.math.MinInt;
+		this.y2 = astrid.math.MinInt;
 	}
 
 	clear() {
-		this.x1 = MaxInt;
-		this.y1 = MaxInt;
-		this.x2 = MinInt;
-		this.y2 = MinInt;
+		this.x1 = astrid.math.MaxInt;
+		this.y1 = astrid.math.MaxInt;
+		this.x2 = astrid.math.MinInt;
+		this.y2 = astrid.math.MinInt;
 	}
 
 	isEmpty() {
-		return (this.x1 == MaxInt); // only need to check one
+		return (this.x1 === astrid.math.MaxInt); // only need to check one
 	}
 
 	getRect() {
@@ -60,7 +59,7 @@ class DirtyRegion extends Equatable {
 	}
 
 	translate(x, y) {
-		if (this.x1 != MaxInt) {
+		if (this.x1 !== astrid.math.MaxInt) {
 			this.x1 += x;
 			this.x2 += x;
 

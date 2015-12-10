@@ -1,6 +1,5 @@
 import Brush from "./Brush";
 import PropertyOptions from "../ui/PropertyOptions";
-import { AreEqual } from "../Engine";
 import Color from "../graphics/Color";
 
 class SolidColorBrush extends Brush {
@@ -26,7 +25,7 @@ class SolidColorBrush extends Brush {
 
 	isEqualTo(other) {
 		if (super.isEqualTo(other)) {
-			return AreEqual(this.getColor(), other.getColor());
+			return astrid.areEqual(this.getColor(), other.getColor());
 		}
 
 		return false;

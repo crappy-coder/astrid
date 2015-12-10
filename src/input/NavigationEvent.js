@@ -1,13 +1,12 @@
 import Event from "../Event";
-import { ValueOrDefault } from "../Engine";
 
 class NavigationEvent extends Event {
 	constructor(type, direction, targetFrom, targetTo, bubbles, cancelable) {
 		super(type, bubbles, cancelable);
 
 		this.direction = direction;
-		this.targetFrom = ValueOrDefault(targetFrom, null);
-		this.targetTo = ValueOrDefault(targetTo, null);
+		this.targetFrom = astrid.valueOrDefault(targetFrom, null);
+		this.targetTo = astrid.valueOrDefault(targetTo, null);
 	}
 
 	getDirection() {

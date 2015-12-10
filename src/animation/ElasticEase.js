@@ -1,13 +1,12 @@
 import EasingFunction from "./EasingFunction";
-import { ValueOrDefault } from "../Engine";
 
 class ElasticEase extends EasingFunction {
 	constructor(easingModeOrPercent, amplitude, period) {
 		super(easingModeOrPercent);
 
-		this.amplitude = ValueOrDefault(amplitude, 1);
+		this.amplitude = astrid.valueOrDefault(amplitude, 1);
 
-		this.period = ValueOrDefault(period, 0.45);
+		this.period = astrid.valueOrDefault(period, 0.45);
 	}
 
 	getAmplitude() {

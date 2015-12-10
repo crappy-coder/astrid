@@ -1,17 +1,16 @@
 import EventDispatcher from "../EventDispatcher";
-import { ValueOrDefault, AreEqual, Mixin } from "../Engine";
 import Color from "../graphics/Color";
 import Animatable from "../animation/Animatable";
 import PropertyOptions from "../ui/PropertyOptions";
 
-var Mixed = Mixin(EventDispatcher, Animatable);
+var Mixed = astrid.mixin(EventDispatcher, Animatable);
 
 class GradientStop extends Mixed {
 	constructor(color, offset) {
 		super();
 
-		this.setColor(ValueOrDefault(color, Color.Transparent));
-		this.setOffset(ValueOrDefault(offset, 0));
+		this.setColor(astrid.valueOrDefault(color, Color.Transparent));
+		this.setOffset(astrid.valueOrDefault(offset, 0));
 		
 		/** GradientBrush **/
 		this.brush = null;
@@ -41,7 +40,7 @@ class GradientStop extends Mixed {
 	}
 	
 	isEqualTo(other) {
-		return (AreEqual(this.getColor(), other.getColor()) && this.getOffset() && other.getOffset());
+		return (astrid.areEqual(this.getColor(), other.getColor()) && this.getOffset() && other.getOffset());
 	}
 
 	toString() {

@@ -1,5 +1,4 @@
 import Drawable from "./Drawable";
-import { ValueOrDefault } from "../Engine";
 import Event from "../Event";
 import Rectangle from "../Rectangle";
 import SourceEvent from "../SourceEvent";
@@ -20,14 +19,14 @@ class Image extends Drawable {
 		this.sourceLoaded = false;
 		this.changed = false;
 
-		if (!ValueOrDefault(enableSourceTiling, false)) {
+		if (!astrid.valueOrDefault(enableSourceTiling, false)) {
 			this.keepAspectRatio = null;
 		}
 
 		this.addEventHandler(Event.PRE_INIT, this.handlePreInitEvent.d(this));
 
-		this.setSourceRect(ValueOrDefault(sourceRect, Rectangle.Empty()));
-		this.setEnableSourceTiling(ValueOrDefault(enableSourceTiling, false));
+		this.setSourceRect(astrid.valueOrDefault(sourceRect, Rectangle.Empty()));
+		this.setEnableSourceTiling(astrid.valueOrDefault(enableSourceTiling, false));
 		this.setSource(source);
 	}
 
