@@ -26,29 +26,28 @@ class GraphicsPathItem extends GraphicsItem {
 	}
 
 	computeBounds() {
-		if (this.ops.length == 0) {
+		if (this.ops.length === 0) {
 			return;
 		}
 
 		//**************************************************************************
 		//* NOTE: instead of computing the initial bounds here this process has
-		//*      been merged to occur during the main process method, this allows
-		//*      use to remove an extra loop
+		//*       been merged to occur during the main process method, this allows
+		//*       use to remove an extra loop
 		//**************************************************************************
 
 		// now that we have the initial bounds, we can compute the final stroked bounds
 		// this only needs to happen if we actually have a stroke, otherwise we're done
-		if (this.strokeOp != null) {
-			var params = this.strokeOp.getSecond();
+		if (this.strokeOp !== null) {
+			var penInfo = this.strokeOp.getSecond();
+			var thickness = penInfo.thickness;
+			var thicknessHalf = (thickness * 0.5);
+			var metrics = new Rectangle(-thicknessHalf, -thicknessHalf, thickness, thickness);
+			var miterLimit = Math.max(penInfo.miterLimit, 1);
+			var joinType = penInfo.lineJoin;
 
-			var thickness = params[0][0];
-			var metrics = new Rectangle(-thickness * 0.5, -thickness * 0.5, thickness, thickness);
-			var miterLimit = Math.max(params[0][1], 1);
-			var joinType = params[0][2];
-
-			// copy the non-stroked bounds
-			this.strokedBounds = new Rectangle();
-			this.strokedBounds.copyFrom(this.bounds);
+			// initialize with the non-stroked bounds
+			this.strokedBounds = Rectangle.fromRect(this.bounds);
 
 			// we will always need to adjust the bounds by the stroke thickness, centered on the outline
 			this.strokedBounds.inflate(metrics.right(), metrics.bottom());
@@ -57,7 +56,7 @@ class GraphicsPathItem extends GraphicsItem {
 			//        beyond the bounds in some cases so we need to apply an extra half a stroke (?)
 			//        to non-connecting segments.
 
-			if (joinType != "miter") {
+			if (joinType !== "miter") {
 				return;
 			}
 
@@ -111,11 +110,10 @@ class GraphicsPathItem extends GraphicsItem {
 			}
 
 			// the current and previous operation are 'closed' and form a joint 
-			if ((jointStartIndex == count - 1 ||
-					(this.segments[jointStartIndex + 1] instanceof PathMoveSegment) && jointStartSeg.x == moveX &&
-					jointStartSeg.y == moveY)) {
+			if ((jointStartIndex === (count - 1) || (this.segments[jointStartIndex + 1] instanceof PathMoveSegment) && jointStartSeg.x === moveX && jointStartSeg.y === moveY)) {
 				jointEndIndex = openIndex;
-			}// move to the next operation
+			}
+			// move to the next operation
 			else {
 				jointEndIndex = jointStartIndex + 1;
 			}
@@ -165,7 +163,7 @@ class GraphicsPathItem extends GraphicsItem {
 		//      lineTo(0,0);  <-- assume implicit move
 		//      lineTo(100, 0);
 		//
-		if (this.lastMoveSegment == null) {
+		if (this.lastMoveSegment === null) {
 			this.lastMoveSegment = segment;
 		}
 	}
@@ -175,8 +173,8 @@ class GraphicsPathItem extends GraphicsItem {
 		// if the last move segment is not the same as the last path segment
 		// then we need make a straight line from the last segment to the
 		// last move segment
-		if (this.lastMoveSegment != null && this.lastSegment != null) {
-			if (this.lastSegment.x != this.lastMoveSegment.x || this.lastSegment.y != this.lastMoveSegment.y) {
+		if (this.lastMoveSegment !== null && this.lastSegment !== null) {
+			if (this.lastSegment.x !== this.lastMoveSegment.x || this.lastSegment.y !== this.lastMoveSegment.y) {
 				this.segments.push(new PathLineSegment(this.lastMoveSegment.x, this.lastMoveSegment.y));
 			}
 		}
@@ -219,7 +217,7 @@ class GraphicsPathItem extends GraphicsItem {
 
 	adjustBoundsForSegment(segment) {
 		// merge the segments bounds into our bounds
-		if (segment != null) {
+		if (segment !== null) {
 			segment.mergeBounds(this.lastSegment, this.bounds);
 		}
 	}
@@ -245,7 +243,7 @@ class GraphicsPathItem extends GraphicsItem {
 
 
 		// we must have at least one valid tangent
-		if (t0.length() == 0 || t1.length() == 0) {
+		if (t0.length() === 0 || t1.length() === 0) {
 			return;
 		}
 
@@ -274,12 +272,12 @@ class GraphicsPathItem extends GraphicsItem {
 				(t0.y + t1.y) * -0.5);
 
 		// joint is at 180 degrees, nothing to do
-		if (bisect.length() == 0) {
+		if (bisect.length() === 0) {
 			return;
 		}
 
 		// compute based on the set miter limit
-		if (alpha == 0 || miterLimit < (1 / alpha)) {
+		if (alpha === 0 || miterLimit < (1 / alpha)) {
 			// normalize the mid point first, we need the bisect vector
 			midPoint.normalize((weight - miterLimit * weight * alpha) / bisect.length());
 

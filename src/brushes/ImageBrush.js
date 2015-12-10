@@ -1,4 +1,5 @@
 import Brush from "./Brush";
+import BrushType from "./BrushType";
 import HorizontalAlignment from "../ui/HorizontalAlignment";
 import VerticalAlignment from "../ui/VerticalAlignment";
 import Stretch from "../ui/Stretch";
@@ -7,7 +8,7 @@ import SourceEvent from "../SourceEvent";
 
 class ImageBrush extends Brush {
 	constructor() {
-		super();
+		super(BrushType.Image);
 
 		/** TextureSource **/
 		this.texture = null;

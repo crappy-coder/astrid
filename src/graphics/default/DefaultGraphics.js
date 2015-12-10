@@ -1,6 +1,7 @@
 import Graphics from "../Graphics"
 import GraphicsOp from "../GraphicsOp"
 import GraphicsItemType from "../GraphicsItemType"
+import GraphicsUtil from "../GraphicsUtil"
 import CompositeOperator from "../CompositeOperator"
 import Line from "../../Line"
 import Vector2D from "../../Vector2D"
@@ -41,7 +42,7 @@ class DefaultGraphics extends Graphics {
 		var item = null;
 		var op = null;
 		var opType = null;
-		var params = null;
+		var opParams = null;
 
 		for (var i = 0; i < itemCount; ++i) {
 			item = this.processor.items[i];
@@ -50,16 +51,21 @@ class DefaultGraphics extends Graphics {
 			if (item.type === GraphicsItemType.Image) {
 				op = item.imageOp;
 				opType = op.getFirst();
-				params = op.getSecond();
+				opParams = op.getSecond();
 
-				switch (opType) {
-					case GraphicsOp.TiledImage:
-						this.drawImageImpl(ctx, params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], params[8], true, params[9]);
-						break;
-					case GraphicsOp.Image:
-						this.drawImageImpl(ctx, params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7], params[8], false, params[9]);
-						break;
-				}
+				this.drawImageImpl(
+					ctx,
+					opParams.source,
+					opParams.srcX,
+					opParams.srcY,
+					opParams.srcWidth,
+					opParams.srcHeight,
+					opParams.dstX,
+					opParams.dstY,
+					opParams.dstWidth,
+					opParams.dstHeight,
+					opType === GraphicsOp.TiledImage ? true : false,
+					opParams.transform);
 			}
 
 			// render the item as a path, or text
@@ -85,7 +91,7 @@ class DefaultGraphics extends Graphics {
 				for (var j = 0; j < len; ++j) {
 					op = item.ops[j];
 					opType = op.getFirst();
-					params = op.getSecond();
+					opParams = op.getSecond();
 
 					this.currentTextOp = null;
 
@@ -97,20 +103,20 @@ class DefaultGraphics extends Graphics {
 							this.closePathImpl(ctx);
 							break;
 						case GraphicsOp.MoveTo:
-							this.moveToImpl(ctx, params[0]);
+							this.moveToImpl(ctx, opParams);
 							break;
 						case GraphicsOp.LineTo:
-							this.lineToImpl(ctx, params[0]);
+							this.lineToImpl(ctx, opParams);
 							break;
 						case GraphicsOp.CurveTo:
-							this.quadraticCurveToImpl(ctx, params[0]);
+							this.quadraticCurveToImpl(ctx, opParams);
 							break;
 						case GraphicsOp.CubicCurveTo:
-							this.bezierCurveToImpl(ctx, params[0]);
+							this.bezierCurveToImpl(ctx, opParams);
 							break;
 						case GraphicsOp.Text:
 							this.currentTextOp = op;
-							this.drawTextImpl(ctx, bounds, item.fillOp, item.strokeOp, params[0], params[1], params[2], params[3]);
+							this.drawTextImpl(ctx, bounds, item.fillOp, item.strokeOp, opParams.text, opParams.x, opParams.y, opParams.font);
 							break;
 					}
 				}
@@ -126,14 +132,14 @@ class DefaultGraphics extends Graphics {
 				for (var j = 0; j < paintOpCount; ++j) {
 					op = item.paintOps[j];
 					opType = op.getFirst();
-					params = op.getSecond();
+					opParams = op.getSecond();
 
 					switch (opType) {
 						case GraphicsOp.Fill:
-							this.fillImpl(ctx, bounds, params[0], params[1], false);
+							this.fillImpl(ctx, bounds, opParams, false);
 							break;
 						case GraphicsOp.Stroke:
-							this.strokeImpl(ctx, bounds, params[0], params[1], false);
+							this.strokeImpl(ctx, bounds, opParams, false);
 							break;
 					}
 				}
@@ -153,7 +159,7 @@ class DefaultGraphics extends Graphics {
 		this.drawable.registerGraphicsObject(maskBrush);
 
 		// fill the mask rect
-		this.fillImpl(ctx, this.tmpRect, this.createParamsFromBrush(maskBrush), CompositeOperator.DestinationIn);
+		this.fillImpl(ctx, this.tmpRect, this.createParamsFromBrush(maskBrush, CompositeOperator.DestinationIn));
 	}
 
 	beginPathImpl(ctx) {
@@ -196,7 +202,7 @@ class DefaultGraphics extends Graphics {
 			if (imageSource instanceof VideoSource) {
 				ctx.drawImage(nativeData, dstX, dstY, dstWidth, dstHeight);
 			} else {
-				if (matrix == null) {
+				if (matrix === null) {
 					ctx.drawImage(nativeData, srcX, srcY, srcWidth, srcHeight, dstX, dstY, dstWidth, dstHeight);
 				} else {
 					ctx.save();
@@ -219,7 +225,7 @@ class DefaultGraphics extends Graphics {
 		// must draw the tile first then create the pattern from the
 		// offscreen surface. most likely this surface will be used
 		// multiple times, hence the reason for keeping it in memory
-		if (this.offscreenSurface == null) {
+		if (this.offscreenSurface === null) {
 			this.offscreenSurface = document.createElement("canvas");
 		}
 
@@ -256,18 +262,18 @@ class DefaultGraphics extends Graphics {
 
 	drawTextImpl(ctx, boundsRect, fillOp, strokeOp, text, x, y, font) {
 
-		if (fillOp != null) {
-			this.fillImpl(ctx, boundsRect, fillOp.getSecond()[0], fillOp.getSecond()[1], true);
+		if (fillOp !== null) {
+			this.fillImpl(ctx, boundsRect, fillOp.getSecond(), true);
 		}
 
-		if (strokeOp != null) {
-			this.strokeImpl(ctx, boundsRect, strokeOp.getSecond()[0], strokeOp.getSecond()[1], true);
+		if (strokeOp !== null) {
+			this.strokeImpl(ctx, boundsRect, strokeOp.getSecond(), true);
 		}
 	}
 
-	fillImpl(ctx, boundsRect, brushParams, compositeOp, forText) {
+	fillImpl(ctx, boundsRect, brushInfo, forText) {
 
-		if (brushParams == null) {
+		if (brushInfo === null) {
 			ctx.fillStyle = this.createFallbackStyle();
 
 			if (forText) {
@@ -286,7 +292,7 @@ class DefaultGraphics extends Graphics {
 
 		// if the brush has a transform we will need to save our current state and restore it, this adds a bit of overhead
 		// so we only do this if we absolutley must (hence the saving of the alpha directly)
-		if (this.getMustSaveContextForBrush(brushParams)) {
+		if (Graphics.WillBrushRequireSavingContext(brushInfo)) {
 			saveState = true;
 		}
 
@@ -295,13 +301,13 @@ class DefaultGraphics extends Graphics {
 				ctx.save();
 			}
 
-			ctx.globalCompositeOperation = this.getCompositeOperatorString(compositeOp);
-			ctx.fillStyle = this.createStyleFromBrush(ctx, boundsRect, brushParams, false);
+			ctx.globalCompositeOperation = GraphicsUtil.toCompositeOperatorString(brushInfo.compositeOp);
+			ctx.fillStyle = this.createStyleFromBrush(ctx, boundsRect, brushInfo, false);
 
 			// the brush may have it's own alpha channel, so we append it to the global alpha
 			// this will relieve us of some overhead of making a copy of the brushes color(s), however, the
 			// color(s) could also have their own alpha which will be in the style created
-			ctx.globalAlpha *= brushParams[brushParams.length - 2];
+			ctx.globalAlpha *= brushInfo.opacity;
 
 			if (forText) {
 				this.fillText(ctx);
@@ -328,23 +334,23 @@ class DefaultGraphics extends Graphics {
 	}
 
 	fillText(ctx) {
-		if (this.currentTextOp == null) {
+		if (this.currentTextOp === null) {
 			return;
 		}
 
 		var params = this.currentTextOp.getSecond();
-		var text = params[0];
-		var x = params[1];
-		var y = params[2];
-		var font = params[3];
+		var text = params.text;
+		var x = params.x;
+		var y = params.y;
+		var font = params.font;
 
 		ctx.font = font.toString();
 		ctx.textBaseline = "top";
 		ctx.fillText(text, x, y);
 	}
 
-	strokeImpl(ctx, boundsRect, penParams, compositeOp, forText) {
-		if (penParams == null) {
+	strokeImpl(ctx, boundsRect, penInfo, forText) {
+		if (penInfo === null) {
 			ctx.strokeStyle = this.createFallbackStyle();
 
 			if (forText) {
@@ -357,19 +363,19 @@ class DefaultGraphics extends Graphics {
 		}
 
 		var success = true;
-		var lineWidth = penParams[0];
-		var lineCap = penParams[3];
-		var dashCap = penParams[6];
-		var dashStyle = penParams[5];
+		var lineWidth = penInfo.thickness;
+		var lineCap = penInfo.lineCap;
+		var dashCap = penInfo.dashCap;
+		var dashStyle = penInfo.dashStyle;
 		var dashSuccess = false;
-		var brushParams = penParams[4];
+		var brushInfo = penInfo.brushInfo;
 		var saveState = false;
 		var alpha = ctx.globalAlpha;
 		var currentCompositeOp = ctx.globalCompositeOperation;
 
 		// if the brush has a transform we will need to save our current state and restore it, this adds a bit of overhead
 		// so we only do this if we absolutley must (hence the saving of the alpha directly)
-		if (this.getMustSaveContextForBrush(brushParams)) {
+		if (Graphics.WillBrushRequireSavingContext(brushInfo)) {
 			saveState = true;
 		}
 
@@ -378,17 +384,17 @@ class DefaultGraphics extends Graphics {
 				ctx.save();
 			}
 
-			ctx.globalCompositeOperation = this.getCompositeOperatorString(compositeOp);
-			ctx.strokeStyle = this.createStyleFromBrush(ctx, boundsRect, brushParams, true);
+			ctx.globalCompositeOperation = GraphicsUtil.toCompositeOperatorString(penInfo.compositeOp);
+			ctx.strokeStyle = this.createStyleFromBrush(ctx, boundsRect, brushInfo, true);
 
 			// the brush may have it's own alpha channel, so we append it to the global alpha
 			// this will relieve us of some overhead of making a copy of the brushes color(s), however, the
 			// color(s) could also have their own alpha which will be in the style created
-			ctx.globalAlpha *= brushParams[brushParams.length - 2];
+			ctx.globalAlpha *= brushInfo.opacity;
 
 			ctx.lineWidth = lineWidth;
-			ctx.miterLimit = penParams[1];
-			ctx.lineJoin = penParams[2];
+			ctx.miterLimit = penInfo.miterLimit;
+			ctx.lineJoin = penInfo.lineJoin;
 
 			// dashing is currently available for paths created through the DefaultGraphics class only
 			// so text cannot have a dashed path since we currently use the native font rendering provided
@@ -397,7 +403,7 @@ class DefaultGraphics extends Graphics {
 			// TODO : implement our own OpenType or TrueType font reader and renderer so we can use precise
 			//        bounds caclulation, dashing, etc...
 			//
-			if (!forText && dashStyle != null && dashStyle != DashStyle.Solid && lineWidth > 0) {
+			if (!forText && dashStyle !== null && dashStyle !== DashStyle.Solid && lineWidth > 0) {
 				dashSuccess = this.dashCurrentPath(ctx, dashStyle, lineWidth, dashCap, lineCap);
 			}
 
@@ -430,15 +436,15 @@ class DefaultGraphics extends Graphics {
 	}
 
 	strokeText(ctx) {
-		if (this.currentTextOp == null) {
+		if (this.currentTextOp === null) {
 			return;
 		}
 
 		var params = this.currentTextOp.getSecond();
-		var text = params[0];
-		var x = params[1];
-		var y = params[2];
-		var font = params[3];
+		var text = params.text;
+		var x = params.x;
+		var y = params.y;
+		var font = params.font;
 
 		ctx.font = font.toString();
 		ctx.textBaseline = "top";
@@ -500,7 +506,7 @@ class DefaultGraphics extends Graphics {
 		// till the end to stroke, which will apply the same cap on all strokes
 		// otherwise, instead of dashing directly to the context we builds up a
 		// set of dash segments so we can handle start and ending caps
-		if (dashCap != lineCap) {
+		if (dashCap !== lineCap) {
 			useDashCap = true;
 		}
 
@@ -527,7 +533,7 @@ class DefaultGraphics extends Graphics {
 
 		flatSegments = this.flattenCurrentPath();
 
-		if (flatSegments == null) {
+		if (flatSegments === null) {
 			return false;
 		}
 
@@ -628,7 +634,7 @@ class DefaultGraphics extends Graphics {
 	}
 
 	flattenCurrentPath() {
-		if (this.currentPathItem.segments == null || this.currentPathItem.segments.length == 0) {
+		if (this.currentPathItem.segments === null || this.currentPathItem.segments.length === 0) {
 			return null;
 		}
 

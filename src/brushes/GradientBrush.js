@@ -2,8 +2,8 @@ import Brush from "./Brush";
 import PropertyOptions from "../ui/PropertyOptions";
 
 class GradientBrush extends Brush {
-	constructor() {
-		super();
+	constructor(type) {
+		super(type);
 
 		this.setColorStops();
 	}

@@ -1,11 +1,12 @@
-import GradientBrush from "./GradientBrush";
-import Vector2D from "../Vector2D";
-import PropertyOptions from "../ui/PropertyOptions";
-import GradientStop from "../graphics/GradientStop";
+import BrushType from "./BrushType"
+import GradientBrush from "./GradientBrush"
+import GradientStop from "./GradientStop"
+import PropertyOptions from "../ui/PropertyOptions"
+import Vector2D from "../Vector2D"
 
 class RadialGradientBrush extends GradientBrush {
 	constructor() {
-		super();
+		super(BrushType.RadialGradient);
 
 		this.setStartPoint(new Vector2D(0.5, 0.5));
 		this.setEndPoint(new Vector2D(0.5, 0.5));

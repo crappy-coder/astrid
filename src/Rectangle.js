@@ -7,10 +7,10 @@ class Rectangle extends Equatable {
 	constructor(x, y, width, height) {
 		super();
 
-		this.initialize(x, y, width, height);
+		this.update(x, y, width, height);
 	}
 
-	initialize(x, y, width, height) {
+	update(x, y, width, height) {
 		this.x = astrid.valueOrDefault(x, 0);
 		this.y = astrid.valueOrDefault(y, 0);
 		this.width = astrid.valueOrDefault(width, 0);
@@ -130,7 +130,7 @@ class Rectangle extends Equatable {
 
 	union(left, top, right, bottom) {
 		if (this.isZero()) {
-			this.initialize(left, top, right - left, bottom - top);
+			this.update(left, top, right - left, bottom - top);
 			return this;
 		}
 
@@ -153,7 +153,7 @@ class Rectangle extends Equatable {
 
 	unionWithRect(rect) {
 		if (this.isZero()) {
-			this.initialize(rect.x, rect.y, rect.width, rect.height);
+			this.update(rect.x, rect.y, rect.width, rect.height);
 			return this;
 		}
 
@@ -243,7 +243,11 @@ class Rectangle extends Equatable {
 	}
 
 	static Empty() {
-		return new Rectangle(astrid.math.PositiveInfinity, astrid.math.PositiveInfinity, astrid.math.NegativeInfinity, astrid.math.NegativeInfinity);
+		return new Rectangle(
+			astrid.math.PositiveInfinity,
+			astrid.math.PositiveInfinity,
+			astrid.math.NegativeInfinity,
+			astrid.math.NegativeInfinity);
 	}
 
 	static Zero() {
@@ -257,6 +261,10 @@ class Rectangle extends Equatable {
 		var height = Math.max(Math.max(p1.y, p2.y) - y, 0);
 
 		return new Rectangle(x, y, width, height);
+	}
+
+	static fromRect(rect) {
+		return new Rectangle(rect.x, rect.y, rect.width, rect.height);
 	}
 
 	static parse(str) {

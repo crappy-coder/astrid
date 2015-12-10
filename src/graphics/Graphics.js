@@ -1,6 +1,6 @@
 import GraphicsOp from "./GraphicsOp"
-import GraphicsBrushType from "./GraphicsBrushType"
 import GraphicsProcessor from "./GraphicsProcessor"
+import GraphicsUtil from "./GraphicsUtil"
 import CompositeOperator from "./CompositeOperator"
 import SweepDirection from "./SweepDirection"
 import PathMoveSegment from "./PathMoveSegment"
@@ -17,11 +17,10 @@ import Vector2D from "../Vector2D"
 import SolidColorBrush from "../brushes/SolidColorBrush"
 import LinearGradientBrush from "../brushes/LinearGradientBrush"
 import RadialGradientBrush from "../brushes/RadialGradientBrush"
+import BrushType from "../brushes/BrushType"
 import ImageBrush from "../brushes/ImageBrush"
 import VideoBrush from "../brushes/VideoBrush"
 import Stretch from "../ui/Stretch"
-import PenLineCap from "../ui/PenLineCap"
-import PenLineJoin from "../ui/PenLineJoin"
 import Debug from "../Debug"
 
 class Graphics {
@@ -50,14 +49,8 @@ class Graphics {
 		return this.processor.bounds;
 	}
 
-	pushOp(type /** [p1, [p2, [...]]] **/) {
-		var op = new Pair(type, []);
-
-		for (var i = 1; i < arguments.length; i++) {
-			op.getSecond().push(arguments[i]);
-		}
-
-		this.ops.push(op);
+	pushOp(type, params) {
+		this.ops.push(new Pair(type, astrid.valueOrDefault(params, null)));
 	}
 
 	beginPath() {
@@ -72,14 +65,14 @@ class Graphics {
 		compositeOp = astrid.valueOrDefault(compositeOp, CompositeOperator.SourceOver);
 
 		this.drawable.registerGraphicsObject(brush);
-		this.pushOp(GraphicsOp.Fill, this.createParamsFromBrush(brush), compositeOp);
+		this.pushOp(GraphicsOp.Fill, this.createParamsFromBrush(brush, compositeOp));
 	}
 
 	stroke(pen, compositeOp) {
 		compositeOp = astrid.valueOrDefault(compositeOp, CompositeOperator.SourceOver);
 
 		this.drawable.registerGraphicsObject(pen);
-		this.pushOp(GraphicsOp.Stroke, this.createParamsFromPen(pen), compositeOp);
+		this.pushOp(GraphicsOp.Stroke, this.createParamsFromPen(pen, compositeOp));
 	}
 
 	clear() {
@@ -172,24 +165,34 @@ class Graphics {
 		dstWidth = astrid.valueOrDefault(dstWidth, srcWidth);
 		dstHeight = astrid.valueOrDefault(dstHeight, srcHeight);
 		repeat = astrid.valueOrDefault(repeat, false);
+		matrix = astrid.valueOrDefault(matrix, null);
 
 		// identity matrices still have an overhead of transformations
-		// and state changes, so skip omit these
-		if (matrix != null && matrix.isIdentity()) {
+		// and state changes, so skip these
+		if (matrix !== null && matrix.isIdentity()) {
 			matrix = null;
 		}
 
 		// make sure we don't use the object reference, otherwise
-		// a user will need to pass in a new matrix everytime.
-		if (matrix != null) {
+		// a user will need to pass in a new matrix every time.
+		if (matrix !== null) {
 			matrix = matrix.copy();
 		}
 
-		if (repeat) {
-			this.pushOp(GraphicsOp.TiledImage, imageSource, srcX, srcY, srcWidth, srcHeight, dstX, dstY, dstWidth, dstHeight, matrix);
-		} else {
-			this.pushOp(GraphicsOp.Image, imageSource, srcX, srcY, srcWidth, srcHeight, dstX, dstY, dstWidth, dstHeight, matrix);
-		}
+		var params = {
+			source: imageSource,
+			transform: matrix,
+			srcX: srcX,
+			srcY: srcY,
+			srcWidth: srcWidth,
+			srcHeight: srcHeight,
+			dstX: dstX,
+			dstY: dstY,
+			dstWidth: dstWidth,
+			dstHeight: dstHeight
+		};
+
+		this.pushOp((repeat ? GraphicsOp.TiledImage : GraphicsOp.Image), params);
 	}
 
 	drawLine(x1, y1, x2, y2) {
@@ -287,7 +290,12 @@ class Graphics {
 	}
 
 	drawText(text, x, y, font) {
-		this.pushOp(GraphicsOp.Text, text, x, y, font);
+		this.pushOp(GraphicsOp.Text, {
+			text: text,
+			x: x,
+			y: y,
+			font: font
+		});
 	}
 
 	makeArcPath(x, y, width, height, startAngle, sweepAngle, direction, connectWithPrevOp) {
@@ -446,166 +454,176 @@ class Graphics {
 		ctx.transform(mx.m11, mx.m12, mx.m21, mx.m22, mx.offsetX, mx.offsetY);
 	}
 
-	/** Pen Parameters **/
-	createParamsFromPen(pen) {
-		if (pen == null || pen.getBrush() == null) {
+	createParamsFromPen(pen, compositeOp) {
+		if (pen === null || pen.getBrush() === null) {
 			return null;
 		}
 
-		return [pen.getThickness(),
-						pen.getMiterLimit(),
-						this.getLineJoinString(pen.getLineJoin()),
-						this.getLineCapString(pen.getLineCap()),
-						this.createParamsFromBrush(pen.getBrush()),
-						pen.getDashStyle(),
-						this.getLineCapString(pen.getDashCap())];
+		return {
+			compositeOp: compositeOp,
+			thickness: pen.getThickness(),
+			miterLimit: pen.getMiterLimit(),
+			lineJoin: GraphicsUtil.toLineJoinString(pen.getLineJoin()),
+			lineCap: GraphicsUtil.toLineCapString(pen.getLineCap()),
+			dashStyle: pen.getDashStyle(),
+			dashCap: GraphicsUtil.toLineCapString(pen.getDashCap()),
+			brushInfo: this.createParamsFromBrush(pen.getBrush(), compositeOp)
+		};
 	}
 
+	createFallbackBrushParams() {
+		return {
+			type: BrushType.Solid,
+			color: this.createFallbackStyle(),
+			compositeOp: CompositeOperator.SourceOver,
+			opacity: 1,
+			transform: null
+		};
+	}
 
-	/** Brush Parameters **/
-
-	createParamsFromBrush(brush) {
-		if (brush == null) {
+	createParamsFromBrush(brush, compositeOp) {
+		if (brush === null) {
 			return null;
 		}
 
 		var params = null;
 
-		if (brush instanceof SolidColorBrush) {
-			params = this.createParamsFromSolidColorBrush(brush);
-		} else if (brush instanceof LinearGradientBrush) {
-			params = this.createParamsFromLinearGradientBrush(brush);
-		} else if (brush instanceof RadialGradientBrush) {
-			params = this.createParamsFromRadialGradientBrush(brush);
-		} else if (brush instanceof ImageBrush) {
-			params = this.createParamsFromImageBrush(brush);
-		} else if (brush instanceof VideoBrush) {
-			params = this.createParamsFromVideoBrush(brush);
-		} else {
-			Debug.warn("DefaultGraphics.createParamsFromBrush() found an unknown brush type.");
-
-			// the brush is unknown so just return a solid type with the fallback color
-			params = [GraphicsBrushType.Solid, this.createFallbackStyle()];
-			params.push(1); 	// opacity
-			params.push(null); 	// matrix
-
-			return params;
+		switch(brush.type) {
+			case BrushType.Solid:
+				params = this.createParamsFromSolidColorBrush(brush);
+				break;
+			case BrushType.LinearGradient:
+				params = this.createParamsFromGradientBrush(brush);
+				break;
+			case BrushType.RadialGradient:
+				params = this.createParamsFromGradientBrush(brush);
+				break;
+			case BrushType.Image:
+				params = this.createParamsFromImageBrush(brush);
+				break;
+			case BrushType.Video:
+				params = this.createParamsFromVideoBrush(brush);
+				break;
+			default:
+				Debug.warn("Graphics.createParamsFromBrush() found an unknown brush type '%s'.", brush.type);
+				return this.createFallbackBrushParams();
 		}
 
-		params.push(brush.getOpacity());
+		var transform = brush.getTransform();
 
-		if (brush.getTransform() != null) {
-			params.push(brush.getTransform().getValue());
-		} else {
-			params.push(null);
-		}
+		params.type = brush.type;
+		params.compositeOp = compositeOp;
+		params.opacity = brush.getOpacity();
+		params.transform = (transform === null ? null : transform.getValue());
 
 		return params;
 	}
 
 	createParamsFromSolidColorBrush(brush) {
-		return [GraphicsBrushType.Solid, brush.getColor().toRGBAString()];
+		return {
+			color: brush.getColor().toRGBAString()
+		};
 	}
 
 	createParamsFromGradientBrush(brush) {
 		var len = brush.getColorStopCount();
 		var stop = null;
 		var stops = [];
+		var startPoint = brush.getStartPoint();
+		var endPoint = brush.getEndPoint();
 
 		for (var i = 0; i < len; ++i) {
 			stop = brush.getColorStop(i);
 			stops.push([stop.getColor().toRGBAString(), stop.getOffset()]);
 		}
 
-		return stops;
-	}
+		if (brush.type === BrushType.LinearGradient) {
+			return {
+				startX: startPoint.x,
+				startY: startPoint.y,
+				endX: endPoint.x,
+				endY: endPoint.y,
+				stops: stops
+			};
+		}
 
-	createParamsFromLinearGradientBrush(brush) {
-		return [GraphicsBrushType.Linear,
-						brush.getStartPoint().x,
-						brush.getStartPoint().y,
-						brush.getEndPoint().x,
-						brush.getEndPoint().y,
-						this.createParamsFromGradientBrush(brush)];
-	}
-
-	createParamsFromRadialGradientBrush(brush) {
-		return [GraphicsBrushType.Radial,
-						brush.getStartPoint().x,
-						brush.getStartPoint().y,
-						brush.getStartRadius(),
-						brush.getEndPoint().x,
-						brush.getEndPoint().y,
-						brush.getEndRadius(),
-						this.createParamsFromGradientBrush(brush)];
+		return {
+			startX: startPoint.x,
+			startY: startPoint.y,
+			startRadius: brush.getStartRadius(),
+			endX: endPoint.x,
+			endY: endPoint.y,
+			endRadius: brush.getEndRadius(),
+			stops: stops
+		};
 	}
 
 	createParamsFromImageBrush(brush) {
 		if (!brush.getIsAvailable()) {
-			return [GraphicsBrushType.Solid, this.createFallbackStyle()];
+			return this.createFallbackBrushParams();
 		}
 
-		return [GraphicsBrushType.Image,
-						brush.texture.getSize().width,
-						brush.texture.getSize().height,
-						brush.texture.getNativeData(),
-						brush.getSourceUrl(),
-						brush.getStretch(),
-						brush.getHorizontalAlignment(),
-						brush.getVerticalAlignment()];
+		var size = brush.texture.getSize();
+
+		return {
+			textureWidth: size.width,
+			textureHeight: size.height,
+			textureData: brush.texture.getNativeData(),
+			sourceUrl: brush.getSourceUrl(),
+			stretch: brush.getStretch(),
+			horizontalAlignment: brush.getHorizontalAlignment(),
+			verticalAlignment: brush.getVerticalAlignment()
+		};
 	}
 
 	createParamsFromVideoBrush(brush) {
 		if (!brush.getIsAvailable()) {
-			return [GraphicsBrushType.Solid, this.createFallbackStyle()];
+			return this.createFallbackBrushParams();
 		}
 
 		var naturalSize = brush.getNaturalSize();
 
-		return [GraphicsBrushType.Video,
-						naturalSize.width,
-						naturalSize.height,
-						brush.getSourceElement(),
-						brush.getCurrentPosition(),
-						brush.getStretch(),
-						brush.getHorizontalAlignment(),
-						brush.getVerticalAlignment()];
+		return {
+			width: naturalSize.width,
+			height: naturalSize.height,
+			source: brush.getSourceElement(),
+			sourcePosition: brush.getCurrentPosition(),
+			stretch: brush.getStretch(),
+			horizontalAlignment: brush.getHorizontalAlignment(),
+			verticalAlignment: brush.getVerticalAlignment()
+		};
 	}
 
-	/** Brush Styles **/
-
-	createStyleFromBrush(ctx, boundsRect, brushParams, isStroking) {
-		var type = brushParams[0];
-
-		switch (type) {
-		case GraphicsBrushType.Solid:
-			return this.createStyleFromSolidColorBrush(brushParams);
-		case GraphicsBrushType.Linear:
-			return this.createStyleFromLinearGradientBrush(ctx, boundsRect, brushParams, isStroking);
-		case GraphicsBrushType.Radial:
-			return this.createStyleFromRadialGradientBrush(ctx, boundsRect, brushParams, isStroking);
-		case GraphicsBrushType.Image:
-			return this.createStyleFromImageBrush(ctx, boundsRect, brushParams, isStroking);
-		case GraphicsBrushType.Video:
-			return this.createStyleFromVideoBrush(ctx, boundsRect, brushParams, isStroking);
+	createStyleFromBrush(ctx, boundsRect, brushInfo, isStroking) {
+		switch (brushInfo.type) {
+			case BrushType.Solid:
+				return this.createStyleFromSolidColorBrush(brushInfo);
+			case BrushType.LinearGradient:
+				return this.createStyleFromLinearGradientBrush(ctx, boundsRect, brushInfo, isStroking);
+			case BrushType.RadialGradient:
+				return this.createStyleFromRadialGradientBrush(ctx, boundsRect, brushInfo, isStroking);
+			case BrushType.Image:
+				return this.createStyleFromImageBrush(ctx, boundsRect, brushInfo, isStroking);
+			case BrushType.Video:
+				return this.createStyleFromVideoBrush(ctx, boundsRect, brushInfo, isStroking);
 		}
 
-		Debug.warn("DefaultGraphics.fill() found an unknown brush type. " + type);
+		Debug.warn("DefaultGraphics.fill() found an unknown brush type '%s'.", brushInfo.type);
 
 		return this.createFallbackStyle();
 	}
 
-	createStyleFromSolidColorBrush(brushParams) {
-		return brushParams[1];
+	createStyleFromSolidColorBrush(brushInfo) {
+		return brushInfo.color;
 	}
 
-	createStyleFromLinearGradientBrush(ctx, boundsRect, brushParams, isStroking) {
-		var startX = brushParams[1];
-		var startY = brushParams[2];
-		var endX = brushParams[3];
-		var endY = brushParams[4];
-		var stops = brushParams[5];
-		var xform = brushParams[7];
+	createStyleFromLinearGradientBrush(ctx, boundsRect, brushInfo, isStroking) {
+		var startX = brushInfo.startX;
+		var startY = brushInfo.startY;
+		var endX = brushInfo.endX;
+		var endY = brushInfo.endY;
+		var stops = brushInfo.stops;
+		var xform = brushInfo.transform;
 		var len = stops.length;
 		var stop = null;
 		var rect = boundsRect;
@@ -649,15 +667,15 @@ class Graphics {
 	// TODO : for some reason, this fails when the start/end radius and points are lowered or increased,
 	//        the results fail differently in IE and FF so something is def wrong with the below
 
-	createStyleFromRadialGradientBrush(ctx, boundsRect, brushParams, isStroking) {
-		var startX = brushParams[1];
-		var startY = brushParams[2];
-		var startRadius = brushParams[3];
-		var endX = brushParams[4];
-		var endY = brushParams[5];
-		var endRadius = brushParams[6];
-		var stops = brushParams[7];
-		var xform = brushParams[9];
+	createStyleFromRadialGradientBrush(ctx, boundsRect, brushInfo, isStroking) {
+		var startX = brushInfo.startX;
+		var startY = brushInfo.startY;
+		var startRadius = brushInfo.startRadius;
+		var endX = brushInfo.endX;
+		var endY = brushInfo.endY;
+		var endRadius = brushInfo.endRadius;
+		var stops = brushInfo.stops;
+		var xform = brushInfo.transform;
 		var len = stops.length;
 		var stop = null;
 		var rect = boundsRect;
@@ -705,15 +723,15 @@ class Graphics {
 	//        strokes.
 	//***********************************************************************************************
 
-	createStyleFromImageBrush(ctx, boundsRect, brushParams, isStroking) {
-		var sourceWidth = brushParams[1];
-		var sourceHeight = brushParams[2];
-		var nativeData = brushParams[3];
-		var sourceUrl = brushParams[4].toLowerCase();
-		var stretch = brushParams[5];
-		var horizontalAlignment = brushParams[6];
-		var verticalAlignment = brushParams[7];
-		var xform = brushParams[9];
+	createStyleFromImageBrush(ctx, boundsRect, brushInfo, isStroking) {
+		var sourceWidth = brushInfo.textureWidth;
+		var sourceHeight = brushInfo.textureHeight;
+		var nativeData = brushInfo.textureData;
+		var sourceUrl = brushInfo.sourceUrl.toLowerCase();
+		var stretch = brushInfo.stretch;
+		var horizontalAlignment = brushInfo.horizontalAlignment;
+		var verticalAlignment = brushInfo.verticalAlignment;
+		var xform = brushInfo.transform;
 		var patternSize = this.computePatternSize(stretch, boundsRect, sourceWidth, sourceHeight);
 		var patternPosition = this.computePatternPosition(horizontalAlignment, verticalAlignment, patternSize, boundsRect);
 		var pattern = this.createBrushStylePattern(ctx, nativeData, xform, patternSize, isStroking);
@@ -723,14 +741,14 @@ class Graphics {
 		return pattern;
 	}
 
-	createStyleFromVideoBrush(ctx, boundsRect, brushParams, isStroking) {
-		var sourceWidth = brushParams[1];
-		var sourceHeight = brushParams[2];
-		var sourceElement = brushParams[3];
-		var stretch = brushParams[5];
-		var horizontalAlignment = brushParams[6];
-		var verticalAlignment = brushParams[7];
-		var xform = brushParams[9];
+	createStyleFromVideoBrush(ctx, boundsRect, brushInfo, isStroking) {
+		var sourceWidth = brushInfo.width;
+		var sourceHeight = brushInfo.height;
+		var sourceElement = brushInfo.source;
+		var stretch = brushInfo.stretch;
+		var horizontalAlignment = brushInfo.horizontalAlignment;
+		var verticalAlignment = brushInfo.verticalAlignment;
+		var xform = brushInfo.transform;
 		var patternSize = this.computePatternSize(stretch, boundsRect, sourceWidth, sourceHeight);
 		var patternPosition = this.computePatternPosition(horizontalAlignment, verticalAlignment, patternSize, boundsRect);
 		var pattern = this.createBrushStylePattern(ctx, sourceElement, xform, patternSize, isStroking);
@@ -759,7 +777,7 @@ class Graphics {
 		// seperate surface that can then be used as the final source when creating
 		// the pattern, otherwise if we scale the stroke itself it will end up looking
 		// like ass, this produces a much better and accurate stroke
-		if (this.offscreenStyleSurface == null) {
+		if (this.offscreenStyleSurface === null) {
 			this.offscreenStyleSurface = document.createElement("canvas");
 		}
 
@@ -795,8 +813,6 @@ class Graphics {
 
 		return this.offscreenStyleSurface;
 	}
-
-	/** Other **/
 
 	makeBrushStyleMatrix(brushMatrix, patternPosition, patternSize, sourceWidth, sourceHeight, isStroking) {
 		this.tmpMatrix.setIdentity();
@@ -858,57 +874,8 @@ class Graphics {
 		return this.tmpVect;
 	}
 
-	getMustSaveContextForBrush(brushParams) {
-		return (brushParams[brushParams.length - 1] !== null || brushParams[0] === GraphicsBrushType.Image || brushParams[0] === GraphicsBrushType.Video);
-	}
-
-	getLineCapString(penLineCap) {
-		switch (penLineCap) {
-			case PenLineCap.Round:
-				return "round";
-			case PenLineCap.Square:
-				return "square";
-		}
-
-		return "butt";
-	}
-
-	getLineJoinString(penLineJoin) {
-		switch (penLineJoin) {
-			case PenLineJoin.Bevel:
-				return "bevel";
-			case PenLineJoin.Round:
-				return "round";
-		}
-
-		return "miter";
-	}
-
-	getCompositeOperatorString(compositeOp) {
-		switch (compositeOp) {
-			case CompositeOperator.Clear:
-				return "clear";
-			case CompositeOperator.SourceIn:
-				return "source-in";
-			case CompositeOperator.SourceOut:
-				return "source-out";
-			case CompositeOperator.SourceATop:
-				return "source-atop";
-			case CompositeOperator.DestinationOver:
-				return "destination-over";
-			case CompositeOperator.DestinationIn:
-				return "destination-in";
-			case CompositeOperator.DestinationOut:
-				return "destination-out";
-			case CompositeOperator.DestinationATop:
-				return "destination-atop";
-			case CompositeOperator.XOr:
-				return "xor";
-			case CompositeOperator.Copy:
-				return "copy";
-		}
-
-		return "source-over";
+	static WillBrushRequireSavingContext(brushInfo) {
+		return (brushInfo.transform !== null || brushInfo.type === BrushType.Image || brushInfo.type === BrushType.Video);
 	}
 }
 

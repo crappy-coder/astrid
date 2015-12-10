@@ -1,10 +1,11 @@
-import GradientBrush from "./GradientBrush";
-import Vector2D from "../Vector2D";
-import GradientStop from "../graphics/GradientStop";
+import BrushType from "./BrushType"
+import GradientBrush from "./GradientBrush"
+import GradientStop from "./GradientStop"
+import Vector2D from "../Vector2D"
 
 class LinearGradientBrush extends GradientBrush {
 	constructor() {
-		super();
+		super(BrushType.LinearGradient);
 
 		this.setStartPoint(new Vector2D(0, 0));
 		this.setEndPoint(new Vector2D(1, 1));

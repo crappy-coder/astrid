@@ -23,7 +23,6 @@ class GraphicsProcessor {
 
 		var len = ops.length;
 		var op = null;
-		var opType = null;
 		var params = null;
 		var item = null;
 
@@ -35,9 +34,8 @@ class GraphicsProcessor {
 		//***********************************************************************************************
 		for (var i = 0; i < len; ++i) {
 			op = ops[i];
-			opType = op.getFirst();
 
-			switch (opType) {
+			switch (op.getFirst()) {
 				case GraphicsOp.BeginPath:
 					this.processBeginPath(op);
 					break;
@@ -46,14 +44,12 @@ class GraphicsProcessor {
 				case GraphicsOp.LineTo:
 				case GraphicsOp.CurveTo:
 				case GraphicsOp.CubicCurveTo:
-					this.processPathOp(op, opType);
+				case GraphicsOp.Text:
+					this.processPathOp(op);
 					break;
 				case GraphicsOp.Image:
 				case GraphicsOp.TiledImage:
 					this.processImage(op);
-					break;
-				case GraphicsOp.Text:
-					this.processPathOp(op, opType);
 					break;
 				case GraphicsOp.Fill:
 					this.processFillOp(op);
@@ -125,31 +121,29 @@ class GraphicsProcessor {
 
 	processBeginPath(op) {
 		this.finishPathItem();
-
 		this.processPathOp(op);
 	}
 
-	processPathOp(op, opType) {
+	processPathOp(op) {
 		this.ensurePathItem();
 		this.currentPath.ops.push(op);
 
 		var params = op.getSecond();
 
-		switch (opType) {
+		switch (op.getFirst()) {
 			case GraphicsOp.ClosePath:
 				this.currentPath.closePath();
 				break;
 			case GraphicsOp.MoveTo:
-				this.currentPath.moveTo(params[0]);
+				this.currentPath.moveTo(params);
 				break;
 			case GraphicsOp.LineTo:
 			case GraphicsOp.CurveTo:
 			case GraphicsOp.CubicCurveTo:
-				this.currentPath.pathTo(params[0]);
+				this.currentPath.pathTo(params);
 				break;
 			case GraphicsOp.Text:
-
-				this.currentPath.text(params[0], params[1], params[2], params[3]);
+				this.currentPath.text(params.text, params.x, params.y, params.font);
 				break;
 		}
 	}

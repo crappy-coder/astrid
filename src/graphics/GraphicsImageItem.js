@@ -10,11 +10,11 @@ class GraphicsImageItem extends GraphicsItem {
 
 	computeBounds() {
 		var params = this.imageOp.getSecond();
-		var x = params[5];		// dstX
-		var y = params[6];		// dstY
-		var width = params[7];	// dstWidth
-		var height = params[8];	// dstHeight
-		var mx = params[9];		// matrix
+		var x = params.dstX;
+		var y = params.dstY;
+		var width = params.dstWidth;
+		var height = params.dstHeight;
+		var mx = params.transform;
 
 		this.bounds.x = x;
 		this.bounds.y = y;

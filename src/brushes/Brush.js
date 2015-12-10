@@ -6,16 +6,15 @@ import PropertyOptions from "../ui/PropertyOptions";
 var Mixed = astrid.mixin(EventDispatcher, Animatable);
 
 class Brush extends Mixed {
-	constructor() {
+	constructor(type) {
 		super();
 
-		/** Boolean **/
+		this.type = type;
 		this.isAvailable = false;
-
-		/** CanvasGradient/CanvasPattern **/
 		this.nativeBrushCache = null;
 
 		this.setOpacity(1);
+		this.setTransform(null);
 		this.initializeAnimatableProperties();
 	}
 
@@ -51,7 +50,7 @@ class Brush extends Mixed {
 	}
 
 	isEqualTo(other) {
-		if (this.getOpacity() == other.getOpacity()) {
+		if (this.type === other.type && this.getOpacity() === other.getOpacity()) {
 			return astrid.areEqual(this.getTransform(), other.getTransform());
 		}
 

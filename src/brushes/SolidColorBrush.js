@@ -1,10 +1,11 @@
-import Brush from "./Brush";
-import PropertyOptions from "../ui/PropertyOptions";
-import Color from "../graphics/Color";
+import Brush from "./Brush"
+import BrushType from "./BrushType"
+import PropertyOptions from "../ui/PropertyOptions"
+import Color from "../graphics/Color"
 
 class SolidColorBrush extends Brush {
 	constructor(color) {
-		super();
+		super(BrushType.Solid);
 
 		this.setColor(color);
 	}

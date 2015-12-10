@@ -101,8 +101,9 @@ var Animatable = {
 		 * RETURNS (any):
 		 *  The value of your property, or null if the property was never set.
 		 */
+		var value = this[propertyName + "$"];
 
-		return this[propertyName + "$"];
+		return (value === undefined ? null : value);
 	},
 
 	setPropertyValue(propertyName, value) {
