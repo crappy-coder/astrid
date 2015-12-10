@@ -1,5 +1,4 @@
-var GraphicsOp = {
-//  @PRIVATE
+const GraphicsOp = {
 	"MoveTo"		: 1,
 	"LineTo"		: 2,
 	"CurveTo"		: 3,

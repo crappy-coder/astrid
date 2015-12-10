@@ -25,7 +25,7 @@ class Application extends EventDispatcher {
 		Application.Instance = this;
 
 		this.debugFlags = DebugFlags.None;
-		this.renderMode = RenderMode.AUTO;
+		this.renderMode = RenderMode.SOFTWARE; // default to software while we work on the webgl version
 		this.startTime = (window.getHighResTimer ? window.getHighResTimer() : performance.now());
 		this.isPaused = true;
 		this.isAutoPaused = false;

@@ -3,7 +3,7 @@ import Rectangle from "../Rectangle";
 import HorizontalAlignment from "./HorizontalAlignment";
 import VerticalAlignment from "./VerticalAlignment";
 import Dock from "./Dock";
-import Graphics from "../graphics/Graphics";
+import GraphicsUtil from "../graphics/GraphicsUtil";
 import Matrix2D from "../Matrix2D";
 import LayoutManager from "./LayoutManager";
 import DirtyRegion from "./DirtyRegion";
@@ -73,7 +73,7 @@ class Drawable extends Mixed {
 		this.alphaAffectsVisibility = false;
 		this.depth = 0;
 		this.dock = Dock.None;
-		this.graphics = new Graphics(this);
+		this.graphics = GraphicsUtil.createGraphics(this);
 		this.bitmapCache = null;
 		this.bitmapEffectCache = null;
 		this.renderTransform = null;
@@ -1644,7 +1644,7 @@ class Drawable extends Mixed {
 	}
 
 	areAnyGraphicsDirty() {
-		if (this.selfDirty || this.graphics.getHasChangedSinceLastRender()) {
+		if (this.selfDirty || this.graphics.hasChangedSinceLastRender) {
 			return true;
 		}
 
@@ -1679,7 +1679,7 @@ class Drawable extends Mixed {
 
 		// get the new bounds from our graphics, if the graphics does not have
 		// any strokes then the non-stroked bounds will just be returned
-		this.computeBounds(this.graphics.getStrokeBounds());
+		this.computeBounds(this.graphics.bounds);
 
 		// add a dirty region if the bounds have changed or any of our graphics
 		// are dirty
@@ -1724,7 +1724,7 @@ class Drawable extends Mixed {
 
 		// compute the local/global bounds, this will give us the actual bounds
 		// based on what was actually rendered
-		this.computeBounds(this.graphics.getStrokeBounds());
+		this.computeBounds(this.graphics.bounds);
 
 		// save the current dirty region and reset it
 		this.lastDirtyRegion = this.dirtyRegion.copy();
@@ -1839,7 +1839,7 @@ class Drawable extends Mixed {
 		gfx.globalAlpha *= this.getAlpha();
 
 		// perform the actual render operation
-		this.graphics.render(gfx);
+		this.graphics.update(gfx);
 
 		// when specified, clip just the child content
 		if (this.clipChildren) {
