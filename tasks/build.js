@@ -3,6 +3,7 @@ var fs = require("fs");
 var path = require("path");
 var browserify = require("browserify");
 var babelify = require("babelify");
+var chalk = require("chalk");
 
 const SCRIPT_DIR = __dirname;
 const EXAMPLE_REGEX = /\-\-example=(.*)/;
@@ -78,7 +79,7 @@ else {
 }
 
 function buildExample() {
-    console.log("\u001b[34;1mbuilding example '" + buildConfig.example.name + "'...\u001b[0m");
+    console.log(chalk.bold.white("BUILDING EXAMPLE '%s'..."), buildConfig.example.name);
 
     build(buildConfig.example.path, "./js/main.js", "./app.js");
 }
@@ -102,13 +103,13 @@ function build(srcPath, entryFilePath, outFilePath) {
 
     // print the file being processed
     b.on("file", function (fileName) {
-        console.log("\u001b[1mPROCESSING\u001b[0m: \u001b[37m" + fileName + "\u001b[0m");
+        console.log(chalk.bold.blue("PROCESSING: %s"), chalk.white(fileName));
     });
 
     // print out bundling errors
     b.on("bundle", function (bundle) {
         bundle.on("error", function (err) {
-            console.log("\u001b[31;1mERROR\u001b[0m: \u001b[31m" + err.toString() + "\u001b[0m");
+            console.log(chalk.bold.red("ERROR: %s"), err.toString());
             console.log(err.stack);
 
             if (err.codeFrame) {
@@ -140,15 +141,14 @@ function doesDirectoryExist(path) {
 }
 
 function printUsage(msg) {
-    console.log("\u001b[31;1m" + msg + "\u001b[0m");
+    console.log(chalk.bold.red(msg));
     console.log("");
-    console.log("\u001b[37;1mUsage:\u001b[37m");
-    console.log("  node build [--debug] [--example=name]");
+    console.log(chalk.bold("Usage:"));
+    console.log(chalk.white("  node build [--debug] [--example=name]"));
     console.log("");
-    console.log("  --debug:               Flag indicating whether or not to produce a build for debugging.");
-    console.log("  --example=name:        Build one of the examples. The 'name' value should be a directory");
-    console.log("                         name located under the /examples directory.");
-    console.log("\u001b[0m");
+    console.log(chalk.white("  --debug:               Flag indicating whether or not to produce a build for debugging."));
+    console.log(chalk.white("  --example=name:        Build one of the examples. The 'name' value should be a directory"));
+    console.log(chalk.white("                         name located under the /examples directory."));
 
     process.exit();
 }

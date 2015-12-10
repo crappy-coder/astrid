@@ -27,7 +27,8 @@
   },
   "homepage": "https://github.com/JTJustCodes/astrid#readme",
   "dependencies": {
-    "box2dweb": "^2.1.0"
+    "box2dweb": "^2.1.0",
+    "chalk": "^1.1.1"
   },
   "devDependencies": {
     "babel-preset-es2015-loose": "^6.1.3",

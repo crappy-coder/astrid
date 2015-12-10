@@ -2,6 +2,7 @@
 
 var fs = require("fs");
 var path = require("path");
+var chalk = require("chalk");
 
 const SCRIPT_DIR = __dirname;
 const BASE_DIR = path.resolve(SCRIPT_DIR, "../");
@@ -27,21 +28,25 @@ if(!outputFilePath) {
 
 var str = "";
 
+console.log(chalk.bold.white("GENERATING EXPORTS IN '%s'..."), path.relative(BASE_DIR, outputFilePath));
+
 gatherListOfFiles(SOURCE_DIR, function(files) {
     files.forEach(function(file) {
         file = "./" + path.relative(SOURCE_DIR, file);
         file = file.replace(/\\/g, "/");
+
+        console.log(chalk.bold.blue("EXPORTING: %s"), chalk.white(file));
 
         str += "export * from \"" + file + "\"\n";
     });
 
     fs.writeFile(outputFilePath, str, function(err) {
         if(err) {
-            console.error(err);
+            console.log(chalk.bold.red("ERROR: %s", err));
             process.exit();
         }
 
-        console.log("%d files added to export list.", files.length);
+        console.log(chalk.green("%d files added to export list."), files.length);
     });
 });
 
@@ -121,14 +126,13 @@ function doesDirectoryExist(path) {
 }
 
 function printUsage(msg) {
-    console.log("\u001b[31;1m" + msg + "\u001b[0m");
+    console.log(chalk.bold.red(msg));
     console.log("");
-    console.log("\u001b[37;1mUsage:\u001b[37m");
-    console.log("  node generate-exports [--output-path=path]");
+    console.log(chalk.bold.white("Usage:"));
+    console.log(chalk.white("  node generate-exports [--output-path=path]"));
     console.log("");
-    console.log("  --output-path=path:        Path where the exports file should be generated. The 'path' value should be an absolute or");
-    console.log("                             relative path to the project directory.");
-    console.log("\u001b[0m");
+    console.log(chalk.white("  --output-path=path:        Path where the exports file should be generated. The 'path' value should be an absolute or"));
+    console.log(chalk.white("                             relative path to the project directory."));
 
     process.exit();
 }
