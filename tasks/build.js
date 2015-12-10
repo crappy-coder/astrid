@@ -12,33 +12,50 @@ var args = process.argv;
 var isExample = false;
 var isExampleValid = false;
 var buildConfig = {
-    debug:   false,
+    debug: false,
     example: null
 };
 
-for(var i = 0; i < args.length; i++) {
-    if(args[i] === "--debug") {
+for (var i = 0; i < args.length; i++) {
+    if (args[i] === "--debug") {
         buildConfig.debug = true;
         continue;
     }
 
-    if(~args[i].indexOf("--example")) {
-        var result = EXAMPLE_REGEX.exec(args[i]);
+    if (~args[i].indexOf("--example")) {
+        var exampleName = null;
+        var exampleMatchResults = null;
 
         isExample = true;
 
-        if (result && result[1]) {
+        // if the example arg is specified with no '=' then it could be building from npm, in which
+        // case the next argument should be the name of the example.
+        if (args[i] === "--example") {
+            if ((i + 1) < args.length) {
+                exampleName = args[i+1];
+            }
+        }
+
+        // otherwise, check if the format is a match and grab the example name value
+        if (!exampleName) {
+            exampleMatchResults = EXAMPLE_REGEX.exec(args[i]);
+
+            if (exampleMatchResults && exampleMatchResults[1]) {
+                exampleName = exampleMatchResults[1];
+            }
+        }
+
+        if (exampleName) {
             buildConfig.example = {
-                name: result[1],
-                path: path.resolve(EXAMPLE_DIR, result[1])
+                name: exampleName,
+                path: path.resolve(EXAMPLE_DIR, exampleName)
             };
-            continue;
         }
     }
 }
 
 // validate example configuration
-if(isExample) {
+if (isExample) {
 
     // --example argument was added but no example specified
     if (!buildConfig.example) {
@@ -46,13 +63,13 @@ if(isExample) {
     }
 
     // check if example exists
-    if(!doesDirectoryExist(buildConfig.example.path)) {
+    if (!doesDirectoryExist(buildConfig.example.path)) {
         printUsage("the example '" + buildConfig.example.name + "' could not be found.");
     }
 }
 
 // build the example
-if(buildConfig.example) {
+if (buildConfig.example) {
     buildExample();
 }
 // otherwise just build the package
@@ -73,37 +90,38 @@ function build(srcPath, entryFilePath, outFilePath) {
         sourceMaps: false
     });
 
-    var b = browserify({ debug: buildConfig.debug });
+    var b = browserify({debug: buildConfig.debug});
 
     // resolve file paths
     entryFilePath = path.resolve(srcPath, entryFilePath);
     outFilePath = path.resolve(srcPath, outFilePath);
 
-    if(!doesDirectoryExist(path.dirname(outFilePath))) {
+    if (!doesDirectoryExist(path.dirname(outFilePath))) {
         fs.mkdirSync(path.dirname(outFilePath));
     }
 
     // print the file being processed
-	b.on("file", function(fileName) {
+    b.on("file", function (fileName) {
         console.log("\u001b[1mPROCESSING\u001b[0m: \u001b[37m" + fileName + "\u001b[0m");
     });
 
     // print out bundling errors
-    b.on("bundle", function(bundle) {
-        bundle.on("error", function(err) {
+    b.on("bundle", function (bundle) {
+        bundle.on("error", function (err) {
             console.log("\u001b[31;1mERROR\u001b[0m: \u001b[31m" + err.toString() + "\u001b[0m");
             console.log(err.stack);
 
-            if(err.codeFrame)
+            if (err.codeFrame) {
                 console.log(err.codeFrame);
+            }
 
             process.exit();
         });
     });
 
     // transform, bundle and pipe to output file
-	b.transform(babelConfig)
-     .require(entryFilePath, { entry: true })
+    b.transform(babelConfig)
+     .require(entryFilePath, {entry: true})
      .bundle()
      .pipe(fs.createWriteStream(outFilePath));
 }

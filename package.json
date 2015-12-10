@@ -4,7 +4,11 @@
   "description": "Graphics engine for building cross-platform games and applications.",
   "main": "src/Application.js",
   "scripts": {
-    "test": "node node_modules/karma/bin/karma start"
+    "test": "node node_modules/karma/bin/karma start",
+    "exports": "node tasks/generate-exports --output-path=src/Astrid.js",
+    "build": "node tasks/build",
+    "build-debug": "node tasks/build --debug",
+    "build-example": "node tasks/build --debug --example"
   },
   "repository": {
     "type": "git",
